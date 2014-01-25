@@ -109,6 +109,11 @@ class PlayState extends FlxState
 		if (FlxG.keyboard.justPressed("DOWN")|| (gamepadUtilOne.getPressedbuttons().exists(1)&& gamepadUtilOne.getControllerId() == 0 )) {
 			FlxG.overlap(player1, player2, killPlayer);
 		}
+		if (FlxG.keyboard.anyJustPressed(["SPACE"])|| (gamepadUtilOne.getPressedbuttons().exists(7) && gamepadUtilTwo.getControllerId() == 0)) {
+			player1.destroyGraphics();
+			player1.generateGraphics();
+		}
+		
 		
 		//player2
 		player2.acceleration.x = 0;
@@ -123,13 +128,12 @@ class PlayState extends FlxState
 		}if (FlxG.keyboard.anyPressed(["S"]) || (gamepadUtilTwo.getPressedbuttons().exists(1) && gamepadUtilTwo.getControllerId() == 1)) {
 			FlxG.overlap(player2, player1, killPlayer);
 		}
-		
-		if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
-			player1.destroyGraphics();
-			player1.generateGraphics();
+		if (FlxG.keyboard.anyJustPressed(["SPACE"])|| (gamepadUtilTwo.getPressedbuttons().exists(7) && gamepadUtilTwo.getControllerId() == 1)) {
 			player2.destroyGraphics();
 			player2.generateGraphics();
 		}
+		
+		
 		
 		
 		super.update();
