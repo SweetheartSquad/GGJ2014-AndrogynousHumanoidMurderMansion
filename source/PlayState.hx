@@ -103,7 +103,7 @@ class PlayState extends FlxState
 		
 		//Thingies
 		var doorPath:String = "assets/images/door.png"; 
-		doorOne = new Door(ThingyTypes,doorPath,0);
+		doorOne = new Door(DOOR,doorPath,0);
 		doorTwo = new Door(DOOR,doorPath,1);
 		
 		thingies = new FlxGroup();

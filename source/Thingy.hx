@@ -24,6 +24,7 @@ class Thingy extends FlxSprite
 	
 	public function new(type:ThingyType, imgPath:String, id:Int ,?isActive:Bool=true) 
 	{
+		super();
 		this.type = type;
 		this.imgPath = imgPath;
 		this.id = id;
