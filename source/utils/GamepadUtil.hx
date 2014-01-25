@@ -68,7 +68,9 @@ class GamepadUtil
 
     public function getLastbuttonUp():Int
     {
-        return lastbuttonUp;
+		var temp = lastbuttonUp;
+		lastbuttonUp = -1;
+        return temp;
     }
 	
 	public function getAxis():Float
