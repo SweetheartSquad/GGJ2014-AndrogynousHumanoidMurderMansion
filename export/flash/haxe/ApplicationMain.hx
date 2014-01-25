@@ -16,7 +16,7 @@ class ApplicationMain {
 		
 		var call_real = true;
 		
-		//nme.Lib.setPackage("HaxeFlixel", "Hello World", "com.example.myapp", "0.0.1");
+		//nme.Lib.setPackage("HaxeFlixel", "HelloWorld", "com.example.myapp", "0.0.1");
 		
 		
 		var loaded:Int = flash.Lib.current.loaderInfo.bytesLoaded;

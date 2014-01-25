@@ -17,7 +17,8 @@ class PlayState extends FlxState
 {
 	
 	private var _level:FlxTilemap;
-	private var _player:FlxSprite;
+	private var player1:Entity;
+	private var player2:FlxSprite;
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -30,15 +31,27 @@ class PlayState extends FlxState
 		_level.loadMap(Assets.getText("assets/level.csv"), FlxTilemap.imgAuto, 0, 0, FlxTilemap.AUTO);
 		add(_level);
 		
-		_player = new FlxSprite(FlxG.width / 2 - 5);
-		_player.makeGraphic(8, 8, FlxColor.CRIMSON);
-		_player.maxVelocity.set(100, 500);
-		_player.acceleration.y = 500;
-		_player.drag.x = _player.maxVelocity.x * 8;
+		player1 = new Entity();
+		player1.x = 50;
+		player1.y = 20;
+		//player1.makeGraphic(8, 8, FlxColor.CRIMSON);
+		player1.maxVelocity.set(80, 500);
+		player1.acceleration.y = 500;
+		player1.drag.x = player1.maxVelocity.x * 4;
 		
 		//smooth subpixel stuff
-		_player.forceComplexRender = true;
-		add(_player);
+		player1.forceComplexRender = true;
+		add(player1);
+		
+		player2 = new FlxSprite(50,20);
+		player2.makeGraphic(8, 8, FlxColor.AZURE);
+		player2.maxVelocity.set(80, 500);
+		player2.acceleration.y = 500;
+		player2.drag.x = player2.maxVelocity.x * 4;
+		
+		//smooth subpixel stuff
+		player2.forceComplexRender = true;
+		add(player2);
 		
 		
 		// Set a background color
@@ -64,18 +77,42 @@ class PlayState extends FlxState
 	 */
 	override public function update():Void {
 		//controls here
-		if (FlxG.keyboard.justPressed("LEFT")){
-			_player.acceleration.x = -_player.maxVelocity.x * 8;
-		}if (FlxG.keyboard.justPressed("RIGHT")){
-			_player.acceleration.x = _player.maxVelocity.x * 8;
-		}if (FlxG.keyboard.justPressed("UP") && _player.isTouching(FlxObject.FLOOR)) {
-			_player.velocity.y = -_player.maxVelocity.y / 2;
+		//player1
+		player1.acceleration.x = 0;
+		if (FlxG.keyboard.anyPressed(["LEFT"])){
+			player1.acceleration.x = -player1.maxVelocity.x * 4;
+		}if (FlxG.keyboard.anyPressed(["RIGHT"])){
+			player1.acceleration.x = player1.maxVelocity.x * 4;
+		}if (FlxG.keyboard.justPressed("UP") && player1.isTouching(FlxObject.FLOOR)) {
+			player1.velocity.y = -player1.maxVelocity.y / 2;
+		}if (FlxG.keyboard.anyPressed(["DOWN"])) {
+			FlxG.overlap(player1, player2, killPlayer);
 		}
+		
+		//player2
+		player2.acceleration.x = 0;
+		if (FlxG.keyboard.anyPressed(["A"])){
+			player2.acceleration.x = -player2.maxVelocity.x * 4;
+		}if (FlxG.keyboard.anyPressed(["D"])){
+			player2.acceleration.x = player2.maxVelocity.x * 4;
+		}if (FlxG.keyboard.justPressed("W") && player2.isTouching(FlxObject.FLOOR)) {
+			player2.velocity.y = -player2.maxVelocity.y / 2;
+		}if (FlxG.keyboard.anyPressed(["S"])) {
+			FlxG.overlap(player2, player1, killPlayer);
+		}
+		
 		
 		super.update();
 		
 		//updates here
 		
-		FlxG.collide(_level, _player);
-	}	
+		FlxG.collide(_level, player1);
+		FlxG.collide(_level, player2);
+		
+		player1.postUpdate();
+	}
+	
+	public function killPlayer(Object1:FlxObject,Object2:FlxObject) {
+		Object2.kill();
+	}
 }

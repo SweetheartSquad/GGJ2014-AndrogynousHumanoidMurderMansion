@@ -7,7 +7,7 @@
 -D FLX_NO_DEBUG
 -D web
 -swf-version 11.2
--swf export/flash/bin/Hello World.swf
--swf-header 640:480:60:FFFFFF
+-swf export/flash/bin/HelloWorld.swf
+-swf-header 1920:1080:60:FFFFFF
 -cp export/flash/haxe
 #--remap nme:flash
