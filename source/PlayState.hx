@@ -180,15 +180,10 @@ class PlayState extends FlxState
 			entities.callAll("generateGraphics");
 		}
 		
-<<<<<<< HEAD
-	
-		
 		//controls above
-=======
 		npcs.callAll("moveAlongPath");
 		
 		//states/controls above
->>>>>>> origin/Sean's-Branch
 		super.update();
 		//updates below
 		manageThingies();
