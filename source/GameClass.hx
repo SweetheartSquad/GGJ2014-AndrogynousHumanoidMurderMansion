@@ -6,8 +6,6 @@ import flixel.FlxState;
 
 class GameClass extends FlxGame
 {
-	var actualGameWidth:Int = 720; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
-	var actualGameHeight:Int = 480; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var initialState:Class<FlxState> = MenuState; // The FlxState the game starts with.
 	var framerate:Int = 60; // How many frames per second the game should run at.
 	var skipSplash:Bool = false; // Whether to skip the flixel splash screen that appears in release mode.
@@ -18,15 +16,17 @@ class GameClass extends FlxGame
 	 */
 	public function new()
 	{
+		Reg.gameWidth = 720; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
+		Reg.gameHeight = 480; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
-		var ratioX:Float = stageWidth / actualGameWidth;
-		var ratioY:Float = stageHeight / actualGameHeight;
+		var ratioX:Float = stageWidth / Reg.gameWidth;
+		var ratioY:Float = stageHeight / Reg.gameHeight;
 		Reg.zoom = Math.min(ratioX, ratioY);
-		Reg.gameWidth = Math.ceil(stageWidth / Reg.zoom);
-		Reg.gameHeight = Math.ceil(stageHeight / Reg.zoom);
+		var actualGameWidth:Int = Math.ceil(stageWidth / Reg.zoom);
+		var actualGameHeight:Int = Math.ceil(stageHeight / Reg.zoom);
 
-		super(Reg.gameWidth, Reg.gameHeight, initialState, Reg.zoom, framerate, framerate, skipSplash, startFullscreen);
+		super(actualGameWidth, actualGameHeight, initialState, Reg.zoom, framerate, framerate, skipSplash, startFullscreen);
 	}
 }
