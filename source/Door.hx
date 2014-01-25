@@ -6,10 +6,12 @@ package ;
  */
 class Door extends Thingy
 {
+	public var relatedDoor:Int;
 
-	public function new(type:ThingyType, imgPath:String,id:Int,?isActive:Bool=true) 
+	public function new(x:Float, y:Float, type:ThingyType, imgPath:String,id:Int,relatedDoor:Int,?isActive:Bool=true) 
 	{
-		super(type, imgPath,id,isActive);
+		super(x,y,type, imgPath, id, isActive);
+		this.relatedDoor = relatedDoor;
 		
 	}
 	

@@ -26,7 +26,7 @@ class PlayState extends FlxState
 	
 	//Flx Groups
 	private var entities:FlxGroup;
-	private var thingies:FlxGroup;
+	private var doors:FlxGroup;
 	private var players:FlxGroup;
 	private var npcs:FlxGroup;
 	
@@ -44,7 +44,7 @@ class PlayState extends FlxState
 	//Thingies
 	private var doorOne:Door;
 	private var doorTwo:Door;
-	
+
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -93,15 +93,15 @@ class PlayState extends FlxState
 		
 		//Thingies
 		var doorPath:String = "assets/images/door.png"; 
-		doorOne = new Door(DOOR,doorPath,0);
-		doorTwo = new Door(DOOR,doorPath,1);
+		doorOne = new Door(40,50,DOOR,doorPath,0,1);
+		doorTwo = new Door(100,300,DOOR,doorPath,1,0);
 		
-		thingies = new FlxGroup();
-		thingies.add(doorOne);
-		thingies.add(doorTwo);
+		doors = new FlxGroup();
+		doors.add(doorOne);
+		doors.add(doorTwo);
 		
 		//add thingies
-		add(thingies);
+		add(doors);
 		
 		//add entities to game
 		add(entities);
@@ -143,12 +143,13 @@ class PlayState extends FlxState
 		if (FlxG.keyboard.justPressed("K")|| (gamepadUtilOne.getPressedbuttons().exists(1)&& gamepadUtilOne.getControllerId() == 0 )) {
 			FlxG.overlap(player1, player2, killPlayer);
 		}
-		if (FlxG.keyboard.justPressed("Q")|| (gamepadUtilOne.getPressedbuttons().exists(3)&& gamepadUtilOne.getControllerId() == 0 )) {
-			FlxG.overlap(player1, player2, killPlayer);
+		if (FlxG.keyboard.justPressed("U")|| (gamepadUtilOne.getPressedbuttons().exists(3)&& gamepadUtilOne.getControllerId() == 0 )) {
+			player1.interacting = true;
 		}
 		if (gamepadUtilOne.getLastbuttonUp() == 7 && gamepadUtilOne.getControllerId() == 0) {
 			player1.destroyGraphics();
 			player1.generateGraphics();
+			
 		}
 		
 		
@@ -164,8 +165,8 @@ class PlayState extends FlxState
 		}if (FlxG.keyboard.anyPressed(["S"]) || (gamepadUtilTwo.getPressedbuttons().exists(1) && gamepadUtilTwo.getControllerId() == 1)) {
 			FlxG.overlap(player2, player1, killPlayer);
 		}
-		if (FlxG.keyboard.justPressed("U")|| (gamepadUtilOne.getPressedbuttons().exists(3)&& gamepadUtilOne.getControllerId() == 1 )) {
-			FlxG.overlap(player1, player2, killPlayer);
+		if (FlxG.keyboard.justPressed("Q")|| (gamepadUtilTwo.getPressedbuttons().exists(3)&& gamepadUtilTwo.getControllerId() == 1 )) {
+			player2.interacting = true;
 		}
 		if (gamepadUtilTwo.getLastbuttonUp() == 7 && gamepadUtilTwo.getControllerId() == 1) {
 			player2.destroyGraphics();
@@ -177,11 +178,15 @@ class PlayState extends FlxState
 			entities.callAll("generateGraphics");
 		}
 		
-		
+	
 		
 		//controls above
 		super.update();
 		//updates below
+		manageThingies();
+		
+		//Reset Variables
+		players.setAll("interacting", false);
 		
 		FlxG.collide(_level, entities);
 		entities.callAll("postUpdate");
@@ -192,13 +197,42 @@ class PlayState extends FlxState
 		victim.kill();
 	}
 	
+	public function manageThingies()
+	{
+		FlxG.overlap(doors, players, manageDoors);
+	}
+	
+	public function manageDoors(door:Door,entity:Player)
+	{
+		var otherDoor:Door = getDoorById(door.relatedDoor);
+		if (otherDoor != null && entity.interacting)
+		{
+			entity.x = otherDoor.x;
+			entity.y = otherDoor.y - 10;
+		}
+		
+	}
+	
+	
+	public function getDoorById(id:Int):Door
+	{
+		
+		for (i in 0 ... doors.length)
+		{
+			if (cast(doors._members[i], Door).isId(id))
+			{
+				return (cast(doors._members[i], Door));
+			}
+		}
+		
+		return null;
+	}
+	
 	public function generateThingys() {
 		var trapX:Int;
 		var trapY:Int;
 		var floorNum = Std.random(4);
-		
-		trace("hey");
-		
+	
 		trapX = Std.random(38) + 3;
 		trace(trapX);
 		switch(floorNum) {

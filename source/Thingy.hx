@@ -22,19 +22,31 @@ class Thingy extends FlxSprite
 	public var imgPath:String;
 	public var id:Int;
 	
-	public function new(type:ThingyType, imgPath:String, id:Int ,?isActive:Bool=true) 
+	public function new(x:Float, y:Float, type:ThingyType, imgPath:String, id:Int ,?isActive:Bool=true) 
 	{
 		super();
 		this.type = type;
 		this.imgPath = imgPath;
 		this.id = id;
 		this.isActive = isActive;
+		this.x = x;
+		this.y = y;
+		drawGraphics();
 	}
 	
-	private function makeGraphics()
+	private function drawGraphics()
 	{
-		this.loadGraphic("imgPath");
+		makeGraphic(20, 30, 0xff00aa11);
+	}
 	
+	public function isId(id:Int):Bool
+	{
+		if (id == this.id)
+		{
+			return true;
+		}
+		else return false;
+		
 	}
 	
 }

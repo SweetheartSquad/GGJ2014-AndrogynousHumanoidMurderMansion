@@ -32,7 +32,7 @@ class Entity extends FlxSprite {
 	private var attackDmg:Int;
 	private var state:State;
 	private var attacking:Bool;
-	private var interacting:Bool;
+	public var interacting:Bool;
 	//private var facing:Facing;
 	
 	//appearance
@@ -67,6 +67,11 @@ class Entity extends FlxSprite {
 		
 		generateGraphics();
 		
+	}
+	
+	private function initializeVars()
+	{
+		interacting = false;
 	}
 	
 	public function generateGraphics() {
