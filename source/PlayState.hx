@@ -109,7 +109,7 @@ class PlayState extends FlxState
 		if (FlxG.keyboard.justPressed("DOWN")|| (gamepadUtilOne.getPressedbuttons().exists(1)&& gamepadUtilOne.getControllerId() == 0 )) {
 			FlxG.overlap(player1, player2, killPlayer);
 		}
-		if (FlxG.keyboard.anyJustPressed(["SPACE"])|| (gamepadUtilOne.getPressedbuttons().exists(7) && gamepadUtilTwo.getControllerId() == 0)) {
+		if (FlxG.keyboard.anyJustPressed(["SPACE"])|| (gamepadUtilOne.getPressedbuttons().exists(7) && gamepadUtilOne.getControllerId() == 0)) {
 			player1.destroyGraphics();
 			player1.generateGraphics();
 		}
