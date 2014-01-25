@@ -216,3 +216,6 @@ pip-log.txt
 
 
 export/
+export/*
+export/flash/haxe/*
+export/flash/haxe/
