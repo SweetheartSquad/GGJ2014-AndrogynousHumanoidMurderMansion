@@ -53,7 +53,7 @@ class PlayState extends FlxState
 		FlxG.cameras.bgColor = 0xffaaaaaa;
 		
 		
-		
+		generateMap();
 		_level = new FlxTilemap();
 		_level.loadMap(Assets.getText("assets/level.csv"), "assets/images/testSet.png", TILE_WIDTH, TILE_HEIGHT, FlxTilemap.AUTO);
 		add(_level);
@@ -189,6 +189,14 @@ class PlayState extends FlxState
 	
 	public function killPlayer(attacker:FlxObject,victim:FlxObject) {
 		victim.kill();
+	}
+	
+	public function generateMap() {
+		//gamewidth and gameheight
+		
+		//put the map in the middle third of the screen
+		//twothick border
+		//floors one tile thick
 	}
 	
 	public function generateThingys() {
