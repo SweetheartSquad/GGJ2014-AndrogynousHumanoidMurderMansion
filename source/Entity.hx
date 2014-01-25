@@ -115,7 +115,16 @@ class Entity extends FlxSprite {
 		animationManagerArms.setAnimationSate("idle");
 		
 		arms.scaleY = (h/20)/1.5;
-		arms.scaleX = (w/20)*1.5;
+		arms.scaleX = (w / 20) * 1.5;
+		
+		body.scaleX *= Reg.zoom;
+		body.scaleY *= Reg.zoom;
+		head.scaleX *= Reg.zoom;
+		head.scaleY *= Reg.zoom;
+		legs.scaleX *= Reg.zoom;
+		legs.scaleY *= Reg.zoom;
+		arms.scaleX *= Reg.zoom;
+		arms.scaleY *= Reg.zoom;
 	}
 	
 	public function destroyGraphics() {
@@ -137,10 +146,10 @@ class Entity extends FlxSprite {
 	
 	public function postUpdate() {
 		//trace(sp.x,this.x);
-		body.x = this.x + (this.facing == FlxObject.LEFT ? w : 0);// + (this.facing == FlxObject.LEFT ? -w / 2 : 0);
-		body.y = this.y;
-		head.x = body.x;
-		head.y = body.y;
+		body.x = (this.x + (this.facing == FlxObject.LEFT ? w : 0))*Reg.zoom;// + (this.facing == FlxObject.LEFT ? -w / 2 : 0);
+		body.y = (this.y)*Reg.zoom;
+		head.x = body.x + (w/2 * (this.facing == FlxObject.LEFT ? -1 : 1))*Reg.zoom;
+		head.y = body.y - h/3 * Reg.zoom;
 		legs.x = body.x;
 		legs.y = body.y+body.height;
 		arms.x = body.x;

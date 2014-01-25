@@ -1,6 +1,7 @@
 package;
 
 import flixel.util.FlxSave;
+import flixel.tile.FlxTilemap;
 
 /**
  * Handy, pre-built Registry class that can be used to store 
@@ -34,4 +35,9 @@ class Reg
 	 * Especially useful for setting up multiple save slots.
 	 */
 	static public var saves:Array<FlxSave> = [];
+	
+	static public var zoom:Float;
+	static public var gameHeight:Int;
+	static public var gameWidth:Int;
+	static public var _level:FlxTilemap;
 }

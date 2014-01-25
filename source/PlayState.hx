@@ -20,7 +20,7 @@ import utils.GamepadUtil;
 class PlayState extends FlxState
 {
 	
-	private var _level:FlxTilemap;
+	//private var _level:FlxTilemap;
 	inline static private var TILE_WIDTH:Int = 16;
 	inline static private var TILE_HEIGHT:Int = 16;
 	
@@ -54,14 +54,13 @@ class PlayState extends FlxState
 		
 		
 		
-		_level = new FlxTilemap();
-		_level.loadMap(Assets.getText("assets/level.csv"), "assets/images/testSet.png", TILE_WIDTH, TILE_HEIGHT, FlxTilemap.AUTO);
-		add(_level);
+		Reg._level = new FlxTilemap();
+		Reg._level.loadMap(Assets.getText("assets/level.csv"), "assets/images/testSet.png", TILE_WIDTH, TILE_HEIGHT, FlxTilemap.AUTO);
+		add(Reg._level);
 		generateThingys();
 
 		player1 = new Player();
 		player2 = new Player();
-		
 		
 		//generate npcs
 		npcTest = new NPC();
@@ -86,6 +85,9 @@ class PlayState extends FlxState
 		players.add(player2);
 		npcs = new FlxGroup();
 		npcs.add(npcTest);
+		for(i in 0...500){
+			npcs.add(new NPC());
+		}
 		entities = new FlxGroup();
 		entities.add(players);
 		entities.add(npcs);
@@ -178,9 +180,15 @@ class PlayState extends FlxState
 			entities.callAll("generateGraphics");
 		}
 		
+<<<<<<< HEAD
 	
 		
 		//controls above
+=======
+		npcs.callAll("moveAlongPath");
+		
+		//states/controls above
+>>>>>>> origin/Sean's-Branch
 		super.update();
 		//updates below
 		manageThingies();
@@ -188,7 +196,7 @@ class PlayState extends FlxState
 		//Reset Variables
 		players.setAll("interacting", false);
 		
-		FlxG.collide(_level, entities);
+		FlxG.collide(Reg._level, entities);
 		entities.callAll("postUpdate");
 		
 	}
@@ -250,7 +258,7 @@ class PlayState extends FlxState
 		
 		for (i in 0...2) {
 			for (j in 0...1) {
-				_level.setTile(trapX + i, trapY + j, 0);
+				Reg._level.setTile(trapX + i, trapY + j, 0);
 			}
 		}
 	}
