@@ -127,6 +127,5 @@ class PlayState extends FlxState
 	
 	public function killPlayer(Object1:FlxObject,Object2:FlxObject) {
 		Object2.kill();
-		(Player)Object2.destroyGraphics();
 	}
 }
