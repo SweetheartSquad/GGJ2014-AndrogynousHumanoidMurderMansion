@@ -19,6 +19,8 @@ class PlayState extends FlxState
 	private var _level:FlxTilemap;
 	private var player1:Player;
 	private var player2:Player;
+	
+	
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -51,6 +53,11 @@ class PlayState extends FlxState
 		//smooth subpixel stuff
 		player2.forceComplexRender = true;
 		add(player2);
+		
+		
+		
+		//generate npcs
+		
 		
 		
 		// Set a background color
