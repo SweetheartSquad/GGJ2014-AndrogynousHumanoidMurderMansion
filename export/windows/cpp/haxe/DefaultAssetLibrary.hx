@@ -48,6 +48,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/animation/legs1.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/animation/legs2.png", __ASSET__assets_images_animation_legs2_png);
 		type.set ("assets/images/animation/legs2.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/door.png", __ASSET__assets_images_door_png);
+		type.set ("assets/images/door.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/images-go-here.txt", __ASSET__assets_images_images_go_here_txt);
 		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		className.set ("assets/level.csv", __ASSET__assets_level_csv);
@@ -148,6 +150,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/animation/legs1.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/animation/legs2.png", "assets/images/animation/legs2.png");
 		type.set ("assets/images/animation/legs2.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/door.png", "assets/images/door.png");
+		type.set ("assets/images/door.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
 		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		path.set ("assets/level.csv", "assets/level.csv");
@@ -681,6 +685,7 @@ class __ASSET__assets_images_animation_leganim_png extends flash.display.BitmapD
 class __ASSET__assets_images_animation_leganim_txt extends null { }
 class __ASSET__assets_images_animation_legs1_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_animation_legs2_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_door_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_images_go_here_txt extends null { }
 class __ASSET__assets_level_csv extends null { }
 class __ASSET__assets_music_music_goes_here_txt extends null { }
@@ -726,6 +731,7 @@ class __ASSET__flixel_snd_flixel_wav extends null { }
 
 
 #elseif html5
+
 
 
 

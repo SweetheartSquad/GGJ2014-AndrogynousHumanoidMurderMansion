@@ -96,6 +96,9 @@ class PlayState extends FlxState
 		thingies.add(doorOne);
 		thingies.add(doorTwo);
 		
+		//add thingies
+		add(thingies);
+		
 		//add entities to game
 		add(entities);
 		

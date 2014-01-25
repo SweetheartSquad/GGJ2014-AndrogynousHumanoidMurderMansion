@@ -31,4 +31,10 @@ class Thingy extends FlxSprite
 		this.isActive = isActive;
 	}
 	
+	private function makeGraphics()
+	{
+		this.loadGraphic("imgPath");
+	
+	}
+	
 }
