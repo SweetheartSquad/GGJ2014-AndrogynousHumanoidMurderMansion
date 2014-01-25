@@ -52,6 +52,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/door.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/images-go-here.txt", __ASSET__assets_images_images_go_here_txt);
 		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		className.set ("assets/images/testSet.png", __ASSET__assets_images_testset_png);
+		type.set ("assets/images/testSet.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/level.csv", __ASSET__assets_level_csv);
 		type.set ("assets/level.csv", Reflect.field (AssetType, "binary".toUpperCase ()));
 		className.set ("assets/music/music-goes-here.txt", __ASSET__assets_music_music_goes_here_txt);
@@ -154,6 +156,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/door.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
 		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		path.set ("assets/images/testSet.png", "assets/images/testSet.png");
+		type.set ("assets/images/testSet.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/level.csv", "assets/level.csv");
 		type.set ("assets/level.csv", Reflect.field (AssetType, "binary".toUpperCase ()));
 		path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
@@ -687,6 +691,7 @@ class __ASSET__assets_images_animation_legs1_png extends flash.display.BitmapDat
 class __ASSET__assets_images_animation_legs2_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_door_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_images_go_here_txt extends null { }
+class __ASSET__assets_images_testset_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_level_csv extends null { }
 class __ASSET__assets_music_music_goes_here_txt extends null { }
 class __ASSET__assets_sounds_sounds_go_here_txt extends null { }
