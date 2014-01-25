@@ -47,4 +47,15 @@ class NPC extends Entity{
 			targetY = Std.random(Reg.gameHeight - 40) + 20;
 		}while (/*Reg._level.getTile(Math.round(targetX)*8, Math.round(targetY)*8) == 1*/Reg._level.overlapsPoint(new FlxPoint(targetX, targetY)));
 	}
+	
+	public function tryJump() {
+		if (Math.random() < 0.01) {
+			this.jump();
+		}
+	}
+	public function tryInteract() {
+		if (Math.random() < 0.01) {
+			this.interacting = true;
+		}
+	}
 }

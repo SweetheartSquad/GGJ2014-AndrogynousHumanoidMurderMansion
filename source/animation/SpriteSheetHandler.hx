@@ -18,7 +18,7 @@ class SpriteSheetHandler
 	public static function getSpriteArray(imgWidth:Int, imgHeight:Int, spriteWidth:Int, spriteHeight:Int, startXCoord:Int, startYCoord:Int, endXCoord, endYCoord):Array<Rectangle>
 	{
 			var spritesX:Int;
-			var spritesY:Int = cast(imgHeight / spriteHeight,Int);
+			var spritesY:Int = cast(Math.round(imgHeight / spriteHeight),Int);
 			var rectArray:Array<Rectangle> = new Array<Rectangle> ();
 			var currentX:Float = startXCoord;
 			var currentY:Float = startYCoord;

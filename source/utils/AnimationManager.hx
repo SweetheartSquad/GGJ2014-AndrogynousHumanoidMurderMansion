@@ -52,7 +52,7 @@ class AnimationManager
 		animationStates.set(name, new AnimationState(tileIds, frameRate));
 	}
 	
-	public function setAnimationSate(name:String)
+	public function setAnimationState(name:String)
 	{
 		currentSate = animationStates.get(name); 
 	}

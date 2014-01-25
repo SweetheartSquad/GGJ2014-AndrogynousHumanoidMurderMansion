@@ -18,6 +18,9 @@ import sys.io.File;
 import sys.io.FileInput;
 import sys.io.FileOutput;
 
+#if not flash
+import utils.GamepadUtil;
+#end
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -42,14 +45,15 @@ class PlayState extends FlxState
 	//npcs
 	private var npcTest:NPC;
 	
+	#if not flash
 	//Utils 
 	private var gamepadUtilOne:GamepadUtil;
 	private var gamepadUtilTwo:GamepadUtil;
+	#end
 	
 	//Thingies
 	private var doorOne:Door;
 	private var doorTwo:Door;
-	
 	//Sound
 	private var soundManager:SoundManager;
 
@@ -66,6 +70,14 @@ class PlayState extends FlxState
 		add(Reg._level);
 		generateLevel();
 
+		/*for (y in 0...Reg.gameHeight) {
+			for (x in 0...Reg.gameWidth) {
+				trace(Reg._level.overlapsPoint(new FlxPoint(x, y)));
+			}
+		}*/
+		
+		
+		
 		player1 = new Player();
 		player2 = new Player();
 		
@@ -82,9 +94,11 @@ class PlayState extends FlxState
 		FlxG.mouse.show();
 		#end
 		
+		#if not flash
 		//Utils
 		gamepadUtilOne = new GamepadUtil(0);
 		gamepadUtilTwo = new GamepadUtil(1);
+		#end
 		
 		//add entities to FlxGroup
 		players = new FlxGroup();
@@ -92,7 +106,7 @@ class PlayState extends FlxState
 		players.add(player2);
 		npcs = new FlxGroup();
 		npcs.add(npcTest);
-		for(i in 0...100){
+		for(i in 0...500){
 			npcs.add(new NPC());
 		}
 		entities = new FlxGroup();
@@ -143,6 +157,7 @@ class PlayState extends FlxState
 			cast(npcs._members[i],Entity).acceleration.x = 0;
 		}
 		
+		#if not flash
 		//player1 controls
 		if (FlxG.keyboard.anyPressed(["J"]) || (gamepadUtilOne.getAxis() < -0.5 && gamepadUtilOne.getControllerId() == 0)){
 			player1.acceleration.x = -player1.maxVelocity.x * 4;
@@ -152,8 +167,8 @@ class PlayState extends FlxState
 			player1.acceleration.x = player1.maxVelocity.x * 4;
 			player1.facing = FlxObject.RIGHT;
 		}
-		if ((FlxG.keyboard.justPressed("I")|| (gamepadUtilOne.getPressedbuttons().exists(0)&& gamepadUtilOne.getControllerId() == 0 )) && player1.isTouching(FlxObject.FLOOR)) {
-			player1.velocity.y = -player1.maxVelocity.y / 2;
+		if ((FlxG.keyboard.justPressed("I")|| (gamepadUtilOne.getPressedbuttons().exists(0)&& gamepadUtilOne.getControllerId() == 0 ))) {
+			player1.jump();
 		}
 		if (FlxG.keyboard.justPressed("K")|| (gamepadUtilOne.getPressedbuttons().exists(1)&& gamepadUtilOne.getControllerId() == 0 )) {
 			FlxG.overlap(player1, player2, killPlayer);
@@ -175,8 +190,8 @@ class PlayState extends FlxState
 		}if (FlxG.keyboard.anyPressed(["D"])|| (gamepadUtilTwo.getAxis() > 0.5 && gamepadUtilTwo.getControllerId() == 1 )){
 			player2.acceleration.x = player2.maxVelocity.x * 4;
 			player2.facing = FlxObject.RIGHT;
-		}if ((FlxG.keyboard.justPressed("W") || (gamepadUtilTwo.getPressedbuttons().exists(0) && gamepadUtilTwo.getControllerId() == 1)) && player2.isTouching(FlxObject.FLOOR)) {
-			player2.velocity.y = -player2.maxVelocity.y / 2;
+		}if ((FlxG.keyboard.justPressed("W") || (gamepadUtilTwo.getPressedbuttons().exists(0) && gamepadUtilTwo.getControllerId() == 1))) {
+			player2.jump();
 		}if (FlxG.keyboard.anyPressed(["S"]) || (gamepadUtilTwo.getPressedbuttons().exists(1) && gamepadUtilTwo.getControllerId() == 1)) {
 			FlxG.overlap(player2, player1, killPlayer);
 		}
@@ -192,9 +207,55 @@ class PlayState extends FlxState
 			entities.callAll("destroyGraphics");
 			entities.callAll("generateGraphics");
 		}
+		#else
+		//player1 controls
+		if (FlxG.keyboard.anyPressed(["J"])){
+			player1.acceleration.x = -player1.maxVelocity.x * 4;
+			player1.facing = FlxObject.LEFT;
+		}
+		if (FlxG.keyboard.anyPressed(["L"])){
+			player1.acceleration.x = player1.maxVelocity.x * 4;
+			player1.facing = FlxObject.RIGHT;
+		}
+		if (FlxG.keyboard.justPressed("I")) {
+			player1.jump();
+		}
+		if (FlxG.keyboard.justPressed("K")) {
+			FlxG.overlap(player1, player2, killPlayer);
+		}
+		if (FlxG.keyboard.justPressed("U")) {
+			player1.interacting = true;
+		}
+		
+		
+		//player2 controls
+		if (FlxG.keyboard.anyPressed(["A"])){
+			player2.acceleration.x = -player2.maxVelocity.x * 4;
+			player2.facing = FlxObject.LEFT;
+		}if (FlxG.keyboard.anyPressed(["D"])){
+			player2.acceleration.x = player2.maxVelocity.x * 4;
+			player2.facing = FlxObject.RIGHT;
+		}if (FlxG.keyboard.justPressed("W")) {
+			player2.jump();
+		}if (FlxG.keyboard.anyPressed(["S"])) {
+			FlxG.overlap(player2, player1, killPlayer);
+		}
+		if (FlxG.keyboard.justPressed("Q")) {
+			player2.interacting = true;
+		}
+		#end
+		
+		
+		
+		if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
+			entities.callAll("destroyGraphics");
+			entities.callAll("generateGraphics");
+		}
 		
 		//controls above
 		npcs.callAll("moveAlongPath");
+		npcs.callAll("tryInteract");
+		npcs.callAll("tryJump");
 		
 		//states/controls above
 		super.update();
@@ -202,13 +263,17 @@ class PlayState extends FlxState
 		manageThingies();
 		
 		//Reset Variables
-		players.setAll("interacting", false);
+		entities.setAll("interacting", false);
 		
 		FlxG.collide(Reg._level, entities);
 		entities.callAll("postUpdate");
-		
+		//FlxG.overlap(entities, entities, entityToEntity);
 	}
-	
+	public function entityToEntity(attacker:Entity,victim:Entity) {
+		if (attacker.interacting) {
+			victim.talkBubble.alpha += 0.5;
+		}
+	}
 	public function killPlayer(attacker:FlxObject,victim:FlxObject) {
 		victim.kill();
 	}
@@ -230,7 +295,6 @@ class PlayState extends FlxState
 		
 	}
 	
-	
 	public function getDoorById(id:Int):Door
 	{
 		
@@ -244,7 +308,6 @@ class PlayState extends FlxState
 		
 		return null;
 	}
-
 	public function generateMapCSV() {
 		var fname = "assets/level.csv";
 		var fout = File.write(fname, false);
