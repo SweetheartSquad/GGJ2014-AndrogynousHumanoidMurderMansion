@@ -17,9 +17,8 @@ class PlayState extends FlxState
 {
 	
 	private var _level:FlxTilemap;
-	private var player1:Entity;
-	private var player2:FlxSprite;
-	
+	private var player1:Player;
+	private var player2:Player;
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -31,10 +30,9 @@ class PlayState extends FlxState
 		_level.loadMap(Assets.getText("assets/level.csv"), FlxTilemap.imgAuto, 8, 8, FlxTilemap.AUTO);
 		add(_level);
 		
-		player1 = new Entity();
+		player1 = new Player();
 		player1.x = 50;
 		player1.y = 20;
-		//player1.makeGraphic(8, 8, FlxColor.CRIMSON);
 		player1.maxVelocity.set(80, 500);
 		player1.acceleration.y = 1500;
 		player1.drag.x = player1.maxVelocity.x * 8;
@@ -43,8 +41,9 @@ class PlayState extends FlxState
 		player1.forceComplexRender = true;
 		add(player1);
 		
-		player2 = new FlxSprite(50,20);
-		player2.makeGraphic(8, 8, FlxColor.AZURE);
+		player2 = new Player();
+		player2.x = 50;
+		player2.y = 20;
 		player2.maxVelocity.set(80, 500);
 		player2.acceleration.y = 500;
 		player2.drag.x = player2.maxVelocity.x * 8;
@@ -81,8 +80,10 @@ class PlayState extends FlxState
 		player1.acceleration.x = 0;
 		if (FlxG.keyboard.anyPressed(["LEFT"])){
 			player1.acceleration.x = -player1.maxVelocity.x * 4;
+			player1.facing = FlxObject.LEFT;
 		}if (FlxG.keyboard.anyPressed(["RIGHT"])){
 			player1.acceleration.x = player1.maxVelocity.x * 4;
+			player1.facing = FlxObject.RIGHT;
 		}if (FlxG.keyboard.justPressed("UP") && player1.isTouching(FlxObject.FLOOR)) {
 			player1.velocity.y = -player1.maxVelocity.y / 2;
 		}if (FlxG.keyboard.anyPressed(["DOWN"])) {
@@ -102,6 +103,14 @@ class PlayState extends FlxState
 		}
 		
 		
+		if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
+			player1.destroyGraphics();
+			player1.generateGraphics();
+			player2.destroyGraphics();
+			player2.generateGraphics();
+		}
+		
+		
 		super.update();
 		
 		//updates here
@@ -110,6 +119,8 @@ class PlayState extends FlxState
 		FlxG.collide(_level, player2);
 		
 		player1.postUpdate();
+		player2.postUpdate();
+		
 	}
 	
 	public function killPlayer(Object1:FlxObject,Object2:FlxObject) {
