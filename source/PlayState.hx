@@ -21,6 +21,8 @@ class PlayState extends FlxState
 {
 	
 	private var _level:FlxTilemap;
+	inline static private var TILE_WIDTH:Int = 16;
+	inline static private var TILE_HEIGHT:Int = 16;
 	
 	//Flx Groups
 	private var entities:FlxGroup;
@@ -50,11 +52,13 @@ class PlayState extends FlxState
 		//FlxG.mouse.visible = false;
 		FlxG.cameras.bgColor = 0xffaaaaaa;
 		
+		
+		
 		_level = new FlxTilemap();
-		_level.loadMap(Assets.getText("assets/level.csv"), FlxTilemap.imgAuto, 8, 8, FlxTilemap.AUTO);
+		_level.loadMap(Assets.getText("assets/level.csv"), "assets/images/testSet.png", TILE_WIDTH, TILE_HEIGHT, FlxTilemap.AUTO);
 		add(_level);
-		
-		
+		generateThingys();
+
 		player1 = new Player();
 		player2 = new Player();
 		
@@ -186,5 +190,34 @@ class PlayState extends FlxState
 	
 	public function killPlayer(attacker:FlxObject,victim:FlxObject) {
 		victim.kill();
+	}
+	
+	public function generateThingys() {
+		var trapX:Int;
+		var trapY:Int;
+		var floorNum = Std.random(4);
+		
+		trace("hey");
+		
+		trapX = Std.random(38) + 3;
+		trace(trapX);
+		switch(floorNum) {
+			case 0:
+				trapY = 17;
+			case 1:
+				trapY = 13;
+			case 2:
+				trapY = 9;
+			case 3:
+				trapY = 5;
+			default:
+				trapY = -1;
+		}
+		
+		for (i in 0...2) {
+			for (j in 0...1) {
+				_level.setTile(trapX + i, trapY + j, 0);
+			}
+		}
 	}
 }
