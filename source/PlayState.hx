@@ -12,6 +12,7 @@ import flixel.util.FlxPath;
 import flixel.util.FlxPoint;
 import openfl.Assets;
 import utils.GamepadUtil;
+import utils.SoundManager;
 
 
 /**
@@ -44,6 +45,9 @@ class PlayState extends FlxState
 	//Thingies
 	private var doorOne:Door;
 	private var doorTwo:Door;
+	
+	//Sound
+	private var soundManager:SoundManager;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -85,7 +89,7 @@ class PlayState extends FlxState
 		players.add(player2);
 		npcs = new FlxGroup();
 		npcs.add(npcTest);
-		for(i in 0...500){
+		for(i in 0...100){
 			npcs.add(new NPC());
 		}
 		entities = new FlxGroup();
@@ -107,6 +111,12 @@ class PlayState extends FlxState
 		
 		//add entities to game
 		add(entities);
+		
+		
+		//Add Sounds 
+		soundManager = new SoundManager();
+		soundManager.addSound("door", "assets/music/door.wav");
+		
 		
 		super.create();
 	}
@@ -212,6 +222,7 @@ class PlayState extends FlxState
 		{
 			entity.x = otherDoor.x;
 			entity.y = otherDoor.y - 10;
+			soundManager.playSound("door");
 		}
 		
 	}
