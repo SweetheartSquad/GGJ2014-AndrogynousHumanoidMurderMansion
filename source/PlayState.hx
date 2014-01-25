@@ -94,8 +94,10 @@ class PlayState extends FlxState
 		player2.acceleration.x = 0;
 		if (FlxG.keyboard.anyPressed(["A"])){
 			player2.acceleration.x = -player2.maxVelocity.x * 4;
+			player2.facing = FlxObject.LEFT;
 		}if (FlxG.keyboard.anyPressed(["D"])){
 			player2.acceleration.x = player2.maxVelocity.x * 4;
+			player2.facing = FlxObject.RIGHT;
 		}if (FlxG.keyboard.justPressed("W") && player2.isTouching(FlxObject.FLOOR)) {
 			player2.velocity.y = -player2.maxVelocity.y / 2;
 		}if (FlxG.keyboard.anyPressed(["S"])) {
@@ -125,5 +127,6 @@ class PlayState extends FlxState
 	
 	public function killPlayer(Object1:FlxObject,Object2:FlxObject) {
 		Object2.kill();
+		(Player)Object2.destroyGraphics();
 	}
 }
