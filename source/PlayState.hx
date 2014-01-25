@@ -48,6 +48,7 @@ class PlayState extends FlxState
 		add(_level);
 		
 		
+		player1 = new Player();
 		player2 = new Player();
 		
 		//generate npcs

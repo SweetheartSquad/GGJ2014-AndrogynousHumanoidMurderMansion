@@ -59,7 +59,7 @@ class Entity extends FlxSprite {
 		this.x = 50;
 		this.y = 20;
 		this.maxVelocity.set(80, 500);
-		player2.acceleration.y = 1500;
+		this.acceleration.y = 1500;
 		this.drag.x = this.maxVelocity.x * 8;
 		
 		//smooth subpixel stuff
