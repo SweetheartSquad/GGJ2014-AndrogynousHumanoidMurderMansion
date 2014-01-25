@@ -28,7 +28,7 @@ class PlayState extends FlxState
 		FlxG.cameras.bgColor = 0xffaaaaaa;
 		
 		_level = new FlxTilemap();
-		_level.loadMap(Assets.getText("assets/level.csv"), FlxTilemap.imgAuto, 0, 0, FlxTilemap.AUTO);
+		_level.loadMap(Assets.getText("assets/level.csv"), FlxTilemap.imgAuto, 8, 8, FlxTilemap.AUTO);
 		add(_level);
 		
 		player1 = new Entity();
@@ -36,8 +36,8 @@ class PlayState extends FlxState
 		player1.y = 20;
 		//player1.makeGraphic(8, 8, FlxColor.CRIMSON);
 		player1.maxVelocity.set(80, 500);
-		player1.acceleration.y = 500;
-		player1.drag.x = player1.maxVelocity.x * 4;
+		player1.acceleration.y = 1500;
+		player1.drag.x = player1.maxVelocity.x * 8;
 		
 		//smooth subpixel stuff
 		player1.forceComplexRender = true;
@@ -47,7 +47,7 @@ class PlayState extends FlxState
 		player2.makeGraphic(8, 8, FlxColor.AZURE);
 		player2.maxVelocity.set(80, 500);
 		player2.acceleration.y = 500;
-		player2.drag.x = player2.maxVelocity.x * 4;
+		player2.drag.x = player2.maxVelocity.x * 8;
 		
 		//smooth subpixel stuff
 		player2.forceComplexRender = true;

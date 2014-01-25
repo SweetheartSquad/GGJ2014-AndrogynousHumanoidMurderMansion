@@ -38,6 +38,16 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("assets/data/data-goes-here.txt", __ASSET__assets_data_data_goes_here_txt);
 		type.set ("assets/data/data-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		className.set ("assets/images/animation/armAnim.png", __ASSET__assets_images_animation_armanim_png);
+		type.set ("assets/images/animation/armAnim.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/animation/legAnim.png", __ASSET__assets_images_animation_leganim_png);
+		type.set ("assets/images/animation/legAnim.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/animation/legAnim.txt", __ASSET__assets_images_animation_leganim_txt);
+		type.set ("assets/images/animation/legAnim.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		className.set ("assets/images/animation/legs1.png", __ASSET__assets_images_animation_legs1_png);
+		type.set ("assets/images/animation/legs1.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/animation/legs2.png", __ASSET__assets_images_animation_legs2_png);
+		type.set ("assets/images/animation/legs2.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/images-go-here.txt", __ASSET__assets_images_images_go_here_txt);
 		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		className.set ("assets/level.csv", __ASSET__assets_level_csv);
@@ -128,6 +138,16 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		path.set ("assets/data/data-goes-here.txt", "assets/data/data-goes-here.txt");
 		type.set ("assets/data/data-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		path.set ("assets/images/animation/armAnim.png", "assets/images/animation/armAnim.png");
+		type.set ("assets/images/animation/armAnim.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/animation/legAnim.png", "assets/images/animation/legAnim.png");
+		type.set ("assets/images/animation/legAnim.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/animation/legAnim.txt", "assets/images/animation/legAnim.txt");
+		type.set ("assets/images/animation/legAnim.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		path.set ("assets/images/animation/legs1.png", "assets/images/animation/legs1.png");
+		type.set ("assets/images/animation/legs1.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/animation/legs2.png", "assets/images/animation/legs2.png");
+		type.set ("assets/images/animation/legs2.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
 		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		path.set ("assets/level.csv", "assets/level.csv");
@@ -656,6 +676,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 #elseif flash
 
 class __ASSET__assets_data_data_goes_here_txt extends flash.utils.ByteArray { }
+class __ASSET__assets_images_animation_armanim_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_animation_leganim_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_animation_leganim_txt extends flash.utils.ByteArray { }
+class __ASSET__assets_images_animation_legs1_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_animation_legs2_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_images_go_here_txt extends flash.utils.ByteArray { }
 class __ASSET__assets_level_csv extends flash.utils.ByteArray { }
 class __ASSET__assets_music_music_goes_here_txt extends flash.utils.ByteArray { }
@@ -701,6 +726,11 @@ class __ASSET__flixel_snd_flixel_wav extends flash.media.Sound { }
 
 
 #elseif html5
+
+
+
+
+
 
 
 
