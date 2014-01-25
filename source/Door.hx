@@ -7,9 +7,9 @@ package ;
 class Door extends Thingy
 {
 
-	public function new(type:ThingyType, imgPath:String, ?isActive:Bool=true) 
+	public function new(type:ThingyType, imgPath:String,id:Int,?isActive:Bool=true) 
 	{
-		super(type, imgPath, ?isActive);
+		super(type, imgPath,id,isActive);
 		
 	}
 	

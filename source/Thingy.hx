@@ -13,28 +13,21 @@ import utils.AnimationManager;
  * ...
  * @author Ryan
  */
-enum ThingyType {
-	
-	LADDER;
-	ELEVATOR;
-	STAIRS;
-	DOOR;
-	LEVER;
-	TRAPDOOR;
-}
- 
+
 class Thingy extends FlxSprite
 {
 	
 	public var isActive:Bool;
 	public var type:ThingyType; 
 	public var imgPath:String;
+	public var id:Int;
 	
-	public function new(type:ThingyType, imgPath:String, ?isActive:Bool=true) 
+	public function new(type:ThingyType, imgPath:String, id:Int ,?isActive:Bool=true) 
 	{
-		
+		this.type = type;
+		this.imgPath = imgPath;
+		this.id = id;
+		this.isActive = isActive;
 	}
-	
-	
 	
 }
