@@ -9,6 +9,7 @@ import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
 import openfl.Assets;
+import utils.GamepadUtil;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -19,6 +20,11 @@ class PlayState extends FlxState
 	private var _level:FlxTilemap;
 	private var player1:Entity;
 	private var player2:FlxSprite;
+	
+	//Utils 
+	private var gamepadUtilOne:GamepadUtil;
+	private var gamepadUtilTwo:GamepadUtil;
+	
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -61,6 +67,10 @@ class PlayState extends FlxState
 		FlxG.mouse.show();
 		#end
 		
+		//Utils
+		gamepadUtilOne = new GamepadUtil(0);
+		gamepadUtilTwo = new GamepadUtil(1);
+		
 		super.create();
 	}
 	
@@ -79,25 +89,25 @@ class PlayState extends FlxState
 		//controls here
 		//player1
 		player1.acceleration.x = 0;
-		if (FlxG.keyboard.anyPressed(["LEFT"])){
+		if (FlxG.keyboard.anyPressed(["LEFT"]) || (gamepadUtilOne.getAxis() < -0.5 && gamepadUtilOne.getControllerId() == 0)){
 			player1.acceleration.x = -player1.maxVelocity.x * 4;
-		}if (FlxG.keyboard.anyPressed(["RIGHT"])){
+		}if (FlxG.keyboard.anyPressed(["RIGHT"])|| (gamepadUtilOne.getAxis() > 0.5 && gamepadUtilOne.getControllerId() == 0 )){
 			player1.acceleration.x = player1.maxVelocity.x * 4;
-		}if (FlxG.keyboard.justPressed("UP") && player1.isTouching(FlxObject.FLOOR)) {
+		}if ((FlxG.keyboard.justPressed("UP")|| (gamepadUtilOne.getPressedbuttons().exists(0)&& gamepadUtilOne.getControllerId() == 0 )) && player1.isTouching(FlxObject.FLOOR)) {
 			player1.velocity.y = -player1.maxVelocity.y / 2;
-		}if (FlxG.keyboard.anyPressed(["DOWN"])) {
+		}if (FlxG.keyboard.justPressed("DOWN")|| (gamepadUtilOne.getPressedbuttons().exists(1)&& gamepadUtilOne.getControllerId() == 0 )) {
 			FlxG.overlap(player1, player2, killPlayer);
 		}
 		
 		//player2
 		player2.acceleration.x = 0;
-		if (FlxG.keyboard.anyPressed(["A"])){
+		if (FlxG.keyboard.anyPressed(["A"])|| (gamepadUtilTwo.getAxis() < -0.5 && gamepadUtilTwo.getControllerId() == 1)){
 			player2.acceleration.x = -player2.maxVelocity.x * 4;
-		}if (FlxG.keyboard.anyPressed(["D"])){
+		}if (FlxG.keyboard.anyPressed(["D"])|| (gamepadUtilTwo.getAxis() > 0.5 && gamepadUtilTwo.getControllerId() == 1 )){
 			player2.acceleration.x = player2.maxVelocity.x * 4;
-		}if (FlxG.keyboard.justPressed("W") && player2.isTouching(FlxObject.FLOOR)) {
+		}if ((FlxG.keyboard.justPressed("W") || (gamepadUtilTwo.getPressedbuttons().exists(0) && gamepadUtilTwo.getControllerId() == 1)) && player2.isTouching(FlxObject.FLOOR)) {
 			player2.velocity.y = -player2.maxVelocity.y / 2;
-		}if (FlxG.keyboard.anyPressed(["S"])) {
+		}if (FlxG.keyboard.anyPressed(["S"]) || (gamepadUtilTwo.getPressedbuttons().exists(1) && gamepadUtilTwo.getControllerId() == 1)) {
 			FlxG.overlap(player2, player1, killPlayer);
 		}
 		
