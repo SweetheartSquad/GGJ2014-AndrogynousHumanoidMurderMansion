@@ -51,9 +51,9 @@ class PlayState extends FlxState
 	private var player1:Player;
 	private var player2:Player;
 	
-	private var player1Lives:Array<FlxSprite>;
-	private var player2Lives:Array<FlxSprite>;
-	
+	private var player1LivesMask:Array<FlxSprite>;
+	private var player2LivesMask:Array<FlxSprite>;
+		
 	//npcs
 	private var npcTest:NPC;
 	
@@ -184,32 +184,41 @@ class PlayState extends FlxState
 			}
 		}
 		
-		player1Lives = new Array();
-		player2Lives = new Array();
+		var player1Lives:Array<FlxSprite> = new Array();
+		var player2Lives:Array<FlxSprite> = new Array();
+		player1LivesMask = new Array();
+		player2LivesMask = new Array();
 		
 		player1Lives.push(new FlxSprite(10, 0));
-		player1Lives.push(new FlxSprite(10, 30));
-		player1Lives.push(new FlxSprite(10, 60));
+		player1Lives.push(new FlxSprite(10, 75));
+		player1Lives.push(new FlxSprite(10, 150));
+		player1LivesMask.push(new FlxSprite(10, 0));
+		player1LivesMask.push(new FlxSprite(10, 75));
+		player1LivesMask.push(new FlxSprite(10, 150));
 		
-		player2Lives.push(new FlxSprite(Reg.gameWidth-10, 0));
-		player2Lives.push(new FlxSprite(Reg.gameWidth-10, 30));
-		player2Lives.push(new FlxSprite(Reg.gameWidth-10, 60));
+		player2Lives.push(new FlxSprite(Reg.gameWidth-85, 0));
+		player2Lives.push(new FlxSprite(Reg.gameWidth-85, 75));
+		player2Lives.push(new FlxSprite(Reg.gameWidth-85, 150));
+		player2LivesMask.push(new FlxSprite(Reg.gameWidth-85, 0));
+		player2LivesMask.push(new FlxSprite(Reg.gameWidth-85, 75));
+		player2LivesMask.push(new FlxSprite(Reg.gameWidth-85, 150));
 		
 		for (i in player1Lives) {
-			cast(i, FlxSprite).makeGraphic(20, 20, 0xffff0000);
-			//add(i);
+			cast(i, FlxSprite).loadGraphic("assets/images/heart.png");
+			add(i);
 		}
 		for (i in player2Lives) {
-			cast(i, FlxSprite).makeGraphic(20, 20, 0xffff0000);
-			//add(i);
+			cast(i, FlxSprite).loadGraphic("assets/images/heart.png");
+			add(i);
+		}for (i in player1LivesMask) {
+			cast(i, FlxSprite).loadGraphic("assets/images/heart_mask.png");
+			add(i);
+		}
+		for (i in player2LivesMask) {
+			cast(i, FlxSprite).loadGraphic("assets/images/heart_mask.png");
+			add(i);
 		}
 		
-		var temp:FlxSprite = new FlxSprite(10, 0);
-		var temp2:FlxSprite = new FlxSprite(10, 0);
-		temp.loadGraphic("assets/images/mask.png");
-		//add(temp);
-		FlxSpriteUtil.alphaMaskFlxSprite(player1Lives[0], temp, temp2);
-		add(temp2);
 		super.create();
 	}
 	
@@ -238,95 +247,95 @@ class PlayState extends FlxState
 		if(player1.alive && player2.alive){
 		#if flash
 		//player1 controls
-		if (FlxG.keyboard.anyPressed(["J"])){
+		if (FlxG.keyboard.anyPressed(["A"])){
 			player1.acceleration.x = -player1.maxVelocity.x * (player1.running ? 8 : 4);
 			player1.facing = FlxObject.LEFT;
 		}
-		if (FlxG.keyboard.anyPressed(["L"])){
+		if (FlxG.keyboard.anyPressed(["D"])){
 			player1.acceleration.x = player1.maxVelocity.x * (player1.running ? 8 : 4);
 			player1.facing = FlxObject.RIGHT;
 		}
-		if (FlxG.keyboard.justPressed("I")) {
+		if (FlxG.keyboard.justPressed("W")) {
 			player1.jump();
 		}
-		if (FlxG.keyboard.justPressed("K")) {
+		if (FlxG.keyboard.justPressed("S")) {
 			player1.attacking = true;
 		}
-		if (FlxG.keyboard.justPressed("U")) {
+		if (FlxG.keyboard.justPressed("Q")) {
 			player1.interacting = true;
-		}if (FlxG.keyboard.anyPressed(["O"])) {
+		}if (FlxG.keyboard.anyPressed(["E"])) {
 			player1.running = true;
 		}
 		
 		
 		//player2 controls
-		if (FlxG.keyboard.anyPressed(["A"])){
+		if (FlxG.keyboard.anyPressed(["J"])){
 			player2.acceleration.x = -player2.maxVelocity.x * (player2.running ? 8 : 4);
 			player2.facing = FlxObject.LEFT;
-		}if (FlxG.keyboard.anyPressed(["D"])){
+		}if (FlxG.keyboard.anyPressed(["L"])){
 			player2.acceleration.x = player2.maxVelocity.x * (player2.running ? 8 : 4);
 			player2.facing = FlxObject.RIGHT;
-		}if (FlxG.keyboard.justPressed("W")) {
+		}if (FlxG.keyboard.justPressed("I")) {
 			player2.jump();
-		}if (FlxG.keyboard.anyPressed(["S"])) {
+		}if (FlxG.keyboard.anyPressed(["K"])) {
 			player2.attacking = true;
-		}if (FlxG.keyboard.justPressed("Q")) {
+		}if (FlxG.keyboard.justPressed("U")) {
 			player2.interacting = true;
-		}if (FlxG.keyboard.anyPressed(["E"])) {
+		}if (FlxG.keyboard.anyPressed(["O"])) {
 			player2.running = true;
 		}
 		#else
 		//player1 controls
-		if (FlxG.keyboard.anyPressed(["J"]) || (gamepadUtilOne.getAxis() < -0.5 && gamepadUtilOne.getControllerId() == 0)){
+		if (FlxG.keyboard.anyPressed(["A"]) || (gamepadUtilOne.getAxis() < -0.5 && gamepadUtilOne.getControllerId() == 0)){
 			player1.acceleration.x = -player1.maxVelocity.x * (player1.running ? 8 : 4);
 			player1.facing = FlxObject.LEFT;
 		}
-		if (FlxG.keyboard.anyPressed(["L"])|| (gamepadUtilOne.getAxis() > 0.5 && gamepadUtilOne.getControllerId() == 0 )){
+		if (FlxG.keyboard.anyPressed(["D"])|| (gamepadUtilOne.getAxis() > 0.5 && gamepadUtilOne.getControllerId() == 0 )){
 			player1.acceleration.x = player1.maxVelocity.x * (player1.running ? 8 : 4);
 			player1.facing = FlxObject.RIGHT;
 		}
-		if ((FlxG.keyboard.justPressed("I")|| (gamepadUtilOne.getPressedbuttons().exists(0)&& gamepadUtilOne.getControllerId() == 0 ))) {
+		if ((FlxG.keyboard.justPressed("W")|| (gamepadUtilOne.getPressedbuttons().exists(0)&& gamepadUtilOne.getControllerId() == 0 ))) {
 			player1.jump();
 		}
-		if (FlxG.keyboard.justPressed("K")|| (gamepadUtilOne.getPressedbuttons().exists(1)&& gamepadUtilOne.getControllerId() == 0 )) {
+		if (FlxG.keyboard.justPressed("S")|| (gamepadUtilOne.getPressedbuttons().exists(1)&& gamepadUtilOne.getControllerId() == 0 )) {
 			player1.attacking = true;
 		}
-		if (FlxG.keyboard.justPressed("U")|| (gamepadUtilOne.getPressedbuttons().exists(2)&& gamepadUtilOne.getControllerId() == 0 )) {
+		if (FlxG.keyboard.justPressed("Q")|| (gamepadUtilOne.getPressedbuttons().exists(2)&& gamepadUtilOne.getControllerId() == 0 )) {
 			player1.interacting = true;
-		}if (FlxG.keyboard.anyPressed(["O"])|| ((gamepadUtilOne.getPressedbuttons().exists(5)||gamepadUtilOne.getPressedbuttons().exists(4))&& gamepadUtilOne.getControllerId() == 0 )) {
+		}if (FlxG.keyboard.anyPressed(["E"])|| ((gamepadUtilOne.getPressedbuttons().exists(5)||gamepadUtilOne.getPressedbuttons().exists(4))&& gamepadUtilOne.getControllerId() == 0 )) {
 			player1.running = true;
 		}
-		if (gamepadUtilOne.getLastbuttonUp() == 7 && gamepadUtilOne.getControllerId() == 0) {
+		/*if (gamepadUtilOne.getLastbuttonUp() == 7 && gamepadUtilOne.getControllerId() == 0) {
 			player1.destroyGraphics();
 			player1.generateGraphics();
 			
-		}
+		}*/
 		
 		
 		//player2 controls
-		if (FlxG.keyboard.anyPressed(["A"])|| (gamepadUtilTwo.getAxis() < -0.5 && gamepadUtilTwo.getControllerId() == 1)){
+		if (FlxG.keyboard.anyPressed(["J"])|| (gamepadUtilTwo.getAxis() < -0.5 && gamepadUtilTwo.getControllerId() == 1)){
 			player2.acceleration.x = -player2.maxVelocity.x * (player2.running ? 8 : 4);
 			player2.facing = FlxObject.LEFT;
-		}if (FlxG.keyboard.anyPressed(["D"])|| (gamepadUtilTwo.getAxis() > 0.5 && gamepadUtilTwo.getControllerId() == 1 )){
+		}if (FlxG.keyboard.anyPressed(["L"])|| (gamepadUtilTwo.getAxis() > 0.5 && gamepadUtilTwo.getControllerId() == 1 )){
 			player2.acceleration.x = player2.maxVelocity.x * (player2.running ? 8 : 4);
 			player2.facing = FlxObject.RIGHT;
-		}if ((FlxG.keyboard.justPressed("W") || (gamepadUtilTwo.getPressedbuttons().exists(0) && gamepadUtilTwo.getControllerId() == 1))) {
+		}if ((FlxG.keyboard.justPressed("I") || (gamepadUtilTwo.getPressedbuttons().exists(0) && gamepadUtilTwo.getControllerId() == 1))) {
 			player2.jump();
-		}if (FlxG.keyboard.justPressed("S")|| (gamepadUtilTwo.getPressedbuttons().exists(1)&& gamepadUtilTwo.getControllerId() == 1 )) {
+		}if (FlxG.keyboard.justPressed("K")|| (gamepadUtilTwo.getPressedbuttons().exists(1)&& gamepadUtilTwo.getControllerId() == 1 )) {
 			player2.attacking = true;
 		}
-		if (FlxG.keyboard.justPressed("Q")|| (gamepadUtilTwo.getPressedbuttons().exists(2)&& gamepadUtilTwo.getControllerId() == 1 )) {
+		if (FlxG.keyboard.justPressed("U")|| (gamepadUtilTwo.getPressedbuttons().exists(2)&& gamepadUtilTwo.getControllerId() == 1 )) {
 			player2.interacting = true;
-		}if (FlxG.keyboard.anyPressed(["E"])|| ((gamepadUtilTwo.getPressedbuttons().exists(5)||gamepadUtilTwo.getPressedbuttons().exists(4))&& gamepadUtilTwo.getControllerId() == 1 )) {
+		}if (FlxG.keyboard.anyPressed(["O"])|| ((gamepadUtilTwo.getPressedbuttons().exists(5)||gamepadUtilTwo.getPressedbuttons().exists(4))&& gamepadUtilTwo.getControllerId() == 1 )) {
 			player2.running = true;
 		}
-		if (gamepadUtilTwo.getLastbuttonUp() == 7 && gamepadUtilTwo.getControllerId() == 1) {
+		/*if (gamepadUtilTwo.getLastbuttonUp() == 7 && gamepadUtilTwo.getControllerId() == 1) {
 			player2.destroyGraphics();
 			player2.generateGraphics();
-		}
+		}*/
 		
 		
-		if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
+		/*if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
 			entities.callAll("destroyGraphics");
 			entities.callAll("generateGraphics");
 			
@@ -336,14 +345,14 @@ class PlayState extends FlxState
 			teleporters = new FlxGroup();
 			add(teleporters);
 			generateLevel();
-		}
+		}*/
 		#end
 		
 		
-		if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
+		/*if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
 			entities.callAll("destroyGraphics");
 			entities.callAll("generateGraphics");
-		}
+		}*/
 		
 		//controls above
 		npcs.callAll("moveAlongPath");
@@ -390,6 +399,30 @@ class PlayState extends FlxState
 			entities.setAll("winState", true);
 			player1.alive ? makeGibs(player1.x, player1.y, true) : makeGibs(player2.x, player2.y, true);
 		}
+		
+		
+		
+		//GUI
+		if (player1 != null) {
+			player1LivesMask[player1.lives].alpha = player1.health / 100;
+			if (player1.lives < 2) {
+				player1LivesMask[2].alpha = 0;
+			}if (player1.lives < 1) {
+				player1LivesMask[1].alpha = 0;
+			}if(player1.lives < 0){
+				player1LivesMask[0].alpha = 0;
+			}
+		}if(player2 != null){
+			player2LivesMask[player2.lives].alpha = player2.health / 100;
+			if (player2.lives < 2) {
+				player2LivesMask[2].alpha = 0;
+			}if (player2.lives < 1) {
+				player2LivesMask[1].alpha = 0;
+			}if(player2.lives < 0) {
+				player2LivesMask[0].alpha = 0;
+			}
+		}
+		
 	}
 	public function entityToEntity(object1:Entity,object2:Entity) {
 		if (object2.attacking && object2.attackTimer == 3) {

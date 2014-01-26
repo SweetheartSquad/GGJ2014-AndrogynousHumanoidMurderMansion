@@ -44,24 +44,64 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/armAnimationsHD.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/background.png", __ASSET__assets_images_background_png);
 		type.set ("assets/images/background.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("assets/images/background.psd", __ASSET__assets_images_background_psd);
-		type.set ("assets/images/background.psd", Reflect.field (AssetType, "binary".toUpperCase ()));
 		className.set ("assets/images/door.png", __ASSET__assets_images_door_png);
 		type.set ("assets/images/door.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/doorObjThingy.png", __ASSET__assets_images_doorobjthingy_png);
+		type.set ("assets/images/doorObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/ElevatorObjThingy.png", __ASSET__assets_images_elevatorobjthingy_png);
+		type.set ("assets/images/ElevatorObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/heart.png", __ASSET__assets_images_heart_png);
+		type.set ("assets/images/heart.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/heart_mask.png", __ASSET__assets_images_heart_mask_png);
+		type.set ("assets/images/heart_mask.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/images-go-here.txt", __ASSET__assets_images_images_go_here_txt);
 		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		className.set ("assets/images/instructions1.png", __ASSET__assets_images_instructions1_png);
+		type.set ("assets/images/instructions1.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/instructions2.png", __ASSET__assets_images_instructions2_png);
+		type.set ("assets/images/instructions2.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/instructions3.png", __ASSET__assets_images_instructions3_png);
+		type.set ("assets/images/instructions3.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/instructions4.png", __ASSET__assets_images_instructions4_png);
+		type.set ("assets/images/instructions4.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/legAnimations.png", __ASSET__assets_images_leganimations_png);
 		type.set ("assets/images/legAnimations.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/legAnimationsHD.png", __ASSET__assets_images_leganimationshd_png);
 		type.set ("assets/images/legAnimationsHD.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("assets/images/testSet.png", __ASSET__assets_images_testset_png);
-		type.set ("assets/images/testSet.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/LeverObjThingy.png", __ASSET__assets_images_leverobjthingy_png);
+		type.set ("assets/images/LeverObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/mask.png", __ASSET__assets_images_mask_png);
+		type.set ("assets/images/mask.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/runCycle.png", __ASSET__assets_images_runcycle_png);
+		type.set ("assets/images/runCycle.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/StairObjThingy.png", __ASSET__assets_images_stairobjthingy_png);
+		type.set ("assets/images/StairObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/titleCard.png", __ASSET__assets_images_titlecard_png);
+		type.set ("assets/images/titleCard.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/TrapDoorObjThingy.png", __ASSET__assets_images_trapdoorobjthingy_png);
+		type.set ("assets/images/TrapDoorObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/woodTileSet.png", __ASSET__assets_images_woodtileset_png);
 		type.set ("assets/images/woodTileSet.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/level.csv", __ASSET__assets_level_csv);
 		type.set ("assets/level.csv", Reflect.field (AssetType, "binary".toUpperCase ()));
 		className.set ("assets/music/door.wav", __ASSET__assets_music_door_wav);
 		type.set ("assets/music/door.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("assets/music/f1.wav", __ASSET__assets_music_f1_wav);
+		type.set ("assets/music/f1.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("assets/music/f2.wav", __ASSET__assets_music_f2_wav);
+		type.set ("assets/music/f2.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("assets/music/f3.wav", __ASSET__assets_music_f3_wav);
+		type.set ("assets/music/f3.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("assets/music/f4.wav", __ASSET__assets_music_f4_wav);
+		type.set ("assets/music/f4.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("assets/music/f5.wav", __ASSET__assets_music_f5_wav);
+		type.set ("assets/music/f5.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("assets/music/f6.wav", __ASSET__assets_music_f6_wav);
+		type.set ("assets/music/f6.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("assets/music/f7.wav", __ASSET__assets_music_f7_wav);
+		type.set ("assets/music/f7.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("assets/music/f8.wav", __ASSET__assets_music_f8_wav);
+		type.set ("assets/music/f8.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
 		className.set ("assets/music/music-goes-here.txt", __ASSET__assets_music_music_goes_here_txt);
 		type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		className.set ("assets/sounds/sounds-go-here.txt", __ASSET__assets_sounds_sounds_go_here_txt);
@@ -154,24 +194,64 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/armAnimationsHD.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/background.png", "assets/images/background.png");
 		type.set ("assets/images/background.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/background.psd", "assets/images/background.psd");
-		type.set ("assets/images/background.psd", Reflect.field (AssetType, "binary".toUpperCase ()));
 		path.set ("assets/images/door.png", "assets/images/door.png");
 		type.set ("assets/images/door.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/doorObjThingy.png", "assets/images/doorObjThingy.png");
+		type.set ("assets/images/doorObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/ElevatorObjThingy.png", "assets/images/ElevatorObjThingy.png");
+		type.set ("assets/images/ElevatorObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/heart.png", "assets/images/heart.png");
+		type.set ("assets/images/heart.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/heart_mask.png", "assets/images/heart_mask.png");
+		type.set ("assets/images/heart_mask.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
 		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		path.set ("assets/images/instructions1.png", "assets/images/instructions1.png");
+		type.set ("assets/images/instructions1.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/instructions2.png", "assets/images/instructions2.png");
+		type.set ("assets/images/instructions2.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/instructions3.png", "assets/images/instructions3.png");
+		type.set ("assets/images/instructions3.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/instructions4.png", "assets/images/instructions4.png");
+		type.set ("assets/images/instructions4.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/legAnimations.png", "assets/images/legAnimations.png");
 		type.set ("assets/images/legAnimations.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/legAnimationsHD.png", "assets/images/legAnimationsHD.png");
 		type.set ("assets/images/legAnimationsHD.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/testSet.png", "assets/images/testSet.png");
-		type.set ("assets/images/testSet.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/LeverObjThingy.png", "assets/images/LeverObjThingy.png");
+		type.set ("assets/images/LeverObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/mask.png", "assets/images/mask.png");
+		type.set ("assets/images/mask.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/runCycle.png", "assets/images/runCycle.png");
+		type.set ("assets/images/runCycle.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/StairObjThingy.png", "assets/images/StairObjThingy.png");
+		type.set ("assets/images/StairObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/titleCard.png", "assets/images/titleCard.png");
+		type.set ("assets/images/titleCard.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/TrapDoorObjThingy.png", "assets/images/TrapDoorObjThingy.png");
+		type.set ("assets/images/TrapDoorObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/woodTileSet.png", "assets/images/woodTileSet.png");
 		type.set ("assets/images/woodTileSet.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/level.csv", "assets/level.csv");
 		type.set ("assets/level.csv", Reflect.field (AssetType, "binary".toUpperCase ()));
 		path.set ("assets/music/door.wav", "assets/music/door.wav");
 		type.set ("assets/music/door.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		path.set ("assets/music/f1.wav", "assets/music/f1.wav");
+		type.set ("assets/music/f1.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		path.set ("assets/music/f2.wav", "assets/music/f2.wav");
+		type.set ("assets/music/f2.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		path.set ("assets/music/f3.wav", "assets/music/f3.wav");
+		type.set ("assets/music/f3.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		path.set ("assets/music/f4.wav", "assets/music/f4.wav");
+		type.set ("assets/music/f4.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		path.set ("assets/music/f5.wav", "assets/music/f5.wav");
+		type.set ("assets/music/f5.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		path.set ("assets/music/f6.wav", "assets/music/f6.wav");
+		type.set ("assets/music/f6.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		path.set ("assets/music/f7.wav", "assets/music/f7.wav");
+		type.set ("assets/music/f7.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		path.set ("assets/music/f8.wav", "assets/music/f8.wav");
+		type.set ("assets/music/f8.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
 		path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
 		type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		path.set ("assets/sounds/sounds-go-here.txt", "assets/sounds/sounds-go-here.txt");
@@ -699,15 +779,35 @@ class __ASSET__assets_data_data_goes_here_txt extends flash.utils.ByteArray { }
 class __ASSET__assets_images_armanimations_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_armanimationshd_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_background_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_background_psd extends flash.utils.ByteArray { }
 class __ASSET__assets_images_door_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_doorobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_elevatorobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_heart_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_heart_mask_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_images_go_here_txt extends flash.utils.ByteArray { }
+class __ASSET__assets_images_instructions1_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_instructions2_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_instructions3_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_instructions4_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_leganimations_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_leganimationshd_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_testset_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_leverobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_mask_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_runcycle_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_stairobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_titlecard_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_trapdoorobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_woodtileset_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_level_csv extends flash.utils.ByteArray { }
 class __ASSET__assets_music_door_wav extends flash.media.Sound { }
+class __ASSET__assets_music_f1_wav extends flash.media.Sound { }
+class __ASSET__assets_music_f2_wav extends flash.media.Sound { }
+class __ASSET__assets_music_f3_wav extends flash.media.Sound { }
+class __ASSET__assets_music_f4_wav extends flash.media.Sound { }
+class __ASSET__assets_music_f5_wav extends flash.media.Sound { }
+class __ASSET__assets_music_f6_wav extends flash.media.Sound { }
+class __ASSET__assets_music_f7_wav extends flash.media.Sound { }
+class __ASSET__assets_music_f8_wav extends flash.media.Sound { }
 class __ASSET__assets_music_music_goes_here_txt extends flash.utils.ByteArray { }
 class __ASSET__assets_sounds_sounds_go_here_txt extends flash.utils.ByteArray { }
 class __ASSET__flixel_img_debugger_buttons_console_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
@@ -751,6 +851,26 @@ class __ASSET__flixel_snd_flixel_wav extends flash.media.Sound { }
 
 
 #elseif html5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
