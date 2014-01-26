@@ -1,16 +1,30 @@
 package ;
+import flixel.FlxSprite;
 
 /**
  * ...
- * @author Ryan
+ * @author Ian
  */
-class TrapDoor extends Thingy
+class TrapDoor extends FlxSprite
 {
 
-	public function new(type:ThingyType, imgPath:String, ?isActive:Bool=true) 
+	public var isActive:Bool;
+	public var imgPath:String;
+	public var id:Int;
+	
+	public function new(x:Float, y:Float, imgPath:String, ?isActive:Bool=false) 
 	{
-		super(type, imgPath, ?isActive);
-		
+		super();
+		this.imgPath = imgPath;
+		this.isActive = isActive;
+		this.x = x;
+		this.y = y;
+		drawGraphics();
+	}
+	
+	private function drawGraphics()
+	{
+		makeGraphic(32, 16, 0xff550099);
 	}
 	
 }

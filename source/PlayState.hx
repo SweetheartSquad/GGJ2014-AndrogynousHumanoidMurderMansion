@@ -64,6 +64,12 @@ class PlayState extends FlxState
 	//Thingies
 	private var doorOne:Door;
 	private var doorTwo:Door;
+	
+	//Lever/Trapdoor
+	private var lever:Lever;
+	private var trapdoor:TrapDoor;
+	private var trapTimer:Int;
+	
 	//Sound
 	private var soundManager:SoundManager;
 	
@@ -385,6 +391,10 @@ class PlayState extends FlxState
 	{
 		FlxG.overlap(doors, entities, manageDoors);
 		FlxG.overlap(stairs, entities, manageStairs);
+		FlxG.overlap(lever, entities, manageLever);
+		FlxG.collide(trapdoor, entities);
+		trapdoor.immovable = true;
+		if (trapTimer > 0) --trapTimer;
 	}
 	
 	public function manageDoors(door:Door,entity:Entity)
@@ -407,6 +417,23 @@ class PlayState extends FlxState
 			entity.x = otherDoor.x;
 			entity.y = otherDoor.y - 10;
 			soundManager.playSound("door");
+		}
+		
+	}
+	
+	public function manageLever(lever:Lever,entity:Entity)
+	{
+		if (trapdoor != null && entity.interacting && trapdoor.isActive == false) {
+			trapdoor.x += 32;
+			trapdoor.y += 1;
+			trapdoor.isActive = true;
+			trapTimer = 100;
+		}
+		
+		if (trapTimer == 0 && trapdoor.isActive == true) {
+			trapdoor.x -= 32;
+			trapdoor.y -= 1;
+			trapdoor.isActive = false;
 		}
 		
 	}
@@ -584,7 +611,11 @@ class PlayState extends FlxState
 		
 		var trapX:Int;
 		var trapY:Int;
-		var floorNum:Int = Std.random(4);
+		var floorNum:Int = Std.random(3);
+		
+		var leverX:Int;
+		var leverY:Int;
+		var leverFloorNum:Int = Std.random(3);
 		
 		//add walls and floors to the level
 		for (i in 0...tileYNum) {
@@ -638,17 +669,19 @@ class PlayState extends FlxState
 			
 			
 		}
-		trace(tiles.toString());
-		//randomly insert a trapdoor into one of the floors
-		trapX = Std.random((tileEndX - tileStartX)) + 3;
+		
+		//randomly insert a hole into one of the floors
+		trapX = Std.random((tileEndX - tileStartX) - 3) + tileStartX;
+		trace(trapX);
+		trace("what");
 		
 		switch(floorNum) {
 			case 0:
 				trapY = 1 + floorHeight;
 			case 1:
-				trapY = 1 + floorHeight * 2;
+				trapY = 1 + (floorHeight * 2);
 			case 2:
-				trapY = 1 + floorHeight * 3;
+				trapY = 1 + (floorHeight * 3);
 			default:
 				trapY = -1;
 		}
@@ -659,6 +692,29 @@ class PlayState extends FlxState
 			}
 		}
 		
+		//create the trapdoor
+		trapdoor = new TrapDoor(
+			(trapX*16), (trapY*16),
+			"assets/image/trapdoor.png");
+		add(trapdoor);
 		
+		//position and create lever
+		leverX = (Std.random((tileEndX - tileStartX) - 3) + tileStartX) * 16;
+		
+		switch(leverFloorNum) {
+			case 0:
+				leverY = 1 + floorHeight;
+			case 1:
+				leverY = 1 + (floorHeight * 2);
+			case 2:
+				leverY = 1 + (floorHeight * 3);
+			default:
+				leverY = -1;
+		}
+		
+		lever = new Lever(
+			leverX, (leverY)*16 - 22,
+			"assets/image/lever.png");
+		add(lever);
 	}
 }
