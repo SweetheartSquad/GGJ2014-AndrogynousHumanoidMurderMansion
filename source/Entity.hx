@@ -155,8 +155,8 @@ class Entity extends FlxSprite {
 			animationManagerArms = new AnimationManager(arms.graphics,"assets/images/armAnimationsHD.png");
 			animationManagerArms.addAnimationState("walk", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 0, 9, 0), 3);
 			animationManagerArms.addAnimationState("run", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 0, 9, 0), 1);
-			animationManagerArms.addAnimationState("attack1", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 9, 8, 0), 3);
-			animationManagerArms.addAnimationState("attack2", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 2, 8, 0), 3);
+			animationManagerArms.addAnimationState("attack1", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 9, 10, 0), 3);
+			animationManagerArms.addAnimationState("attack2", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 2, 10, 0), 3);
 			animationManagerArms.addAnimationState("idle1", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 10, 5, 0), 3);
 			animationManagerArms.addAnimationState("idle2", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 4, 10, 0), 3);
 			animationManagerArms.addAnimationState("idle3", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 12, 8, 0), 3);

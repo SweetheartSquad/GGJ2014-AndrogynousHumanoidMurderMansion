@@ -334,6 +334,8 @@ class PlayState extends FlxState
 			player2.generateGraphics();
 		}*/
 		
+		gamepadUtilOne.clear();
+		gamepadUtilTwo.clear();
 		
 		/*if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
 			entities.callAll("destroyGraphics");
@@ -453,7 +455,7 @@ class PlayState extends FlxState
 		}
 	}
 	public function particleCollide(object1:FlxTilemap, object2:Particle) {
-		//trace("collision");
+		
 		if(Math.random()<0.01){
 			object2.allowCollisions = FlxObject.NONE;
 			object2.timer = 8;
@@ -699,7 +701,7 @@ class PlayState extends FlxState
 				if (sentinel < 100000) {
 					sentinel += 1;
 				}else {
-					//trace("broken1");
+				
 					break;
 				}
 			}while (flag);
@@ -724,11 +726,11 @@ class PlayState extends FlxState
 				if (sentinel < 200000) {
 					sentinel += 1;
 				}else {
-					//trace("broken2");
+					
 					break;
 				}
 			}while (flag);
-			//trace(sentinel);
+	
 			teleporters.add(new Teleporter(tempX, tempY, ThingyType.DOOR, "assets/door.png", tempId+1, tempId));
 		}
 		
