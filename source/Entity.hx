@@ -10,6 +10,8 @@ import flixel.group.FlxGroup;
 import flixel.util.FlxColor;
 import utils.AnimationManager;
 import flixel.util.FlxColorUtil;
+import flash.Vector;
+import flash.geom.Point;
 
 import flash.Lib;
 import Std;
@@ -87,6 +89,8 @@ class Entity extends FlxSprite {
 		interacting = false;
 	}
 	
+
+	
 	public function generateGraphics() {
 		if(this.alive){
 			this.velocity.y -= this.maxVelocity.y/5;
@@ -110,9 +114,28 @@ class Entity extends FlxSprite {
 			Lib.current.stage.addChild(body);
 			
 			
+			
 			head = new Sprite();
 			head.graphics.beginFill(secondaryColour);
-			head.graphics.drawCircle(0, 0, headSize);
+			
+			var lastX:Float = 5;
+			var lastY:Float = 5;
+			
+			var sides:Int = Std.random(30 - 15)+15;
+			
+			for (i in 1...sides)
+			{
+				//var x = Std.random(Math.round(lastX + Std.random(13 - 3) + 3) - (lastX - Std.random(8-4)+4)) + (lastX - Std.random(8-4)+4)));
+				//var y = Std.random(Math.round(lastY + 10 - (lastY - 5))) - Math.round(lastY - 5);
+				
+				var y = Std.random(Math.round(((lastX + (Std.random(15 - 10) + 10)) - (lastX - (Std.random(10 - 5) + 5))) - lastX - (Std.random(10 - 5) + 5)));
+				var x = Std.random(Math.round(((lastY + (Std.random(15 - 10) + 10)) - (lastY - (Std.random(10 - 5) + 5))) - lastY - (Std.random(10 - 5) + 5)));
+				
+				lastX = x;
+				lastY = y;
+				head.graphics.lineTo(x,y);
+				
+			}	
 			head.graphics.endFill();
 			Lib.current.stage.addChild(head);
 			
@@ -205,8 +228,8 @@ class Entity extends FlxSprite {
 	public function postUpdate() {
 		body.x = (this.x + (this.facing == FlxObject.LEFT ? w : 0))*Reg.zoom;// + (this.facing == FlxObject.LEFT ? -w / 2 : 0);
 		body.y = (this.y)*Reg.zoom;
-		head.x = body.x + (w/2 * (this.facing == FlxObject.LEFT ? -1 : 1))*Reg.zoom;
-		head.y = body.y - headSize/2 * Reg.zoom;
+		head.x = (this.x + this.width/2) *Reg.zoom;// body.x + (w / 2 * (this.facing == FlxObject.LEFT ? -1 : 1)) * Reg.zoom;
+		head.y = body.y - headSize - 10 * Reg.zoom;
 		legs.x = body.x + (body.width*1.5 * (this.facing == FlxObject.LEFT ? -1 : 1));
 		legs.y = body.y+body.height;
 		arms.x = body.x + (body.width*3.25 * (this.facing == FlxObject.LEFT ? -1 : 1));

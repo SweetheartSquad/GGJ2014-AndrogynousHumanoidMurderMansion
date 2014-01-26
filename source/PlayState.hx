@@ -401,6 +401,7 @@ class PlayState extends FlxState
 		var otherTeleporter:Teleporter = getTeleporterById(door.relatedId);
 		if (otherTeleporter != null && entity.interacting)
 		{
+			trace("PARENT: " + door.id + "   EXPECTED : " + door.relatedId + "   Actual : " + otherTeleporter.id);
 			entity.x = otherTeleporter.x;
 			entity.y = otherTeleporter.y - 10;
 			soundManager.playSound("door");
@@ -477,14 +478,32 @@ class PlayState extends FlxState
 								teleporterId,
 								teleporterId + 1));
 								
-								var doorTwoRandX:Int = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
-								while ((doorTwoRandX < ((cast(doors._members[doors._members.length-1],Teleporter).x)+60))&& (doorTwoRandX > ((cast(doors._members[doors._members.length-1],Teleporter).x)-40)))
+								var genX = true; 
+								var doorsTwoRandX = 0; 
+								
+								while (genX == true)
 								{
-									doorTwoRandX = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
+									doorsTwoRandX = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
+									for (i in 0...doors.length)
+									{
+										//((cast(doors._members[i], Teleporter).y + 30) / 16 == i) &&
+										if 
+										(
+										(doorsTwoRandX > cast(doors._members[i], Teleporter).x + 70 ||  
+										 doorsTwoRandX < cast(doors._members[i], Teleporter).x - 70 ))
+										 {
+											genX = false; 
+										 }
+										 else
+										 {
+											genX = true;
+										 }
+									}
+									
 								}
 								
 							doors.add(new Teleporter(
-								Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
+								doorsTwoRandX,
 								(i * 16 - 30),
 								DOOR,
 								"assets/images/door.png",
@@ -531,12 +550,26 @@ class PlayState extends FlxState
 								
 								var genX = true; 
 								
-							/*	while (
+								while (genX == true)
 								{
-									//(doorsTwoRandX < ((cast(doors._members[doors._members.length-1],Teleporter).x)+60))&& (doorsTwoRandX > ((cast(doors._members[doors._members.length-1],Teleporter).x)-40)))
-									//doorsTwoRandX = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
+									doorsTwoRandX = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
+									for (i in 0...doors.length)
+									{
+										//((cast(doors._members[i], Teleporter).y + 30) / 16 == i) &&
+										if(
+										(doorsTwoRandX > cast(doors._members[i], Teleporter).x + 70 ||  
+										 doorsTwoRandX < cast(doors._members[i], Teleporter).x - 70 ))
+										 {
+											genX = false; 
+										 }
+										 else
+										 {
+											genX = true;
+										 }
+									}
+									
 								}
-								*/
+								
 								var doorsTwoRandY:Int = 0;
 								var tempI = i+1;
 								
@@ -548,7 +581,7 @@ class PlayState extends FlxState
 								
 								
 							doors.add(new Teleporter(
-								Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
+								doorsTwoRandX,
 								((tempI) * 16 - 30),
 								STAIRS,
 								"assets/images/door.png",
@@ -581,9 +614,33 @@ class PlayState extends FlxState
 						if (!hasStairs(i))
 						{
 							
+							var genX = true; 
+								var doorsTwoRandX = 0; 
+								
+								while (genX == true)
+								{
+									doorsTwoRandX = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
+									for (i in 0...doors.length)
+									{
+										//((cast(doors._members[i], Teleporter).y + 30) / 16 == i) &&
+										if 
+										(
+										(doorsTwoRandX > cast(doors._members[i], Teleporter).x + 70 ||  
+										 doorsTwoRandX < cast(doors._members[i], Teleporter).x - 70 ))
+										 {
+											genX = false; 
+										 }
+										 else
+										 {
+											genX = true;
+										 }
+									}
+									
+								}
+							
 							doors.add(new Teleporter(
 								
-								Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
+								doorsTwoRandX,
 								(i * 16 - 30),
 								ELEVATOR,
 								"assets/images/door.png",
@@ -605,7 +662,7 @@ class PlayState extends FlxState
 			numElev++; 
 		}
 		
-		if (numElev == 1)
+		if (numElev >= 1)
 		{
 			for (i in 0...Math.round(Reg.gameHeight /16))
 				{
@@ -617,9 +674,35 @@ class PlayState extends FlxState
 							{
 								if (containsInt(tiles[i-1], 0) && containsInt(tiles[i-2],0))
 								{
+									
+									var genX = true; 
+									var doorsTwoRandX = 0; 
+								
+									while (genX == true)
+									{
+									doorsTwoRandX = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
+									for (i in 0...doors.length)
+									{
+										//((cast(doors._members[i], Teleporter).y + 30) / 16 == i) &&
+										if 
+										(
+										(doorsTwoRandX > cast(doors._members[i], Teleporter).x + 70 ||  
+										 doorsTwoRandX < cast(doors._members[i], Teleporter).x - 70 ))
+										 {
+											genX = false; 
+										 }
+										 else
+										 {
+											genX = true;
+										 }
+									}
+									
+								}
+							
+									
 									doors.add(new Teleporter(
 										
-										Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
+										doorsTwoRandX,
 										(i * 16 - 30),
 										ELEVATOR,
 										"assets/images/door.png",

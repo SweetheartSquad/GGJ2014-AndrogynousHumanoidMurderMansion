@@ -41,6 +41,6 @@ class Reg
 	static public var gameHeight:Int;
 	static public var gameWidth:Int;
 	static public var _level:FlxTilemap;
-	static public var npcCount:Int = 250;
+	static public var npcCount:Int = 2;
 	static public var aggresionMap:TwoDArray;
 }
