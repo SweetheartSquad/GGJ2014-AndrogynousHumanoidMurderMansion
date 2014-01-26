@@ -62,7 +62,6 @@ class PlayState extends FlxState
 		player1 = new Player();
 		player2 = new Player();
 		
-		
 		//generate npcs
 		npcTest = new NPC();
 		npcTest.x = 150;
