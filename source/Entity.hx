@@ -51,7 +51,6 @@ class Entity extends FlxSprite {
 	private var head:Sprite;
 	private var arms:Sprite;
 	private var legs:Sprite;
-	public var talkBubble:Sprite;
 	
 	private var animationManagerLegs:AnimationManager;
 	private var animationManagerArms:AnimationManager;
@@ -111,7 +110,7 @@ class Entity extends FlxSprite {
 			
 			head = new Sprite();
 			head.graphics.beginFill(secondaryColour);
-			head.graphics.drawCircle(0, 0, headSize);
+			head.graphics.drawCircle(0, headSize/2, headSize);
 			head.graphics.endFill();
 			head.graphics.beginFill(FlxColorUtil.makeFromHSBA(0,0,Math.random(),1));
 			
@@ -165,14 +164,7 @@ class Entity extends FlxSprite {
 			animationManagerArms.setAnimationState("idle1");
 			
 			arms.scaleY = h/30/3;
-			arms.scaleX = w/10/3;
-			
-			talkBubble = new Sprite();
-			talkBubble.graphics.beginFill(0xFFFFFFFF);
-			talkBubble.alpha = 0.0;
-			talkBubble.graphics.drawCircle(0, 0, 10);
-			talkBubble.graphics.endFill();
-			Lib.current.stage.addChild(talkBubble);
+			arms.scaleX = w / 10 / 3;
 			
 			body.scaleX *= Reg.zoom;
 			body.scaleY *= Reg.zoom;
@@ -182,8 +174,6 @@ class Entity extends FlxSprite {
 			legs.scaleY *= Reg.zoom;
 			arms.scaleX *= Reg.zoom;
 			arms.scaleY *= Reg.zoom;
-			talkBubble.scaleX *= Reg.zoom;
-			talkBubble.scaleY *= Reg.zoom;
 			
 			this.antialiasing = false;
 		}
@@ -209,11 +199,6 @@ class Entity extends FlxSprite {
 			arms.graphics.clear();
 			Lib.current.stage.removeChild(arms);
 			//arms = null;
-		}
-		if(talkBubble!=null){
-			talkBubble.graphics.clear();
-			Lib.current.stage.removeChild(talkBubble);
-			//talkBubble = null;
 		}
 	}
 	
@@ -241,11 +226,6 @@ class Entity extends FlxSprite {
 		legs.y = body.y+body.height;
 		arms.x = body.x + (body.width*3.25 * (this.facing == FlxObject.LEFT ? -1 : 1));
 		arms.y = body.y + h / 12 * Reg.zoom;
-		talkBubble.x = head.x;
-		talkBubble.y = head.y - 5 * Reg.zoom;
-		if (talkBubble.alpha > 0) {
-			talkBubble.alpha -= 0.1;
-		}
 		
 		
 		if (this.isTouching(FlxObject.FLOOR)) {

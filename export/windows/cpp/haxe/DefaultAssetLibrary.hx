@@ -62,6 +62,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/legAnimations.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/legAnimationsHD.png", __ASSET__assets_images_leganimationshd_png);
 		type.set ("assets/images/legAnimationsHD.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/mask.png", __ASSET__assets_images_mask_png);
+		type.set ("assets/images/mask.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/runCycle.png", __ASSET__assets_images_runcycle_png);
 		type.set ("assets/images/runCycle.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/titleCard.png", __ASSET__assets_images_titlecard_png);
@@ -198,6 +200,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/legAnimations.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/legAnimationsHD.png", "assets/images/legAnimationsHD.png");
 		type.set ("assets/images/legAnimationsHD.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/mask.png", "assets/images/mask.png");
+		type.set ("assets/images/mask.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/runCycle.png", "assets/images/runCycle.png");
 		type.set ("assets/images/runCycle.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/titleCard.png", "assets/images/titleCard.png");
@@ -760,6 +764,7 @@ class __ASSET__assets_images_instructions3_png extends flash.display.BitmapData 
 class __ASSET__assets_images_instructions4_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_leganimations_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_leganimationshd_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_mask_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_runcycle_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_titlecard_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_woodtileset_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
@@ -816,6 +821,7 @@ class __ASSET__flixel_snd_flixel_wav extends null { }
 
 
 #elseif html5
+
 
 
 

@@ -17,7 +17,7 @@ import haxe.io.Eof;
 
 import flixel.effects.particles.FlxEmitter;
 import flixel.effects.particles.FlxParticle;
-
+import flixel.util.FlxSpriteUtil;
 
 #if flash
 #else
@@ -184,9 +184,32 @@ class PlayState extends FlxState
 			}
 		}
 		
+		player1Lives = new Array();
+		player2Lives = new Array();
 		
+		player1Lives.push(new FlxSprite(10, 0));
+		player1Lives.push(new FlxSprite(10, 30));
+		player1Lives.push(new FlxSprite(10, 60));
 		
+		player2Lives.push(new FlxSprite(Reg.gameWidth-10, 0));
+		player2Lives.push(new FlxSprite(Reg.gameWidth-10, 30));
+		player2Lives.push(new FlxSprite(Reg.gameWidth-10, 60));
 		
+		for (i in player1Lives) {
+			cast(i, FlxSprite).makeGraphic(20, 20, 0xffff0000);
+			//add(i);
+		}
+		for (i in player2Lives) {
+			cast(i, FlxSprite).makeGraphic(20, 20, 0xffff0000);
+			//add(i);
+		}
+		
+		var temp:FlxSprite = new FlxSprite(10, 0);
+		var temp2:FlxSprite = new FlxSprite(10, 0);
+		temp.loadGraphic("assets/images/mask.png");
+		//add(temp);
+		FlxSpriteUtil.alphaMaskFlxSprite(player1Lives[0], temp, temp2);
+		add(temp2);
 		super.create();
 	}
 	
@@ -369,10 +392,6 @@ class PlayState extends FlxState
 		}
 	}
 	public function entityToEntity(object1:Entity,object2:Entity) {
-		if (object1.interacting) {
-			object2.talkBubble.alpha += 0.5;
-		}
-		
 		if (object2.attacking && object2.attackTimer == 3) {
 			makeGibs(object1.x, object1.y);
 			object1.health -= object2.attackDmg;
