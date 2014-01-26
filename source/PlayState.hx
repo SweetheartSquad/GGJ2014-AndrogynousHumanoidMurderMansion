@@ -178,7 +178,7 @@ class PlayState extends FlxState
 		
 		
 		
-		//controls above
+		//states/controls above
 		super.update();
 		//updates below
 		

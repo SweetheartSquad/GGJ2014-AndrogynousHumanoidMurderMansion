@@ -141,7 +141,7 @@ class Entity extends FlxSprite {
 	
 	public function postUpdate() {
 		//trace(sp.x,this.x);
-		body.x = this.x*Reg.zoom;// + (this.facing == FlxObject.LEFT ? w : 0) * Reg.ratioX;// + (this.facing == FlxObject.LEFT ? -w / 2 : 0);
+		body.x = (this.x + (this.facing == FlxObject.LEFT ? w : 0))*Reg.zoom;// + (this.facing == FlxObject.LEFT ? -w / 2 : 0);
 		body.y = (this.y)*Reg.zoom;
 		head.x = body.x;
 		head.y = body.y;
