@@ -14,9 +14,12 @@ import openfl.Assets;
 import utils.GamepadUtil;
 import utils.SoundManager;
 import haxe.io.Eof;
+#if flash
+#else
 import sys.io.File;
 import sys.io.FileInput;
 import sys.io.FileOutput;
+#end
 import flixel.effects.particles.FlxEmitter;
 import flixel.effects.particles.FlxParticle;
 
@@ -70,7 +73,11 @@ class PlayState extends FlxState
 		//FlxG.mouse.visible = false;
 		FlxG.cameras.bgColor = 0xffaaaaaa;
 		
+		#if flash
+		#else
 		generateMapCSV();
+		#end
+		
 		Reg._level = new FlxTilemap();
 		Reg._level.loadMap(Assets.getText("assets/level.csv"), "assets/images/testSet.png", TILE_WIDTH, TILE_HEIGHT, FlxTilemap.AUTO);
 		add(Reg._level);
@@ -143,6 +150,7 @@ class PlayState extends FlxState
 		soundManager = new SoundManager();
 		soundManager.addSound("door", "assets/music/door.wav");
 		
+		particles = new FlxGroup();
 		add(particles);
 		
 		super.create();
@@ -181,7 +189,7 @@ class PlayState extends FlxState
 			player1.jump();
 		}
 		if (FlxG.keyboard.justPressed("K")) {
-			FlxG.overlap(player1, player2, killPlayer);
+			player1.attacking = true;
 		}
 		if (FlxG.keyboard.justPressed("U")) {
 			player1.interacting = true;
@@ -198,7 +206,7 @@ class PlayState extends FlxState
 		}if (FlxG.keyboard.justPressed("W")) {
 			player2.jump();
 		}if (FlxG.keyboard.anyPressed(["S"])) {
-			FlxG.overlap(player2, player1, killPlayer);
+			player2.attacking = true;
 		}
 		if (FlxG.keyboard.justPressed("Q")) {
 			player2.interacting = true;
@@ -238,7 +246,7 @@ class PlayState extends FlxState
 			player2.facing = FlxObject.RIGHT;
 		}if ((FlxG.keyboard.justPressed("W") || (gamepadUtilTwo.getPressedbuttons().exists(0) && gamepadUtilTwo.getControllerId() == 1))) {
 			player2.jump();
-		}if (FlxG.keyboard.anyPressed(["S"]) || (gamepadUtilTwo.getPressedbuttons().exists(1) && gamepadUtilTwo.getControllerId() == 1)) {
+		}if (FlxG.keyboard.justPressed("S")|| (gamepadUtilTwo.getPressedbuttons().exists(1)&& gamepadUtilTwo.getControllerId() == 1 )) {
 			player2.attacking = true;
 		}
 		if (FlxG.keyboard.justPressed("Q")|| (gamepadUtilTwo.getPressedbuttons().exists(3)&& gamepadUtilTwo.getControllerId() == 1 )) {
@@ -273,11 +281,12 @@ class PlayState extends FlxState
 		manageThingies();
 		
 		FlxG.collide(Reg._level, entities);
-		//FlxG.collide(Reg._level, particles);
-		
+		FlxG.collide(Reg._level, particles,particleCollide);
+		particles.callAll("postUpdate");
 		
 		entities.callAll("postUpdate");
 		FlxG.overlap(entities, entities, entityToEntity);
+		
 		
 		//Reset Variables
 		entities.setAll("interacting", false);
@@ -287,39 +296,40 @@ class PlayState extends FlxState
 		if (attacker.interacting) {
 			victim.talkBubble.alpha += 0.5;
 		}
-		
-		if (attacker.attacking) {
-			/*var emitter:FlxEmitter = new FlxEmitter(victim.x,victim.y); //x and y of the emitter
-			var particles:Int = Std.random(4) + 2;
-			emitter.gravity = 500;
-			 emitter.bounce = 50;
-			for(i in 0...particles){
-				var particle:FlxParticle = new FlxParticle();
-				particle.makeGraphic(2, 2, 0xFFFF0000);
-				particle.exists = false;
-				emitter.add(particle);
-			}
-			 
-			add(emitter);
-			emitter.start();*/
-			var particle:FlxSprite = new FlxSprite(victim.x, victim.y);
-			particle.makeGraphic(3, 3, 0xFFFF0000);
-			particle.x = victim.x;
-			particle.y = victim.y;
-			particle.maxVelocity.set(80, 500);
-			particle.acceleration.y = 1500;
-			particle.drag.x = particle.maxVelocity.x * 8;
-			
-			//smooth subpixel stuff
-			particle.forceComplexRender = false;
-			
-			this.add(particles);
-			//particles.add(particle);
-			
+		if (victim.attacking && victim.attackTimer == 3) {
+			makeGibs(attacker.x, attacker.y);
+			attacker.kill();
+		}
+		if (attacker.attacking && attacker.attackTimer == 3) {
+			makeGibs(victim.x, victim.y);
 			victim.kill();
 		}
 	}
-	
+	public function makeGibs(_x:Float, _y:Float) {
+		particles.add(new Particle(_x, _y));
+		if(Math.random()>0.1){
+		particles.add(new Particle(_x, _y));
+			if(Math.random()>0.2){
+		particles.add(new Particle(_x, _y));
+				if(Math.random()>0.3){
+		particles.add(new Particle(_x, _y));
+					if(Math.random()>0.4){
+		particles.add(new Particle(_x, _y));
+						if(Math.random()>0.5){
+		particles.add(new Particle(_x, _y));
+						}
+					}
+				}
+			}
+		}
+	}
+	public function particleCollide(object1:FlxTilemap, object2:Particle) {
+		//trace("collision");
+		if(Math.random()<0.01){
+			object2.allowCollisions = FlxObject.NONE;
+			object2.timer = 8;
+		}
+	}
 	public function manageThingies()
 	{
 		FlxG.overlap(doors, players, manageDoors);
@@ -350,6 +360,8 @@ class PlayState extends FlxState
 		
 		return null;
 	}
+	#if flash
+	#else
 	public function generateMapCSV() {
 		var fname = "assets/level.csv";
 		var fout = File.write(fname, false);
@@ -364,7 +376,7 @@ class PlayState extends FlxState
 
 		fout.close();
 	}
-	
+	#end
 	public function generateLevel() {
 		var tileXNum:Int = Math.round(Reg.gameWidth / 16);
 		var tileYNum:Int = Math.round(Reg.gameHeight / 16);

@@ -1,6 +1,7 @@
 package utils;
 
-
+#if flash
+#else
 import flash.Lib;
 import openfl.events.JoystickEvent;
 import Map;
@@ -81,3 +82,4 @@ class GamepadUtil
 	
 	
 }
+#end
