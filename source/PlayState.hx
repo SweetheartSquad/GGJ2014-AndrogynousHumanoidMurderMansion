@@ -178,6 +178,19 @@ class PlayState extends FlxState
 		soundManager = new SoundManager();
 		soundManager.addSound("door", "assets/music/door.wav");
 		
+		var songOneArray:Array<String> = ["assets/music/f1.wav",
+		"assets/music/f2.wav",
+		"assets/music/f3.wav",
+		"assets/music/f4.wav",
+		"assets/music/f5.wav",
+		"assets/music/f6.wav",
+		"assets/music/f7.wav",
+		"assets/music/f8.wav",
+		];
+		
+		soundManager.addSong("songOne", songOneArray);
+		soundManager.playSong("songOne");
+		
 		particles = new FlxGroup();
 		add(particles);
 		
@@ -298,6 +311,7 @@ class PlayState extends FlxState
 		#end
 		
 		
+		manageThingies();
 		
 		if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
 			entities.callAll("destroyGraphics");
@@ -313,8 +327,7 @@ class PlayState extends FlxState
 		//states/controls above
 		super.update();
 		//updates below
-		manageThingies();
-		
+	
 
 		//Reset Variables
 		entities.setAll("interacting", false);
@@ -333,6 +346,8 @@ class PlayState extends FlxState
 		
 		
 		entities.callAll("updateAggresion");
+		
+		
 		
 		/*for (y in 0...Reg.aggresionMap.height) {
 			for (x in 0...Reg.aggresionMap.width) {
