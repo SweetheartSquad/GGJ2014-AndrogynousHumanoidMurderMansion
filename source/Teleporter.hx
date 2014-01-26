@@ -11,6 +11,7 @@ import flixel.group.FlxGroup;
 import flixel.util.FlxColor;
 import openfl.Assets;
 import utils.AnimationManager;
+import flixel.util.FlxPoint;
 
 /**
  * ...
@@ -42,13 +43,16 @@ class Teleporter extends FlxSprite
 	private function drawGraphics()
 	{
 		if(type == DOOR)
-		makeGraphic(20, 30, 0xff00aa11);
+		loadGraphic("assets/images/doorObjThingy.png");
 		
 		if (type == STAIRS)
-		makeGraphic(20, 30, 0xffee3311);
+		loadGraphic("assets/images/StairObjThingy.png");
 		
 		if (type == ELEVATOR)
-		makeGraphic(20, 30, 0xff224466);
+		loadGraphic("assets/images/ElevatorObjThingy.png");
+		
+		this.scale = new FlxPoint(0.6,0.6);
+		
 	}
 	
 	public function isId(id:Int):Bool
