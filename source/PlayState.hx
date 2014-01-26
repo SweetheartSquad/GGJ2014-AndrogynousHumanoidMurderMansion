@@ -18,8 +18,10 @@ import sys.io.File;
 import sys.io.FileInput;
 import sys.io.FileOutput;
 
+
 #if not flash
 import utils.GamepadUtil;
+
 #end
 
 /**
@@ -35,6 +37,7 @@ class PlayState extends FlxState
 	//Flx Groups
 	private var entities:FlxGroup;
 	private var doors:FlxGroup;
+	private var stairs:FlxGroup;
 	private var players:FlxGroup;
 	private var npcs:FlxGroup;
 	
@@ -56,6 +59,10 @@ class PlayState extends FlxState
 	private var doorTwo:Door;
 	//Sound
 	private var soundManager:SoundManager;
+	
+	//Tile map array values
+	private var tiles:Array<Array<Int>> ;
+	
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -64,11 +71,22 @@ class PlayState extends FlxState
 		//FlxG.mouse.visible = false;
 		FlxG.cameras.bgColor = 0xffaaaaaa;
 		
+		
+		doors = new FlxGroup();
+		stairs = new FlxGroup();
+		
+		
+		tiles = new Array();
 		generateMapCSV();
 		Reg._level = new FlxTilemap();
 		Reg._level.loadMap(Assets.getText("assets/level.csv"), "assets/images/testSet.png", TILE_WIDTH, TILE_HEIGHT, FlxTilemap.AUTO);
 		add(Reg._level);
 		generateLevel();
+		
+		generateDoors();
+		generateStairs();
+		
+		
 
 		/*for (y in 0...Reg.gameHeight) {
 			for (x in 0...Reg.gameWidth) {
@@ -106,7 +124,7 @@ class PlayState extends FlxState
 		players.add(player2);
 		npcs = new FlxGroup();
 		npcs.add(npcTest);
-		for(i in 0...500){
+		for(i in 0...200){
 			npcs.add(new NPC());
 		}
 		entities = new FlxGroup();
@@ -115,17 +133,16 @@ class PlayState extends FlxState
 		
 		
 		//Thingies
-		var doorPath:String = "assets/images/door.png"; 
-		doorOne = new Door(40,50,DOOR,doorPath,0,1);
-		doorTwo = new Door(100,300,DOOR,doorPath,1,0);
+		//var doorPath:String = "assets/images/door.png"; 
+		//doorOne = new Door(40,50,DOOR,doorPath,0,1);
+		//doorTwo = new Door(100,300,DOOR,doorPath,1,0);
 		
-		doors = new FlxGroup();
-		doors.add(doorOne);
-		doors.add(doorTwo);
+		//doors.add(doorOne);
+		//doors.add(doorTwo);
 		
 		//add thingies
 		add(doors);
-		
+		add(stairs);
 		//add entities to game
 		add(entities);
 		
@@ -262,6 +279,7 @@ class PlayState extends FlxState
 		//updates below
 		manageThingies();
 		
+		
 		//Reset Variables
 		entities.setAll("interacting", false);
 		
@@ -281,11 +299,24 @@ class PlayState extends FlxState
 	public function manageThingies()
 	{
 		FlxG.overlap(doors, players, manageDoors);
+		FlxG.overlap(stairs, players, manageStairs);
 	}
 	
-	public function manageDoors(door:Door,entity:Player)
+	public function manageDoors(door:Door,entity:Entity)
 	{
 		var otherDoor:Door = getDoorById(door.relatedDoor);
+		if (otherDoor != null && entity.interacting)
+		{
+			entity.x = otherDoor.x;
+			entity.y = otherDoor.y - 10;
+			soundManager.playSound("door");
+		}
+		
+	}
+	
+	public function manageStairs(stairs:Stairs,entity:Entity)
+	{
+		var otherDoor:Stairs = getStairsById(stairs.relatedStairs);
 		if (otherDoor != null && entity.interacting)
 		{
 			entity.x = otherDoor.x;
@@ -308,6 +339,138 @@ class PlayState extends FlxState
 		
 		return null;
 	}
+	
+	public function getStairsById(id:Int):Stairs
+	{
+		
+		for (i in 0 ... doors.length)
+		{
+			if (cast(stairs._members[i], Stairs).isId(id))
+			{
+				return (cast(stairs._members[i], Stairs));
+			}
+		}
+		
+		return null;
+	}
+	
+	private function containsInt(array:Array<Int>,value:Int)
+	{
+		for (i in array)
+		{
+			if (i == value)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public function generateDoors()
+	{
+		
+		var tileXNum:Int = Math.round(Reg.gameWidth);
+		var tileYNum:Int = Math.round(Reg.gameHeight);
+		var tileStartX:Int = Math.round((tileXNum / 6)) - 1;
+		var tileEndX:Int = Math.round((tileXNum / 6)) * 5 + 1;
+		
+		var doorCounter:Int = 0;
+		
+		for (i in 0...Math.round(Reg.gameHeight /16))
+		{
+			if (containsInt(tiles[i], 1))
+			{
+				if (i - 2 >= 0)
+				{
+					if (containsInt(tiles[i-1], 0) && containsInt(tiles[i-2],0))
+					{
+						if (Std.random(10) > 3)
+						{
+							
+							doors.add(new Door(
+								
+								Std.random(Reg.gameWidth - 256)+128,
+								(i * 16 - 30),
+								DOOR,
+								"assets/images/door.png",
+								doorCounter,
+								doorCounter + 1));
+								
+								var doorTwoRandX:Int = Std.random(Reg.gameWidth - 256) + 128;
+								while (!(doorTwoRandX < ((cast(doors._members[doors._members.length-1],Door).x)+40))&& !(doorTwoRandX > ((cast(doors._members[doors._members.length-1],Door).x)-20)))
+								{
+									doorTwoRandX = Std.random(Reg.gameWidth - 256) + 128;
+								}
+								
+							doors.add(new Door(
+								Std.random(Reg.gameWidth - 256)+128,
+								(i * 16 - 30),
+								DOOR,
+								"assets/images/door.png",
+								doorCounter+1,
+								doorCounter));
+								doorCounter += 2;
+						}
+					}
+				}
+			}
+		}
+		
+	}
+	
+	
+	public function generateStairs()
+	{
+		
+		var tileXNum:Int = Math.round(Reg.gameWidth);
+		var tileYNum:Int = Math.round(Reg.gameHeight);
+		var tileStartX:Int = Math.round((tileXNum / 6)) - 1;
+		var tileEndX:Int = Math.round((tileXNum / 6)) * 5 + 1;
+		
+		var stairsCounter:Int = 0;
+		
+		for (i in 0...Math.round(Reg.gameHeight /16))
+		{
+			if (containsInt(tiles[i], 1))
+			{
+				if (i - 2 >= 0)
+				{
+					if (containsInt(tiles[i-1], 0) && containsInt(tiles[i-2],0))
+					{
+						if (Std.random(10) > 3)
+						{
+							
+							stairs.add(new Stairs(
+								
+								Std.random(Reg.gameWidth - 256)+128,
+								(i * 16 - 30),
+								STAIRS,
+								"assets/images/stairs.png",
+								stairsCounter,
+								stairsCounter + 1));
+								
+								var stairsTwoRandX:Int = Std.random(Reg.gameWidth - 256) + 128;
+								while (!(stairsTwoRandX < ((cast(stairs._members[stairs._members.length-1],Stairs).x)+40))&& !(stairsTwoRandX > ((cast(stairs._members[stairs._members.length-1],Stairs).x)-20)))
+								{
+									stairsTwoRandX = Std.random(Reg.gameWidth - 256) + 128;
+								}
+								
+							stairs.add(new Stairs(
+								Std.random(Reg.gameWidth - 256)+128,
+								((i + 5) * 16 - 30),
+								STAIRS,
+								"assets/images/stairs.png",
+								stairsCounter+1,
+								stairsCounter));
+								stairsCounter += 2;
+						}
+					}
+				}
+			}
+		}
+		
+	}
+	
 	public function generateMapCSV() {
 		var fname = "assets/level.csv";
 		var fout = File.write(fname, false);
@@ -341,18 +504,54 @@ class PlayState extends FlxState
 			for (j in tileStartX...tileEndX) {
 				if (floorCount == (floorHeight - 1) || i == 0 || i == 1 || i == tileYNum - 1 || i == tileYNum - 2) {
 						Reg._level.setTile(j, i, 1);
+						if (j > tileStartX + 2 && j < tileEndX - 2)
+						{
+							if (tiles.length-1 == i)
+							{
+								tiles[i].push(1);
+							}
+							else {
+								tiles.push(new Array<Int>());
+								tiles[i].push(1);
+							}
+						}
+						
 				} else {
 					if (j == tileStartX || j == tileStartX + 1 || j == tileEndX - 2 || j == tileEndX - 1) {
 						Reg._level.setTile(j, i, 1);
+						if (j > tileStartX + 2 && j < tileEndX - 2)
+						{
+								if (tiles.length-1 == i)
+							{
+								tiles[i].push(1);
+							}
+							else {
+								tiles.push(new Array<Int>());
+								tiles[i].push(1);
+							}
+						}
 					} else {
 						Reg._level.setTile(j, i, 0);
+						if (j > tileStartX + 2 && j < tileEndX - 2)
+						{
+							if (tiles.length-1 == i)
+							{
+								tiles[i].push(0);
+							}
+							else {
+								tiles.push(new Array<Int>());
+								tiles[i].push(0);
+							}
+						}
 					}
 				}
 			}
 			floorCount++;
 			if (floorCount == floorHeight) floorCount = 0;
+			
+			
 		}
-		
+		trace(tiles.toString());
 		//randomly insert a trapdoor into one of the floors
 		trapX = Std.random((tileEndX - tileStartX)) + 3;
 		
@@ -372,5 +571,7 @@ class PlayState extends FlxState
 				Reg._level.setTile(trapX + i, trapY + j, 0);
 			}
 		}
+		
+		
 	}
 }

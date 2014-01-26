@@ -1,9 +1,10 @@
 package utils;
 
-
+#if not flash
 import flash.Lib;
 import openfl.events.JoystickEvent;
 import Map;
+#end
 
 /**
  * ...
@@ -11,13 +12,16 @@ import Map;
  */
 class GamepadUtil
 {
+	
 	private var pressedbuttons:Map<Int,Int>;
     private var lastbuttonUp:Int;
 	private var axis:Float;
 	private var device:Int;
 
+	
 	public function new(device:Int) 
 	{
+		#if not flash
 		this.device = device;
 		Lib.current.stage.addEventListener(JoystickEvent.BUTTON_DOWN, this.button_Down);
 		Lib.current.stage.addEventListener(JoystickEvent.BUTTON_UP, this.button_Up);
@@ -25,9 +29,10 @@ class GamepadUtil
 		
 		pressedbuttons = new Map<Int,Int>();
 		axis = 0.0;
+		#end
 		
 	}
-	
+	#if not flash
 	private function button_Down(evt:JoystickEvent){
 		
 		if (evt.device == device)
@@ -77,7 +82,7 @@ class GamepadUtil
 	{
 		return axis;
 	}
-	
+	#end
 	
 	
 }

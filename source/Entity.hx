@@ -57,7 +57,7 @@ class Entity extends FlxSprite {
 	public function new(){
 		super();
 		
-		this.x = 50;
+		this.x = Reg.gameWidth/2;
 		this.y = 20;
 		this.maxVelocity.set(80, 500);
 		this.acceleration.y = 1500;

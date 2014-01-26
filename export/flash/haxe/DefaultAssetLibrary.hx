@@ -48,6 +48,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/testSet.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/level.csv", __ASSET__assets_level_csv);
 		type.set ("assets/level.csv", Reflect.field (AssetType, "binary".toUpperCase ()));
+		className.set ("assets/music/door.wav", __ASSET__assets_music_door_wav);
+		type.set ("assets/music/door.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
 		className.set ("assets/music/music-goes-here.txt", __ASSET__assets_music_music_goes_here_txt);
 		type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		className.set ("assets/sounds/sounds-go-here.txt", __ASSET__assets_sounds_sounds_go_here_txt);
@@ -144,6 +146,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/testSet.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/level.csv", "assets/level.csv");
 		type.set ("assets/level.csv", Reflect.field (AssetType, "binary".toUpperCase ()));
+		path.set ("assets/music/door.wav", "assets/music/door.wav");
+		type.set ("assets/music/door.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
 		path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
 		type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		path.set ("assets/sounds/sounds-go-here.txt", "assets/sounds/sounds-go-here.txt");
@@ -673,6 +677,7 @@ class __ASSET__assets_images_images_go_here_txt extends flash.utils.ByteArray { 
 class __ASSET__assets_images_leganimations_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_testset_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_level_csv extends flash.utils.ByteArray { }
+class __ASSET__assets_music_door_wav extends flash.media.Sound { }
 class __ASSET__assets_music_music_goes_here_txt extends flash.utils.ByteArray { }
 class __ASSET__assets_sounds_sounds_go_here_txt extends flash.utils.ByteArray { }
 class __ASSET__flixel_img_debugger_buttons_console_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
@@ -716,6 +721,7 @@ class __ASSET__flixel_snd_flixel_wav extends flash.media.Sound { }
 
 
 #elseif html5
+
 
 
 
