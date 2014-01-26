@@ -37,11 +37,6 @@ class InstructState extends FlxState
 		instructions = new FlxSprite(Reg.gameWidth/2 - 260, 25);
 		instructions.loadGraphic("assets/images/instructions1.png");
 		add(instructions);
-
-		// Show the mouse (in case it hasn't been disabled)
-		#if !FLX_NO_MOUSE
-		FlxG.mouse.show();
-		#end
 		
 		_text1 = new FlxText((Reg.gameWidth / 2) - 100, Reg.gameHeight / 4 + 320, 290, "PRESS Q TO GO BACK");
 		_text1.size = 20;

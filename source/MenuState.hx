@@ -40,11 +40,6 @@ class MenuState extends FlxState
 		title.loadGraphic("assets/images/titleCard.png");
 		add(title);
 		
-		// Show the mouse (in case it hasn't been disabled)
-		#if !FLX_NO_MOUSE
-		FlxG.mouse.show();
-		#end
-		
 		_text1 = new FlxText((Reg.gameWidth / 2) - 100, Reg.gameHeight / 4 + 280, 295, "PRESS SPACE TO START");
 		_text1.size = 20;
 		_text1.color = 0x000000;
