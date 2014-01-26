@@ -15,8 +15,12 @@ class MenuState extends FlxState
 {
 	private var _text1:FlxText;
 	private var _text2:FlxText;
+	var bg:FlxSprite;
+	var title:FlxSprite;
 	private var particles:FlxGroup;
 	private var counter:Float = 0;
+	private var titleCounter:Float = 0;
+	private var moveCount:Int = 0;
 	private var pReady:Bool;
 	private var qReady:Bool;
 	
@@ -25,19 +29,28 @@ class MenuState extends FlxState
 		pReady = false;
 		qReady = false;
 		
-		// Set a background color
+		bg = new FlxSprite(-525,-310);
+		bg.loadGraphic("assets/images/background.png");
+		bg.scale.x /= Reg.zoom;
+		bg.scale.y /= Reg.zoom;
+		add(bg);
 		FlxG.cameras.bgColor = 0x00000000;
+		
+		title = new FlxSprite(Reg.gameWidth/2 - 220, 20);
+		title.loadGraphic("assets/images/titleCard.png");
+		add(title);
+		
 		// Show the mouse (in case it hasn't been disabled)
 		#if !FLX_NO_MOUSE
 		FlxG.mouse.show();
 		#end
 		
-		_text1 = new FlxText((Reg.gameWidth / 2) - 100, Reg.gameHeight / 4 + 250, 295, "PRESS SPACE TO START");
+		_text1 = new FlxText((Reg.gameWidth / 2) - 100, Reg.gameHeight / 4 + 280, 295, "PRESS SPACE TO START");
 		_text1.size = 20;
 		_text1.color = 0x000000;
 		add(_text1);
 		
-		_text2 = new FlxText((Reg.gameWidth / 2) - 95, Reg.gameHeight / 4 + 285, 300, "PRESS Q TO READ INSTRUCTIONS");
+		_text2 = new FlxText((Reg.gameWidth / 2) - 95, Reg.gameHeight / 4 + 315, 300, "PRESS Q TO READ INSTRUCTIONS");
 		_text2.size = 14;
 		_text2.color = 0x000000;
 		add(_text2);
@@ -110,6 +123,42 @@ class MenuState extends FlxState
 			if (counter >= 1) {
 				FlxG.switchState(new InstructState());
 			}
+		}
+		
+		titleCounter += FlxG.elapsed;
+		if(titleCounter >= 1) {
+			if(moveCount >= 4) {
+				moveCount = 1;
+			} else {
+				moveCount++;
+			}
+			
+			switch(moveCount) {
+				case 1:
+					title.y -= 6;
+				case 2:
+					title.y += 6;
+				case 3:
+					title.y += 6;
+				case 4:
+					title.y -= 6;
+				default:
+					
+			}
+			
+			makeGibs(title.x+50, title.y+title.height-125);
+			makeGibs(title.x+50, title.y+title.height-125);
+			makeGibs(title.x+50, title.y+title.height-125);
+			makeGibs(title.x+50, title.y+title.height-125);
+			makeGibs(title.x+50, title.y+title.height-125);
+			makeGibs(title.x+title.width-50, title.y+title.height-125);
+			makeGibs(title.x+title.width-50, title.y+title.height-125);
+			makeGibs(title.x+title.width-50, title.y+title.height-125);
+			makeGibs(title.x+title.width-50, title.y+title.height-125);
+			makeGibs(title.x+title.width-50, title.y+title.height-125);
+			
+			titleCounter = 0;
+			
 		}
 		
 	}	

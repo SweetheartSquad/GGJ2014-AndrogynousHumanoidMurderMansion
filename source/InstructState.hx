@@ -15,21 +15,35 @@ class InstructState extends FlxState
 {
 	private var _text1:FlxText;
 	private var _text2:FlxText;
+	var bg:FlxSprite;
+	var instructions:FlxSprite;
 	private var particles:FlxGroup;
 	private var counter:Float = 0;
+	private var instructCounter:Float = 0;
+	private var screenCount:Int = 1;
 	private var ready:Bool;
 	
 	override public function create():Void
 	{
 		ready = false;
-		// Set a background color
+		
+		bg = new FlxSprite(-525,-310);
+		bg.loadGraphic("assets/images/background.png");
+		bg.scale.x /= Reg.zoom;
+		bg.scale.y /= Reg.zoom;
+		add(bg);
 		FlxG.cameras.bgColor = 0x00000000;
+		
+		instructions = new FlxSprite(Reg.gameWidth/2 - 260, 25);
+		instructions.loadGraphic("assets/images/instructions1.png");
+		add(instructions);
+
 		// Show the mouse (in case it hasn't been disabled)
 		#if !FLX_NO_MOUSE
 		FlxG.mouse.show();
 		#end
 		
-		_text1 = new FlxText((Reg.gameWidth / 2) - 100, Reg.gameHeight / 4 + 250, 290, "PRESS Q TO GO BACK");
+		_text1 = new FlxText((Reg.gameWidth / 2) - 100, Reg.gameHeight / 4 + 320, 290, "PRESS Q TO GO BACK");
 		_text1.size = 20;
 		_text1.color = 0x000000;
 		add(_text1);
@@ -83,6 +97,17 @@ class InstructState extends FlxState
 			if (counter >= 1) {
 				FlxG.switchState(new MenuState());
 			}
+		}
+		
+		instructCounter += FlxG.elapsed;
+		if(instructCounter >= 1) {
+			if(screenCount >= 4) {
+				screenCount = 1;
+			} else {
+				screenCount++;
+			}
+			instructions.loadGraphic("assets/images/instructions"+screenCount+".png");
+			instructCounter = 0;
 		}
 		
 	}	
