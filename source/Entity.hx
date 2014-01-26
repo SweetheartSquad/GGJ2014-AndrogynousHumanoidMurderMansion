@@ -233,7 +233,11 @@ class Entity extends FlxSprite {
 				}else {
 					if(idleTimer == 0 || idleTimer == idleTimerLimit){
 						idleTimer = 0;
-						animationManagerArms.setAnimationState("idle" + Std.string(Std.random(4) + 1));
+						if(Math.random()>0.75){
+							animationManagerArms.setAnimationState("idle" + Std.string(Std.random(3) + 2));
+						}else {
+							animationManagerArms.setAnimationState("idle4");
+						}
 					}
 					idleTimer += 1;
 				}
