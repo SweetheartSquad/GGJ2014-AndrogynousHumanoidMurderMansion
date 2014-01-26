@@ -337,7 +337,7 @@ class PlayState extends FlxState
 		gamepadUtilOne.clear();
 		gamepadUtilTwo.clear();
 		
-		/*if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
+		/*if (FlxG.keyboard.anyJustPressed(["SPACESPACE"])) {
 			entities.callAll("destroyGraphics");
 			entities.callAll("generateGraphics");
 			
@@ -351,11 +351,11 @@ class PlayState extends FlxState
 		#end
 		
 		
-		if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
+		/*if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
 			entities.callAll("destroyGraphics");
 			entities.callAll("generateGraphics");
 			entities.callAll("placeRandom()");
-		}
+		}*/
 		
 		//controls above
 		npcs.callAll("moveAlongPath");
@@ -494,7 +494,7 @@ class PlayState extends FlxState
 			entity.interacting = false;
 			entity.x = otherTeleporter.x;
 			entity.y = otherTeleporter.y - 10;
-			if (Math.random < 0.1)
+			if (Math.random() < 0.1)
 			{
 				soundManager.playSound("door");
 			}
