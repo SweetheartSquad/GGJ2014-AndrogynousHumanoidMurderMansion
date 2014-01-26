@@ -303,17 +303,17 @@ class PlayState extends FlxState
 		
 		entities.callAll("attackDelay");
 	}
-	public function entityToEntity(attacker:Entity,victim:Entity) {
-		if (attacker.interacting) {
-			victim.talkBubble.alpha += 0.5;
+	public function entityToEntity(object1:Entity,object2:Entity) {
+		if (object1.interacting) {
+			object2.talkBubble.alpha += 0.5;
 		}
-		if (victim.attacking && victim.attackTimer == 3) {
-			makeGibs(attacker.x, attacker.y);
-			attacker.kill();
+		if (object2.attacking && object2.attackTimer == 3) {
+			makeGibs(object1.x, object1.y);
+			object1.kill();
 		}
-		if (attacker.attacking && attacker.attackTimer == 3) {
-			makeGibs(victim.x, victim.y);
-			victim.kill();
+		if (object1.attacking && object1.attackTimer == 3) {
+			makeGibs(object2.x, object2.y);
+			object2.kill();
 		}
 	}
 	public function makeGibs(_x:Float, _y:Float) {
@@ -343,8 +343,8 @@ class PlayState extends FlxState
 	}
 	public function manageThingies()
 	{
-		FlxG.overlap(doors, players, manageDoors);
-		FlxG.overlap(stairs, players, manageStairs);
+		FlxG.overlap(doors, entities, manageDoors);
+		FlxG.overlap(stairs, entities, manageStairs);
 	}
 	
 	public function manageDoors(door:Door,entity:Entity)

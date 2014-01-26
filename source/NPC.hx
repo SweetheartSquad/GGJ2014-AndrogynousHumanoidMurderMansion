@@ -43,7 +43,8 @@ class NPC extends Entity{
 	
 	public function getRandomTarget() {
 		do {
-			targetX = Std.random(Reg.gameWidth - 40) + 20;
+			var temp:Int = Math.round(Reg.gameWidth / 2);
+			targetX = Std.random(temp) + Math.round(temp/2);
 			targetY = Std.random(Reg.gameHeight - 40) + 20;
 		}while (/*Reg._level.getTile(Math.round(targetX)*8, Math.round(targetY)*8) == 1*/Reg._level.overlapsPoint(new FlxPoint(targetX, targetY)));
 	}
