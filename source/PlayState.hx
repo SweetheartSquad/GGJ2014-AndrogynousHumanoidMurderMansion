@@ -41,7 +41,6 @@ class PlayState extends FlxState
 	//Flx Groups
 	private var entities:FlxGroup;
 	private var doors:FlxGroup;
-	private var stairs:FlxGroup;
 	private var players:FlxGroup;
 	private var npcs:FlxGroup;
 	
@@ -62,15 +61,21 @@ class PlayState extends FlxState
 	#end
 	
 	//Thingies
-	private var doorOne:Door;
-	private var doorTwo:Door;
+	private var doorOne:Teleporter;
+	private var doorTwo:Teleporter;
 	//Sound
 	private var soundManager:SoundManager;
 	
 	//Tile map array values
 	private var tiles:Array<Array<Int>> ;
 	
-		
+	
+	//Ids
+	private var teleporterId:Int;
+	
+	private static var doorThreshold:Int = 140;
+	
+	
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -80,8 +85,7 @@ class PlayState extends FlxState
 		FlxG.cameras.bgColor = 0xffaaaaaa;
 		
 		doors = new FlxGroup();
-		stairs = new FlxGroup();
-		
+		teleporterId = 0;
 		
 		tiles = new Array();
 		
@@ -108,8 +112,9 @@ class PlayState extends FlxState
 		add(Reg._level);
 		generateLevel();
 		
-		generateDoors();
 		generateStairs();
+		generateDoors();
+		generateElevators();
 		
 		
 
@@ -118,7 +123,6 @@ class PlayState extends FlxState
 				trace(Reg._level.overlapsPoint(new FlxPoint(x, y)));
 			}
 		}*/
-		
 		
 		
 		player1 = new Player();
@@ -163,7 +167,6 @@ class PlayState extends FlxState
 		
 		//add thingies
 		add(doors);
-		add(stairs);
 		//add entities to game
 		add(entities);
 		
@@ -333,7 +336,7 @@ class PlayState extends FlxState
 			}
 		}*/
 		
-		Reg.aggresionMap.colourSprites();
+		//Reg.aggresionMap.colourSprites();
 		
 		/*for (y in 0...Reg.aggresionMap.height) {
 			for (x in 0...Reg.aggresionMap.width) {
@@ -382,62 +385,35 @@ class PlayState extends FlxState
 	}
 	public function manageThingies()
 	{
-		FlxG.overlap(doors, entities, manageDoors);
-		FlxG.overlap(stairs, entities, manageStairs);
+		FlxG.overlap(doors, entities, manageTeleporters);
 	}
 	
-	public function manageDoors(door:Door,entity:Entity)
+	public function manageTeleporters(door:Teleporter,entity:Entity)
 	{
-		var otherDoor:Door = getDoorById(door.relatedDoor);
-		if (otherDoor != null && entity.interacting)
+		var otherTeleporter:Teleporter = getTeleporterById(door.relatedId);
+		if (otherTeleporter != null && entity.interacting)
 		{
-			entity.x = otherDoor.x;
-			entity.y = otherDoor.y - 10;
+			entity.x = otherTeleporter.x;
+			entity.y = otherTeleporter.y - 10;
 			soundManager.playSound("door");
 		}
 		
 	}
 	
-	public function manageStairs(stairs:Stairs,entity:Entity)
-	{
-		var otherDoor:Stairs = getStairsById(stairs.relatedStairs);
-		if (otherDoor != null && entity.interacting)
-		{
-			entity.x = otherDoor.x;
-			entity.y = otherDoor.y - 10;
-			soundManager.playSound("door");
-		}
-		
-	}
-	
-	public function getDoorById(id:Int):Door
+	public function getTeleporterById(id:Int):Teleporter
 	{
 		
 		for (i in 0 ... doors.length)
 		{
-			if (cast(doors._members[i], Door).isId(id))
+			if (cast(doors._members[i], Teleporter).isId(id))
 			{
-				return (cast(doors._members[i], Door));
+				return (cast(doors._members[i], Teleporter));
 			}
 		}
 		
 		return null;
 	}
-	
-	public function getStairsById(id:Int):Stairs
-	{
-		
-		for (i in 0 ... doors.length)
-		{
-			if (cast(stairs._members[i], Stairs).isId(id))
-			{
-				return (cast(stairs._members[i], Stairs));
-			}
-		}
-		
-		return null;
-	}
-	
+
 	private function containsInt(array:Array<Int>,value:Int)
 	{
 		for (i in array)
@@ -458,8 +434,6 @@ class PlayState extends FlxState
 		var tileStartX:Int = Math.round((tileXNum / 6)) - 1;
 		var tileEndX:Int = Math.round((tileXNum / 6)) * 5 + 1;
 		
-		var doorCounter:Int = 0;
-		
 		for (i in 0...Math.round(Reg.gameHeight /16))
 		{
 			if (containsInt(tiles[i], 1))
@@ -471,29 +445,29 @@ class PlayState extends FlxState
 						if (Std.random(10) > 3)
 						{
 							
-							doors.add(new Door(
+							doors.add(new Teleporter(
 								
-								Std.random(Reg.gameWidth - 256)+128,
+								Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
 								(i * 16 - 30),
 								DOOR,
 								"assets/images/door.png",
-								doorCounter,
-								doorCounter + 1));
+								teleporterId,
+								teleporterId + 1));
 								
-								var doorTwoRandX:Int = Std.random(Reg.gameWidth - 256) + 128;
-								while (!(doorTwoRandX < ((cast(doors._members[doors._members.length-1],Door).x)+40))&& !(doorTwoRandX > ((cast(doors._members[doors._members.length-1],Door).x)-20)))
+								var doorTwoRandX:Int = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
+								while ((doorTwoRandX < ((cast(doors._members[doors._members.length-1],Teleporter).x)+60))&& (doorTwoRandX > ((cast(doors._members[doors._members.length-1],Teleporter).x)-40)))
 								{
-									doorTwoRandX = Std.random(Reg.gameWidth - 256) + 128;
+									doorTwoRandX = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
 								}
 								
-							doors.add(new Door(
-								Std.random(Reg.gameWidth - 256)+128,
+							doors.add(new Teleporter(
+								Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
 								(i * 16 - 30),
 								DOOR,
 								"assets/images/door.png",
-								doorCounter+1,
-								doorCounter));
-								doorCounter += 2;
+								teleporterId+1,
+								teleporterId));
+								teleporterId += 2;
 						}
 					}
 				}
@@ -501,7 +475,6 @@ class PlayState extends FlxState
 		}
 		
 	}
-	
 	
 	public function generateStairs()
 	{
@@ -511,7 +484,68 @@ class PlayState extends FlxState
 		var tileStartX:Int = Math.round((tileXNum / 6)) - 1;
 		var tileEndX:Int = Math.round((tileXNum / 6)) * 5 + 1;
 		
-		var stairsCounter:Int = 0;
+		for (i in 0...Math.round(Reg.gameHeight /16))
+		{
+			if (containsInt(tiles[i], 1))
+			{
+				if (i - 2 >= 0)
+				{
+					if (containsInt(tiles[i-1], 0) && containsInt(tiles[i-2],0) && !containsInt(tiles[i+1],1))
+					{
+						if (Std.random(10) > 3)
+						{
+							
+							doors.add(new Teleporter(
+								
+								Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
+								(i * 16 - 30),
+								STAIRS,
+								"assets/images/door.png",
+								teleporterId,
+								teleporterId + 1));
+								
+								var doorsTwoRandX:Int = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
+								
+								var genX = true; 
+								
+								while (
+								{
+									(doorsTwoRandX < ((cast(doors._members[doors._members.length-1],Teleporter).x)+60))&& (doorsTwoRandX > ((cast(doors._members[doors._members.length-1],Teleporter).x)-40)))
+									doorsTwoRandX = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
+								}
+								
+								var doorsTwoRandY:Int = 0;
+								var tempI = i+1;
+								
+								
+								while(containsInt(tiles[tempI],0))
+								{
+									tempI++;
+								}
+								
+								
+							doors.add(new Teleporter(
+								Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
+								((tempI) * 16 - 30),
+								STAIRS,
+								"assets/images/door.png",
+								teleporterId+1,
+								teleporterId));
+								teleporterId += 2;
+						}
+					}
+				}
+			}
+		}
+		
+	}
+	
+	public function generateElevators()
+	{
+		var tileXNum:Int = Math.round(Reg.gameWidth);
+		var tileYNum:Int = Math.round(Reg.gameHeight);
+		var tileStartX:Int = Math.round((tileXNum / 6)) - 1;
+		var tileEndX:Int = Math.round((tileXNum / 6)) * 5 + 1;
 		
 		for (i in 0...Math.round(Reg.gameHeight /16))
 		{
@@ -521,39 +555,85 @@ class PlayState extends FlxState
 				{
 					if (containsInt(tiles[i-1], 0) && containsInt(tiles[i-2],0))
 					{
-						if (Std.random(10) > 3)
+						if (!hasStairs(i))
 						{
 							
-							stairs.add(new Stairs(
+							doors.add(new Teleporter(
 								
-								Std.random(Reg.gameWidth - 256)+128,
+								Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
 								(i * 16 - 30),
-								STAIRS,
-								"assets/images/stairs.png",
-								stairsCounter,
-								stairsCounter + 1));
+								ELEVATOR,
+								"assets/images/door.png",
+								teleporterId,
+								teleporterId + 1));
 								
-								var stairsTwoRandX:Int = Std.random(Reg.gameWidth - 256) + 128;
-								while (!(stairsTwoRandX < ((cast(stairs._members[stairs._members.length-1],Stairs).x)+40))&& !(stairsTwoRandX > ((cast(stairs._members[stairs._members.length-1],Stairs).x)-20)))
-								{
-									stairsTwoRandX = Std.random(Reg.gameWidth - 256) + 128;
-								}
 								
-							stairs.add(new Stairs(
-								Std.random(Reg.gameWidth - 256)+128,
-								((i + 5) * 16 - 30),
-								STAIRS,
-								"assets/images/stairs.png",
-								stairsCounter+1,
-								stairsCounter));
-								stairsCounter += 2;
 						}
 					}
 				}
 			}
 		}
 		
+		var numElev:Int = 0;
+		
+		for (i in 0...doors.length)
+		{
+			if (cast(doors._members[i], Teleporter).type == ELEVATOR)
+			numElev++; 
+		}
+		
+		if (numElev == 1)
+		{
+			for (i in 0...Math.round(Reg.gameHeight /16))
+				{
+					if (hasStairs(i))
+					{
+						if (containsInt(tiles[i], 1))
+						{
+							if (i - 2 >= 0)
+							{
+								if (containsInt(tiles[i-1], 0) && containsInt(tiles[i-2],0))
+								{
+									doors.add(new Teleporter(
+										
+										Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
+										(i * 16 - 30),
+										ELEVATOR,
+										"assets/images/door.png",
+										teleporterId,
+										teleporterId + 1));
+										
+									break;
+								}
+							}
+					}	}
+				
+			}
+		}
 	}
+	
+	private function hasStairs(iterator:Int)
+	{
+		for (i in 0...doors.length)
+		{
+			if ((cast(doors._members[i], Teleporter).y+30 )/ 16 == iterator && cast(doors._members[i], Teleporter).type==STAIRS)
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private function hasElevator(iterator:Int)
+	{
+		for (i in 0...doors.length)
+		{
+			if ((cast(doors._members[i], Teleporter).y+30 )/ 16 == iterator && cast(doors._members[i], Teleporter).type==ELEVATOR)
+			return true;
+		}
+		
+		return false;
+	}
+	
 	
 	#if flash
 	#else
