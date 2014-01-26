@@ -84,14 +84,13 @@ class Entity extends FlxSprite {
 	
 	public function generateGraphics() {
 		if(this.alive){
-			this.velocity.y -= this.maxVelocity.y/5;
+			this.velocity.y = -this.maxVelocity.y/5;
 			
 			w = Std.random(15)+5;
 			h = Std.random(25)+10;
 			headSize = Math.round(Std.random(w)/3) + 2;
 			
-			this.maxVelocity.y = 400*30/h;
-			
+			this.maxVelocity.y = 420+600/(h/2);
 			this.makeGraphic(w, h, 0x000000FF);
 			
 			primaryColour = FlxColorUtil.makeFromARGB(1.0, Std.random(255), Std.random(255), Std.random(255));
@@ -116,6 +115,7 @@ class Entity extends FlxSprite {
 			animationManagerLegs = new AnimationManager(legs.graphics,"assets/images/legAnimationsHD.png");
 			var spriteSheetHandler:SpriteSheetHandler = new SpriteSheetHandler();
 			animationManagerLegs.addAnimationState("walk", SpriteSheetHandler.getSpriteArray(360*3, 66*3, 40*3, 23*3, 0, 0, 9, 0), 3);
+			animationManagerLegs.addAnimationState("run", SpriteSheetHandler.getSpriteArray(360*3, 66*3, 40*3, 23*3, 0, 0, 9, 0), 1);
 			animationManagerLegs.addAnimationState("jump", SpriteSheetHandler.getSpriteArray(360*3, 66*3, 40*3, 23*3, 0, 4, 9, 0), 3);
 			animationManagerLegs.addAnimationState("idle", SpriteSheetHandler.getSpriteArray(360*3, 66*3, 40*3, 23*3, 0, 2, 2, 0), 15);
 			animationManagerLegs.setAnimationState("idle");
@@ -129,6 +129,7 @@ class Entity extends FlxSprite {
 			
 			animationManagerArms = new AnimationManager(arms.graphics,"assets/images/armAnimationsHD.png");
 			animationManagerArms.addAnimationState("walk", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 0, 9, 0), 3);
+			animationManagerArms.addAnimationState("run", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 0, 9, 0), 1);
 			animationManagerArms.addAnimationState("attack1", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 9, 8, 0), 3);
 			animationManagerArms.addAnimationState("attack2", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 2, 8, 0), 3);
 			animationManagerArms.addAnimationState("idle1", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 10, 5, 0), 3);
@@ -214,7 +215,11 @@ class Entity extends FlxSprite {
 		
 		if (this.isTouching(FlxObject.FLOOR)) {
 			if (Math.abs(this.velocity.x) > 1) {
-				animationManagerLegs.setAnimationState("walk");
+				if (this.running) {
+					animationManagerLegs.setAnimationState("run");
+				}else{
+					animationManagerLegs.setAnimationState("walk");
+				}
 			}else {
 				animationManagerLegs.setAnimationState("idle");
 			}
@@ -232,7 +237,11 @@ class Entity extends FlxSprite {
 		}else {
 			if (this.isTouching(FlxObject.FLOOR)) {
 				if (Math.abs(this.velocity.x) > 1) {
-					animationManagerArms.setAnimationState("walk");
+					if (this.running) {
+						animationManagerArms.setAnimationState("run");
+					}else{
+						animationManagerArms.setAnimationState("walk");
+					}
 					idleTimer = 0;
 				}else {
 					if(idleTimer == 0 || idleTimer == idleTimerLimit){
@@ -284,6 +293,14 @@ class Entity extends FlxSprite {
 					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x - i), 0)] += 1/i*2;
 				}
 			}
+		}
+	}
+	
+	public function runningCheck() {
+		if (running) {
+			this.maxVelocity.x = 160;
+		}else {
+			this.maxVelocity.x = 80;
 		}
 	}
 }
