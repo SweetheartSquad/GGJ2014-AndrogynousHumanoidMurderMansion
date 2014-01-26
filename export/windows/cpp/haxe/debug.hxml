@@ -5,7 +5,7 @@
 -lib flixel
 -lib actuate
 -cp source
--D tools=1.2.8
+-D tools=1.2.6
 -D FLX_NO_DEBUG
 -D lime_native
 -D no-compilation
