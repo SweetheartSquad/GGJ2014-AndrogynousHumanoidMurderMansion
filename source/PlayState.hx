@@ -323,14 +323,15 @@ class PlayState extends FlxState
 		
 		entities.callAll("attackDelay");
 		
+		Reg.aggresionMap.reduceAggression();
+		
+		entities.callAll("updateAggresion");
 		
 		/*for (y in 0...Reg.aggresionMap.height) {
 			for (x in 0...Reg.aggresionMap.width) {
 				this.remove(Reg.aggresionMap.vis[Reg.aggresionMap.idx(x,y)]);
 			}
 		}*/
-		
-		Reg.aggresionMap.members[50] = 1;
 		
 		Reg.aggresionMap.colourSprites();
 		
@@ -343,12 +344,6 @@ class PlayState extends FlxState
 	public function entityToEntity(object1:Entity,object2:Entity) {
 		if (object1.interacting) {
 			object2.talkBubble.alpha += 0.5;
-		}
-		if (object1.attacking) {
-			Reg.aggresionMap.members[Reg.aggresionMap.idx(Math.round(object1.x), Math.round(object1.y))] = 1;
-		}
-		if (object2.attacking) {
-			Reg.aggresionMap.members[Reg.aggresionMap.idx(Math.round(object2.x), Math.round(object2.y))] = 1;
 		}
 		
 		if (object2.attacking && object2.attackTimer == 3) {

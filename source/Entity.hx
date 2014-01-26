@@ -95,7 +95,7 @@ class Entity extends FlxSprite {
 			
 			this.maxVelocity.y = 400*30/h;
 			
-			this.makeGraphic(w, h, 0x330000FF);
+			this.makeGraphic(w, h, 0x000000FF);
 			
 			primaryColour = FlxColorUtil.makeFromARGB(1.0, Std.random(255), Std.random(255), Std.random(255));
 			secondaryColour = Math.random() > 0.5 ? FlxColorUtil.getAnalogousHarmony(primaryColour, Std.random(50)).color2 : FlxColorUtil.getAnalogousHarmony(primaryColour, Std.random(50)).color3;
@@ -268,5 +268,20 @@ class Entity extends FlxSprite {
 		this.destroyGraphics();
 		super.kill();
 		
+	}
+	
+	
+	public function updateAggresion() {
+		if (this.attacking) {
+			Reg.aggresionMap.members[Reg.aggresionMap.idx(Math.round(this.x), 0)] += 1;
+			for (i in 0...25) {
+				if(x+i < Reg.gameWidth){
+					Reg.aggresionMap.members[Reg.aggresionMap.idx(Math.round(this.x + i), 0)] += 1/i;
+				}
+				if(x-i > 0){
+					Reg.aggresionMap.members[Reg.aggresionMap.idx(Math.round(this.x - i), 0)] += 1/i;
+				}
+			}
+		}
 	}
 }
