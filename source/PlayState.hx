@@ -193,6 +193,8 @@ class PlayState extends FlxState
 	
 	public function generateMap() {
 		//gamewidth and gameheight
+		trace(Reg.gameWidth);
+		trace(Reg.gameHeight);
 		
 		//put the map in the middle third of the screen
 		//twothick border
@@ -204,10 +206,7 @@ class PlayState extends FlxState
 		var trapY:Int;
 		var floorNum = Std.random(4);
 		
-		trace("hey");
-		
 		trapX = Std.random(38) + 3;
-		trace(trapX);
 		switch(floorNum) {
 			case 0:
 				trapY = 17;
