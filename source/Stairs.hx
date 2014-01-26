@@ -6,10 +6,13 @@ package ;
  */
 class Stairs extends Thingy
 {
+	public var relatedStairs:Int;
 
-	public function new(type:ThingyType, imgPath:String, ?isActive:Bool=true) 
+	
+	public function new(x:Float, y:Float, type:ThingyType, imgPath:String,id:Int,relatedStairs:Int,?isActive:Bool=true) 
 	{
-		super(type, imgPath, ?isActive);
+		super(x,y,type, imgPath, id, isActive);
+		this.relatedStairs = relatedStairs;
 		
 	}
 	

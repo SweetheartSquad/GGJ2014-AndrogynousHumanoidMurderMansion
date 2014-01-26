@@ -12,11 +12,13 @@ import Map;
  */
 class GamepadUtil
 {
+	
 	private var pressedbuttons:Map<Int,Int>;
     private var lastbuttonUp:Int;
 	private var axis:Float;
 	private var device:Int;
 
+	
 	public function new(device:Int) 
 	{
 		this.device = device;
@@ -28,7 +30,6 @@ class GamepadUtil
 		axis = 0.0;
 		
 	}
-	
 	private function button_Down(evt:JoystickEvent){
 		
 		if (evt.device == device)
@@ -78,8 +79,5 @@ class GamepadUtil
 	{
 		return axis;
 	}
-	
-	
-	
 }
 #end

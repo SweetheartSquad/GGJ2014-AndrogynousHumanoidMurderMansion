@@ -36,7 +36,11 @@ class Thingy extends FlxSprite
 	
 	private function drawGraphics()
 	{
+		if(type == DOOR)
 		makeGraphic(20, 30, 0xff00aa11);
+		
+		if (type == STAIRS)
+		makeGraphic(20, 30, 0xffee3311);
 	}
 	
 	public function isId(id:Int):Bool
