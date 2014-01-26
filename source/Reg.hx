@@ -2,6 +2,7 @@ package;
 
 import flixel.util.FlxSave;
 import flixel.tile.FlxTilemap;
+import TwoDArray;
 
 /**
  * Handy, pre-built Registry class that can be used to store 
@@ -41,4 +42,5 @@ class Reg
 	static public var gameWidth:Int;
 	static public var _level:FlxTilemap;
 	static public var npcCount:Int = 250;
+	static public var aggresionMap:TwoDArray;
 }

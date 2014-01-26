@@ -14,27 +14,26 @@ import openfl.Assets;
 import utils.GamepadUtil;
 import utils.SoundManager;
 import haxe.io.Eof;
-#if flash
-#else
-import sys.io.File;
-import sys.io.FileInput;
-import sys.io.FileOutput;
-#end
+
 import flixel.effects.particles.FlxEmitter;
 import flixel.effects.particles.FlxParticle;
+
 
 #if flash
 #else
 import utils.GamepadUtil;
+import sys.io.File;
+import sys.io.FileInput;
+import sys.io.FileOutput;
 
 #end
 
 /**
  * A FlxState which can be used for the actual gameplay.
  */
+ 
 class PlayState extends FlxState
 {
-	
 	//private var _level:FlxTilemap;
 	inline static private var TILE_WIDTH:Int = 16;
 	inline static private var TILE_HEIGHT:Int = 16;
@@ -71,6 +70,7 @@ class PlayState extends FlxState
 	//Tile map array values
 	private var tiles:Array<Array<Int>> ;
 	
+		
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -90,8 +90,21 @@ class PlayState extends FlxState
 		generateMapCSV();
 		#end
 		
+		
+		Reg.aggresionMap = new TwoDArray(Reg.gameWidth, 4);
+		
+		
+		
+		
 		Reg._level = new FlxTilemap();
-		Reg._level.loadMap(Assets.getText("assets/level.csv"), "assets/images/testSet.png", TILE_WIDTH, TILE_HEIGHT, FlxTilemap.AUTO);
+		Reg._level.loadMap(Assets.getText("assets/level.csv"), "assets/images/woodTileSet.png", TILE_WIDTH, TILE_HEIGHT, FlxTilemap.AUTO);
+		
+		//var bm = new Bitmap(new TestBMD(100,100));
+		var bg:FlxSprite = new FlxSprite(-525,-310);
+		bg.loadGraphic("assets/images/background.png");
+		bg.scale.x /= Reg.zoom;
+		bg.scale.y /= Reg.zoom;
+		add(bg);
 		add(Reg._level);
 		generateLevel();
 		
@@ -161,6 +174,12 @@ class PlayState extends FlxState
 		
 		particles = new FlxGroup();
 		add(particles);
+		
+		for (y in 0...Reg.aggresionMap.height) {
+			for (x in 0...Reg.aggresionMap.width) {
+				this.add(Reg.aggresionMap.vis[Reg.aggresionMap.idx(x,y)]);
+			}
+		}
 		
 		super.create();
 	}
@@ -303,11 +322,35 @@ class PlayState extends FlxState
 		
 		
 		entities.callAll("attackDelay");
+		
+		
+		/*for (y in 0...Reg.aggresionMap.height) {
+			for (x in 0...Reg.aggresionMap.width) {
+				this.remove(Reg.aggresionMap.vis[Reg.aggresionMap.idx(x,y)]);
+			}
+		}*/
+		
+		Reg.aggresionMap.members[50] = 1;
+		
+		Reg.aggresionMap.colourSprites();
+		
+		/*for (y in 0...Reg.aggresionMap.height) {
+			for (x in 0...Reg.aggresionMap.width) {
+				this.add(Reg.aggresionMap.vis[Reg.aggresionMap.idx(x,y)]);
+			}
+		}*/
 	}
 	public function entityToEntity(object1:Entity,object2:Entity) {
 		if (object1.interacting) {
 			object2.talkBubble.alpha += 0.5;
 		}
+		if (object1.attacking) {
+			Reg.aggresionMap.members[Reg.aggresionMap.idx(Math.round(object1.x), Math.round(object1.y))] = 1;
+		}
+		if (object2.attacking) {
+			Reg.aggresionMap.members[Reg.aggresionMap.idx(Math.round(object2.x), Math.round(object2.y))] = 1;
+		}
+		
 		if (object2.attacking && object2.attackTimer == 3) {
 			makeGibs(object1.x, object1.y);
 			object1.kill();
