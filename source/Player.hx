@@ -17,6 +17,7 @@ class Player extends Entity {
 			this.destroyGraphics();
 			this.generateGraphics();
 			this.placeRandom();
+			this.health = 100;
 		}else {
 			super.kill();
 		}
