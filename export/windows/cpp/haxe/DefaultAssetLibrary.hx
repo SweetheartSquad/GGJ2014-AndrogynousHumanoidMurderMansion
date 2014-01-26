@@ -48,12 +48,16 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/background.psd", Reflect.field (AssetType, "binary".toUpperCase ()));
 		className.set ("assets/images/door.png", __ASSET__assets_images_door_png);
 		type.set ("assets/images/door.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/doorObjThingy.png", __ASSET__assets_images_doorobjthingy_png);
+		type.set ("assets/images/doorObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/images-go-here.txt", __ASSET__assets_images_images_go_here_txt);
 		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		className.set ("assets/images/legAnimations.png", __ASSET__assets_images_leganimations_png);
 		type.set ("assets/images/legAnimations.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/legAnimationsHD.png", __ASSET__assets_images_leganimationshd_png);
 		type.set ("assets/images/legAnimationsHD.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/runCycle.png", __ASSET__assets_images_runcycle_png);
+		type.set ("assets/images/runCycle.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/testSet.png", __ASSET__assets_images_testset_png);
 		type.set ("assets/images/testSet.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/woodTileSet.png", __ASSET__assets_images_woodtileset_png);
@@ -158,12 +162,16 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/background.psd", Reflect.field (AssetType, "binary".toUpperCase ()));
 		path.set ("assets/images/door.png", "assets/images/door.png");
 		type.set ("assets/images/door.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/doorObjThingy.png", "assets/images/doorObjThingy.png");
+		type.set ("assets/images/doorObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
 		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		path.set ("assets/images/legAnimations.png", "assets/images/legAnimations.png");
 		type.set ("assets/images/legAnimations.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/legAnimationsHD.png", "assets/images/legAnimationsHD.png");
 		type.set ("assets/images/legAnimationsHD.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/runCycle.png", "assets/images/runCycle.png");
+		type.set ("assets/images/runCycle.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/testSet.png", "assets/images/testSet.png");
 		type.set ("assets/images/testSet.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/woodTileSet.png", "assets/images/woodTileSet.png");
@@ -701,9 +709,11 @@ class __ASSET__assets_images_armanimationshd_png extends flash.display.BitmapDat
 class __ASSET__assets_images_background_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_background_psd extends null { }
 class __ASSET__assets_images_door_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_doorobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_images_go_here_txt extends null { }
 class __ASSET__assets_images_leganimations_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_leganimationshd_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_runcycle_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_testset_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_woodtileset_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_level_csv extends null { }
@@ -751,6 +761,8 @@ class __ASSET__flixel_snd_flixel_wav extends null { }
 
 
 #elseif html5
+
+
 
 
 

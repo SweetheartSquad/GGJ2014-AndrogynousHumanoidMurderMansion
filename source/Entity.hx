@@ -23,6 +23,8 @@ enum Facing {
 }
 
 class Entity extends FlxSprite {
+	public var winState:Bool;
+	
 	private var walkSpeed:Float;
 	private var runSpeed:Float;
 	//private var health:Int;
@@ -62,6 +64,7 @@ class Entity extends FlxSprite {
 		interacting = false;
 		attacking = false;
 		running = false;
+		winState = false;
 		
 		this.attackTimer = 0;
 		this.attackTimerLimit = 9;
@@ -69,8 +72,6 @@ class Entity extends FlxSprite {
 		this.idleTimerLimit = 120;
 		
 		var temp:Int = Math.round(Reg.gameWidth / 2);
-		this.x = Std.random(temp) + Math.round(temp/2);
-		this.y = 20;
 		this.maxVelocity.set(80, 500);
 		this.acceleration.y = 1500;
 		this.drag.x = this.maxVelocity.x * 8;
@@ -78,6 +79,7 @@ class Entity extends FlxSprite {
 		//smooth subpixel stuff
 		this.forceComplexRender = false;
 		
+		placeRandom();
 		generateGraphics();
 		
 	}
@@ -86,8 +88,8 @@ class Entity extends FlxSprite {
 		if(this.alive){
 			this.velocity.y = -this.maxVelocity.y/5;
 			
-			w = Std.random(15)+5;
-			h = Std.random(25)+10;
+			w = Std.random(10)+5;
+			h = Std.random(20)+10;
 			headSize = Math.round(Std.random(w)/3) + 2;
 			
 			this.maxVelocity.y = 420+600/(h/2);
@@ -114,10 +116,10 @@ class Entity extends FlxSprite {
 			Lib.current.stage.addChild(legs);
 			animationManagerLegs = new AnimationManager(legs.graphics,"assets/images/legAnimationsHD.png");
 			var spriteSheetHandler:SpriteSheetHandler = new SpriteSheetHandler();
-			animationManagerLegs.addAnimationState("walk", SpriteSheetHandler.getSpriteArray(360*3, 66*3, 40*3, 23*3, 0, 0, 9, 0), 3);
-			animationManagerLegs.addAnimationState("run", SpriteSheetHandler.getSpriteArray(360*3, 66*3, 40*3, 23*3, 0, 0, 9, 0), 1);
-			animationManagerLegs.addAnimationState("jump", SpriteSheetHandler.getSpriteArray(360*3, 66*3, 40*3, 23*3, 0, 4, 9, 0), 3);
-			animationManagerLegs.addAnimationState("idle", SpriteSheetHandler.getSpriteArray(360*3, 66*3, 40*3, 23*3, 0, 2, 2, 0), 15);
+			animationManagerLegs.addAnimationState("walk", SpriteSheetHandler.getSpriteArray(1080, 544, 40*3, 23*3, 0, 0, 9, 0), 3);
+			animationManagerLegs.addAnimationState("run", SpriteSheetHandler.getSpriteArray(1080, 544, 40*3, 23*3, 0, 6, 9, 0), 1);
+			animationManagerLegs.addAnimationState("jump", SpriteSheetHandler.getSpriteArray(1080, 544, 40*3, 23*3, 0, 4, 9, 0), 3);
+			animationManagerLegs.addAnimationState("idle", SpriteSheetHandler.getSpriteArray(1080, 544, 40*3, 23*3, 0, 2, 2, 0), 15);
 			animationManagerLegs.setAnimationState("idle");
 			
 			legs.scaleY = h/40/3;
@@ -199,6 +201,14 @@ class Entity extends FlxSprite {
 		
 	}
 	public function postUpdate() {
+		if (this.winState) {
+			this.running = false;
+			this.interacting = false;
+			this.attacking = false;
+			this.velocity.x = 0;
+			this.acceleration.x = 0;
+		}
+		
 		body.x = (this.x + (this.facing == FlxObject.LEFT ? w : 0))*Reg.zoom;// + (this.facing == FlxObject.LEFT ? -w / 2 : 0);
 		body.y = (this.y)*Reg.zoom;
 		head.x = body.x + (w/2 * (this.facing == FlxObject.LEFT ? -1 : 1))*Reg.zoom;
@@ -212,6 +222,7 @@ class Entity extends FlxSprite {
 		if (talkBubble.alpha > 0) {
 			talkBubble.alpha -= 0.1;
 		}
+		
 		
 		if (this.isTouching(FlxObject.FLOOR)) {
 			if (Math.abs(this.velocity.x) > 1) {
@@ -236,23 +247,32 @@ class Entity extends FlxSprite {
 			idleTimer = 0;
 		}else {
 			if (this.isTouching(FlxObject.FLOOR)) {
-				if (Math.abs(this.velocity.x) > 1) {
-					if (this.running) {
-						animationManagerArms.setAnimationState("run");
-					}else{
-						animationManagerArms.setAnimationState("walk");
-					}
-					idleTimer = 0;
-				}else {
-					if(idleTimer == 0 || idleTimer == idleTimerLimit){
+				if (this.winState) {
+					animationManagerArms.setAnimationState("idle1");
+					if (idleTimer >= idleTimerLimit) {
 						idleTimer = 0;
-						if(Math.random()>0.75){
-							animationManagerArms.setAnimationState("idle" + Std.string(Std.random(3) + 2));
-						}else {
-							animationManagerArms.setAnimationState("idle4");
-						}
+						//this.facing = this.facing == FlxObject.LEFT ? FlxObject.RIGHT : FlxObject.LEFT;
 					}
 					idleTimer += 1;
+				}else{
+					if (Math.abs(this.velocity.x) > 1) {
+						if (this.running) {
+							animationManagerArms.setAnimationState("run");
+						}else{
+							animationManagerArms.setAnimationState("walk");
+						}
+						idleTimer = 0;
+					}else {
+						if (idleTimer == 0 || idleTimer == idleTimerLimit) {
+							idleTimer = 0;
+							if(Math.random()>0.75){
+								animationManagerArms.setAnimationState("idle" + Std.string(Std.random(3) + 2));
+							}else {
+								animationManagerArms.setAnimationState("idle4");
+							}
+						}
+						idleTimer += 1;
+					}
 				}
 			}
 		}
@@ -302,5 +322,38 @@ class Entity extends FlxSprite {
 		}else {
 			this.maxVelocity.x = 80;
 		}
+	}
+	
+	public function placeRandom() {
+		var _x:Float;
+		var _y:Float;
+		
+		var tileXNum:Int = Math.round(Reg.gameWidth / 16);
+		var tileYNum:Int = Math.round(Reg.gameHeight / 16);
+		var tileStartX:Int = Math.round((tileXNum / 8));
+		var tileEndX:Int = tileXNum-tileStartX;
+		
+		var floorHeight = Math.round((tileYNum - 4) / 4);
+		var floorCount = -3;
+		
+		
+		_x = Std.random((tileEndX - tileStartX) - 5) + tileStartX + 2;
+		
+		
+		switch(Std.random(4)) {
+			case 0:
+				_y = (2 + floorHeight);
+			case 1:
+				_y = (2 + (floorHeight * 2));
+			case 2:
+				_y = (2 + (floorHeight * 3));
+			case 3:
+				_y = (0 + (floorHeight * 4));
+			default:
+				_y = -1;
+		}
+		
+		this.x = _x*16;
+		this.y = _y*16;
 	}
 }

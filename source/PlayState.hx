@@ -142,7 +142,7 @@ class PlayState extends FlxState
 		npcs = new FlxGroup();
 		
 		for(i in 0...Reg.npcCount){
-			npcs.add(new NPC(Math.random()>0.0 ? NpcType.COWARD : NpcType.AGGRESSOR));
+			npcs.add(new NPC(Math.random()>0.5 ? NpcType.COWARD : NpcType.AGGRESSOR));
 		}
 		entities = new FlxGroup();
 		entities.add(players);
@@ -192,6 +192,8 @@ class PlayState extends FlxState
 			cast(npcs._members[i],Entity).acceleration.x = 0;
 		}
 		
+		
+		if(player1.alive && player2.alive){
 		#if flash
 		//player1 controls
 		if (FlxG.keyboard.anyPressed(["J"])){
@@ -281,6 +283,7 @@ class PlayState extends FlxState
 			player2.generateGraphics();
 		}
 		
+		
 		if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
 			entities.callAll("destroyGraphics");
 			entities.callAll("generateGraphics");
@@ -309,22 +312,25 @@ class PlayState extends FlxState
 			npcs.callAll("tryAttack");
 		}
 		
-		entities.callAll("runningCheck");
+		entities.callAll("runningCheck");}
 		//states/controls above
 		super.update();
+		
+		if(player1.alive && player2.alive){
 		//updates below
 		manageThingies();
 
 		//Reset Variables
 		entities.setAll("interacting", false);
-		entities.setAll("running", false);
-		
+		}
 		FlxG.collide(Reg._level, entities);
 		FlxG.collide(Reg._level, particles,particleCollide);
 		particles.callAll("postUpdate");
 		
 		entities.callAll("postUpdate");
+		if(player1.alive && player2.alive){
 		FlxG.overlap(entities, entities, entityToEntity);
+		entities.setAll("running", false);
 		
 		
 		entities.callAll("attackDelay");
@@ -335,20 +341,14 @@ class PlayState extends FlxState
 		entities.callAll("updateAggression");
 		npcs.callAll("updateLocalAggression");
 		
-		/*for (y in 0...Reg.aggressionMap.height) {
-			for (x in 0...Reg.aggressionMap.width) {
-				this.remove(Reg.aggressionMap.vis[Reg.aggressionMap.idx(x,y)]);
-			}
-		}*/
+		if(Reg.viewAggression){
+			Reg.aggressionMap.colourSprites();
+		}
 		
-		Reg.aggressionMap.colourSprites();
-		
-		/*for (y in 0...Reg.aggressionMap.height) {
-			for (x in 0...Reg.aggressionMap.width) {
-				this.add(Reg.aggressionMap.vis[Reg.aggressionMap.idx(x,y)]);
-			}
-		}*/
-		
+		}else{
+			entities.setAll("winState", true);
+			player1.alive ? makeGibs(player1.x, player1.y, true) : makeGibs(player2.x, player2.y, true);
+		}
 	}
 	public function entityToEntity(object1:Entity,object2:Entity) {
 		if (object1.interacting) {
@@ -364,12 +364,12 @@ class PlayState extends FlxState
 			object2.kill();
 		}
 	}
-	public function makeGibs(_x:Float, _y:Float) {
-		particles.add(new Particle(_x, _y));
-		particles.add(new Particle(_x, _y));
-		particles.add(new Particle(_x, _y));
+	public function makeGibs(_x:Float, _y:Float, _happy:Bool = false) {
+		particles.add(new Particle(_x, _y, _happy));
+		particles.add(new Particle(_x, _y, _happy));
+		particles.add(new Particle(_x, _y, _happy));
 		if(Math.random()>0.3){
-			makeGibs(_x, _y);
+			makeGibs(_x, _y, _happy);
 		}
 	}
 	public function particleCollide(object1:FlxTilemap, object2:Particle) {
@@ -506,27 +506,19 @@ class PlayState extends FlxState
 			}
 		}
 		
-		for(i in 0...Std.random(20)){
-			Reg._level.setTile(getTempX(), getTempY() - 1, 1);
-		}for(i in 0...Std.random(20)){
-			Reg._level.setTile(getTempX(), getTempY() + 1, 1);
-		}
+		
 		
 		
 		
 		//create the trapdoor
-		trapdoor = new TrapDoor(
-			(tempX*16), (tempY*16),
-			"assets/image/trapdoor.png");
+		trapdoor = new TrapDoor((tempX*16), (tempY*16),"assets/image/trapdoor.png");
 		add(trapdoor);
 		
 		//position and create lever
 		tempX = getTempX() * 16;
 		tempY = getTempY() * 16;
 		
-		lever = new Lever(
-			tempX, (tempY) - 22,
-			"assets/image/lever.png");
+		lever = new Lever(tempX, (tempY) - 22,"assets/image/lever.png");
 		add(lever);
 		
 		
@@ -659,8 +651,68 @@ class PlayState extends FlxState
 			trace(sentinel);
 			teleporters.add(new Teleporter(tempX, tempY, ThingyType.DOOR, "assets/door.png", tempId+1, tempId));
 		}
+		
+		
+		//generate stalactites/stalagmites
+		var tempTile:Array<Int> = new Array();
+		for (i in 0...Std.random(50)+5) {
+			var _x:Int = getTempX();
+			var _y:Int = getTempY() - 1;
+			tempTile.push(_x);
+			Reg._level.setTile(_x, _y, compareToTeleporters(_x,_y));
+			
+			
+		}for (i in 0...Std.random(50)+5) {
+			var _x:Int;
+			var _y:Int = getTempY() + 1 - floorHeight;
+			if (_y < floorHeight) {
+				_y -= 1;
+			}
+			var flag:Bool = true;
+			var flag2:Bool = false;
+			do {
+				_x = getTempX();
+				
+				for (i in tempTile) {
+					if (i == _x) {
+						flag2 = true;
+						break;
+					}
+				}
+				flag = false;
+				if (flag2) {
+					flag = true;
+					flag2 = false;
+				}
+			}while (flag);
+			Reg._level.setTile(_x, _y, compareToTeleporters(_x,_y));
+		}
+		
+		
+		var tempTile:Array<Int> = new Array();
+		for (i in 0...Std.random(3)+3) {
+			var _x:Int = getTempX();
+			var _y:Int;
+			if (i >= 3) {
+				_y = getTempY();
+			}else if (i == 0) {
+				_y = 2 + floorHeight;
+			}else if (i == 1) {
+				_y = 2 + floorHeight * 2;
+			}else {
+				_y = 2 + floorHeight * 3;
+			}
+			Reg._level.setTile(_x, _y, 0);
+		}
 	}
-	
+	public function compareToTeleporters(tempX:Int, tempY:Int) {
+		for (i in teleporters._members) {
+			if ((cast(i, Teleporter).x - tempX*16 < 5) && (cast(i, Teleporter).y - tempY*16 < 5)) {
+				return 0;
+			}
+		}
+		return 1;
+	}
 	public function getTempX():Int {
 		var tileXNum:Int = Math.round(Reg.gameWidth / 16);
 		var tileStartX:Int = Math.round((tileXNum / 8));

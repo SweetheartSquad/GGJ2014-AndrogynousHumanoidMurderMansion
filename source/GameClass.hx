@@ -17,7 +17,7 @@ class GameClass extends FlxGame
 	public function new()
 	{
 		Reg.gameWidth = 720; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
-		Reg.gameHeight = 480; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
+		Reg.gameHeight = 405; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
