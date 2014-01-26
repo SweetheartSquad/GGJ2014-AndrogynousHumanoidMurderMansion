@@ -283,6 +283,7 @@ class PlayState extends FlxState
 		npcs.callAll("moveAlongPath");
 		npcs.callAll("tryInteract");
 		npcs.callAll("tryJump");
+		npcs.callAll("tryAttack");
 		
 		//states/controls above
 		super.update();
@@ -319,15 +320,15 @@ class PlayState extends FlxState
 	public function makeGibs(_x:Float, _y:Float) {
 		particles.add(new Particle(_x, _y));
 		if(Math.random()>0.1){
-		particles.add(new Particle(_x, _y));
+			particles.add(new Particle(_x, _y));
 			if(Math.random()>0.2){
-		particles.add(new Particle(_x, _y));
+				particles.add(new Particle(_x, _y));
 				if(Math.random()>0.3){
-		particles.add(new Particle(_x, _y));
+					particles.add(new Particle(_x, _y));
 					if(Math.random()>0.4){
-		particles.add(new Particle(_x, _y));
+						particles.add(new Particle(_x, _y));
 						if(Math.random()>0.5){
-		particles.add(new Particle(_x, _y));
+							particles.add(new Particle(_x, _y));
 						}
 					}
 				}

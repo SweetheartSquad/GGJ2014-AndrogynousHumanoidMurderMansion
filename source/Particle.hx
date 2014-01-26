@@ -11,11 +11,13 @@ import flixel.FlxObject;
 class Particle extends FlxSprite
 {
 	public var timer:Int;
-	public function new(X:Float=0, Y:Float=0, ?SimpleGraphic:Dynamic) 
+	public var happy:Bool;
+	public function new(X:Float=0, Y:Float=0, Happy:Bool=false) 
 	{
 		super(X, Y);
+		happy = Happy;
 		var size:Int = Std.random(3) + 2;
-		this.makeGraphic(size, size, (FlxColorUtil.makeFromARGB(1.0, Std.random(100) + 155, 0, 0)));
+		this.makeGraphic(size, size, Happy?(FlxColorUtil.makeFromARGB(1.0, Std.random(105)+150, Std.random(105)+150, Std.random(105)+150)):(FlxColorUtil.makeFromARGB(1.0, Std.random(100) + 155, 0, 0)));
 		this.maxVelocity.set(500, 500);
 		this.acceleration.y = 1500;
 		this.drag.x = this.maxVelocity.x;

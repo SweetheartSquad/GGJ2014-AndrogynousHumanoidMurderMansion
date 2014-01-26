@@ -7,6 +7,7 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import flixel.util.FlxColor;
 import utils.AnimationManager;
+import flixel.util.FlxColorUtil;
 
 import flash.Lib;
 import Std;
@@ -88,16 +89,17 @@ class Entity extends FlxSprite {
 		if(this.alive){
 			this.velocity.y -= this.maxVelocity.y/5;
 			
-			w = Std.random(5)+5;
-			h = Std.random(10)+15;
-			headSize = Std.random(3) + 2;
+			w = Std.random(15)+5;
+			h = Std.random(25)+10;
+			headSize = Math.round(Std.random(w)/3) + 2;
 			
 			this.maxVelocity.y = 400*30/h;
 			
 			this.makeGraphic(w, h, 0x330000FF);
 			
-			primaryColour = Std.random(16777215);
-			secondaryColour = Std.random(16777215);
+			primaryColour = FlxColorUtil.makeFromARGB(1.0, Std.random(255), Std.random(255), Std.random(255));
+			secondaryColour = Math.random() > 0.5 ? FlxColorUtil.getAnalogousHarmony(primaryColour, Std.random(50)).color2 : FlxColorUtil.getAnalogousHarmony(primaryColour, Std.random(50)).color3;
+			
 			
 			body = new Sprite();
 			body.graphics.beginFill(primaryColour);
