@@ -17,7 +17,7 @@ class SoundManager
 	private var soundChannel:SoundChannel;
 	private var songCounter:Int;
 	private var songSegmentCounter:Int;
-	var yourTimer:haxe.Timer;
+	public var yourTimer:haxe.Timer;
 	
 	public function new() 
 	{

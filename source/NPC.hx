@@ -67,10 +67,10 @@ class NPC extends Entity{
 	public function moveAlongPath() {
 		if (this.x < targetX) {
 			this.acceleration.x = this.maxVelocity.x * (this.running ? 8 : 4) ;
-			this.facing = FlxObject.RIGHT;
+			//this.facing = FlxObject.RIGHT;
 		}else {
 			this.acceleration.x = -this.maxVelocity.x * (this.running ? 8 : 4);
-			this.facing = FlxObject.LEFT;
+			//this.facing = FlxObject.LEFT;
 		}
 		if (Math.abs(this.x - targetX) < 10) {
 			this.acceleration.x = 0;
@@ -99,13 +99,14 @@ class NPC extends Entity{
 		}
 	}
 	public function tryAttack() {
-		var aggro:Float = Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x), 0)];
+		var aggro:Float = Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x),  getRow(this.y))];
 		if (Math.random() < (attackChance + attackChance*(aggressionTolerance<aggro ? 0 : 1))) {
 			this.attacking = true;
 		}
 	}
 	public function updateLocalAggression() {
-		var aggro:Float = Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x), 0)];
+		var aggro:Float = Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x), getRow(this.y))];
+		
 		
 		if (aggro > aggressionTolerance) {
 			//react to aggression
@@ -113,7 +114,7 @@ class NPC extends Entity{
 				var minAggro:Float = aggro;
 				var minLocX:Int = Math.round(this.x);
 				for (curLocX in 128...Reg.aggressionMap.width - 128) {
-					var curAggro:Float = Reg.aggressionMap.members[Reg.aggressionMap.idx(curLocX, 0)];
+					var curAggro:Float = Reg.aggressionMap.members[Reg.aggressionMap.idx(curLocX,  getRow(this.y))];
 					if (curAggro+Math.abs(this.x - curLocX)/(Reg.gameWidth*0.5) <= minAggro) {
 						minAggro = curAggro + Math.abs(this.x - curLocX) / (Reg.gameWidth*0.5);
 						minLocX = curLocX;
@@ -131,7 +132,7 @@ class NPC extends Entity{
 				var maxAggro:Float = aggro;
 				var maxLocX:Int = Math.round(this.x);
 				for (curLocX in 128...Reg.aggressionMap.width - 128) {
-					var curAggro:Float = Reg.aggressionMap.members[Reg.aggressionMap.idx(curLocX, 0)];
+					var curAggro:Float = Reg.aggressionMap.members[Reg.aggressionMap.idx(curLocX,  getRow(this.y))];
 					if (curAggro+Math.abs(this.x - curLocX)/(Reg.gameWidth*0.5) >= maxAggro) {
 						maxAggro = curAggro + Math.abs(this.x - curLocX) / (Reg.gameWidth*0.5);
 						maxLocX = curLocX;

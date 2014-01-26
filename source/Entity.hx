@@ -210,6 +210,19 @@ class Entity extends FlxSprite {
 		
 	}
 	public function postUpdate() {
+		if(winState){
+			if (idleTimer >= idleTimerLimit) {
+				this.acceleration.x = this.facing == FlxObject.LEFT ? 2 : -2;
+			}
+		}
+			
+		if (this.acceleration.x < 0) {
+			this.facing = FlxObject.LEFT;
+		}
+		if (this.acceleration.x > 0) {
+			this.facing = FlxObject.RIGHT;
+		}
+		
 		if (this.winState) {
 			this.running = false;
 			this.interacting = false;
@@ -255,6 +268,8 @@ class Entity extends FlxSprite {
 					animationManagerArms.setAnimationState("idle1");
 					if (idleTimer >= idleTimerLimit) {
 						idleTimer = 0;
+						this.jump();
+						this.acceleration.x = this.facing == FlxObject.LEFT ? 2 : -2;
 						//this.facing = this.facing == FlxObject.LEFT ? FlxObject.RIGHT : FlxObject.LEFT;
 					}
 					idleTimer += 1;
@@ -308,23 +323,23 @@ class Entity extends FlxSprite {
 	
 	public function updateAggression() {
 		if (this.attacking) {
-			Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x), 0)] += 1;
+			Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x),  getRow(this.y))] += 1;
 			for (i in 0...100) {
 				if(x+i < Reg.gameWidth){
-					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x + i), 0)] += 1/i*2;
+					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x + i),  getRow(this.y))] += 1/i*2;
 				}
 				if(x-i > 0){
-					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x - i), 0)] += 1/i*2;
+					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x - i),  getRow(this.y))] += 1/i*2;
 				}
 			}
 		}if (this.running) {
-			Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x), 0)] += 1;
+			Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x),  getRow(this.y))] += 1;
 			for (i in 0...100) {
 				if(x+i < Reg.gameWidth){
-					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x + i), 0)] += 1/i/2;
+					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x + i),  getRow(this.y))] += 1/i/2;
 				}
 				if(x-i > 0){
-					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x - i), 0)] += 1/i/2;
+					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x - i),  getRow(this.y))] += 1/i/2;
 				}
 			}
 		}
@@ -369,5 +384,23 @@ class Entity extends FlxSprite {
 		
 		this.x = _x*16;
 		this.y = _y*16;
+	}
+	
+	
+	public function getRow(_y:Dynamic):Int {
+		//4:400-380
+		//3:380-200
+		//2:200-115
+		//1:115-0
+
+		if (_y <= 115) {
+			return 0;
+		}else if (_y <= 200) {
+			return 1;
+		}else if (_y <= 380) {
+			return 2;
+		}else {
+			return 3;
+		}
 	}
 }
