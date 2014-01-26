@@ -249,11 +249,11 @@ class PlayState extends FlxState
 		//player1 controls
 		if (FlxG.keyboard.anyPressed(["A"])){
 			player1.acceleration.x = -player1.maxVelocity.x * (player1.running ? 8 : 4);
-			player1.facing = FlxObject.LEFT;
+			//player1.facing = FlxObject.LEFT;
 		}
 		if (FlxG.keyboard.anyPressed(["D"])){
 			player1.acceleration.x = player1.maxVelocity.x * (player1.running ? 8 : 4);
-			player1.facing = FlxObject.RIGHT;
+			//player1.facing = FlxObject.RIGHT;
 		}
 		if (FlxG.keyboard.justPressed("W")) {
 			player1.jump();
@@ -271,10 +271,10 @@ class PlayState extends FlxState
 		//player2 controls
 		if (FlxG.keyboard.anyPressed(["J"])){
 			player2.acceleration.x = -player2.maxVelocity.x * (player2.running ? 8 : 4);
-			player2.facing = FlxObject.LEFT;
+			//player2.facing = FlxObject.LEFT;
 		}if (FlxG.keyboard.anyPressed(["L"])){
 			player2.acceleration.x = player2.maxVelocity.x * (player2.running ? 8 : 4);
-			player2.facing = FlxObject.RIGHT;
+			//player2.facing = FlxObject.RIGHT;
 		}if (FlxG.keyboard.justPressed("I")) {
 			player2.jump();
 		}if (FlxG.keyboard.anyPressed(["K"])) {
@@ -288,11 +288,11 @@ class PlayState extends FlxState
 		//player1 controls
 		if (FlxG.keyboard.anyPressed(["A"]) || (gamepadUtilOne.getAxis() < -0.5 && gamepadUtilOne.getControllerId() == 0)){
 			player1.acceleration.x = -player1.maxVelocity.x * (player1.running ? 8 : 4);
-			player1.facing = FlxObject.LEFT;
+			//player1.facing = FlxObject.LEFT;
 		}
 		if (FlxG.keyboard.anyPressed(["D"])|| (gamepadUtilOne.getAxis() > 0.5 && gamepadUtilOne.getControllerId() == 0 )){
 			player1.acceleration.x = player1.maxVelocity.x * (player1.running ? 8 : 4);
-			player1.facing = FlxObject.RIGHT;
+			//player1.facing = FlxObject.RIGHT;
 		}
 		if ((FlxG.keyboard.justPressed("W")|| (gamepadUtilOne.getPressedbuttons().exists(0)&& gamepadUtilOne.getControllerId() == 0 ))) {
 			player1.jump();
@@ -315,10 +315,10 @@ class PlayState extends FlxState
 		//player2 controls
 		if (FlxG.keyboard.anyPressed(["J"])|| (gamepadUtilTwo.getAxis() < -0.5 && gamepadUtilTwo.getControllerId() == 1)){
 			player2.acceleration.x = -player2.maxVelocity.x * (player2.running ? 8 : 4);
-			player2.facing = FlxObject.LEFT;
+			//player2.facing = FlxObject.LEFT;
 		}if (FlxG.keyboard.anyPressed(["L"])|| (gamepadUtilTwo.getAxis() > 0.5 && gamepadUtilTwo.getControllerId() == 1 )){
 			player2.acceleration.x = player2.maxVelocity.x * (player2.running ? 8 : 4);
-			player2.facing = FlxObject.RIGHT;
+			//player2.facing = FlxObject.RIGHT;
 		}if ((FlxG.keyboard.justPressed("I") || (gamepadUtilTwo.getPressedbuttons().exists(0) && gamepadUtilTwo.getControllerId() == 1))) {
 			player2.jump();
 		}if (FlxG.keyboard.justPressed("K")|| (gamepadUtilTwo.getPressedbuttons().exists(1)&& gamepadUtilTwo.getControllerId() == 1 )) {
@@ -351,10 +351,11 @@ class PlayState extends FlxState
 		#end
 		
 		
-		/*if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
+		if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
 			entities.callAll("destroyGraphics");
 			entities.callAll("generateGraphics");
-		}*/
+			entities.callAll("placeRandom()");
+		}
 		
 		//controls above
 		npcs.callAll("moveAlongPath");
@@ -400,8 +401,20 @@ class PlayState extends FlxState
 		}else{
 			entities.setAll("winState", true);
 			player1.alive ? makeGibs(player1.x, player1.y, true) : makeGibs(player2.x, player2.y, true);
+			
+			if (FlxG.keyboard.anyJustPressed(["ESC","SPACE","ENTER"]) || gamepadUtilOne.getLastbuttonUp() == 7) {
+						
+				entities.callAll("destroyGraphics");
+				entities.kill();
+				trapdoor.kill();
+				lever.kill();
+				teleporters.kill();
+				
+				soundManager.yourTimer.stop();
+				this.kill();
+				FlxG.switchState(new MenuState());
+			}
 		}
-		
 		
 		
 		//GUI

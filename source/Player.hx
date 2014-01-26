@@ -5,7 +5,7 @@ package ;
  * @author Sean
  */
 class Player extends Entity {
-	public var lives:Int = 2;
+	public var lives:Int = 0;
 	public function new() {
 		super();
 		this.attackDmg = 101;
