@@ -22,22 +22,16 @@ enum Facing {
 	RIGHT;
 }
 
-enum State {
-	IDLE;
-	WALKING;
-	RUNNING;
-}
-
 class Entity extends FlxSprite {
 	private var walkSpeed:Float;
 	private var runSpeed:Float;
 	//private var health:Int;
 	private var attackDmg:Int;
-	private var state:State;
 	public var attacking:Bool;
 	public var attackTimer:Int;
 	private var attackTimerLimit:Int;
 	public var interacting:Bool;
+	public var running:Bool;
 	
 	private var idleTimer:Int;
 	private var idleTimerLimit:Int;
@@ -64,12 +58,18 @@ class Entity extends FlxSprite {
 	
 	public function new(){
 		super();
+		
+		interacting = false;
+		attacking = false;
+		running = false;
+		
 		this.attackTimer = 0;
 		this.attackTimerLimit = 9;
 		this.idleTimer = 0;
 		this.idleTimerLimit = 120;
 		
-		this.x = Reg.gameWidth/2;
+		var temp:Int = Math.round(Reg.gameWidth / 2);
+		this.x = Std.random(temp) + Math.round(temp/2);
 		this.y = 20;
 		this.maxVelocity.set(80, 500);
 		this.acceleration.y = 1500;
@@ -80,11 +80,6 @@ class Entity extends FlxSprite {
 		
 		generateGraphics();
 		
-	}
-	
-	private function initializeVars()
-	{
-		interacting = false;
 	}
 	
 	public function generateGraphics() {
@@ -212,7 +207,7 @@ class Entity extends FlxSprite {
 		arms.x = body.x + (body.width*3.25 * (this.facing == FlxObject.LEFT ? -1 : 1));
 		arms.y = body.y + h / 12 * Reg.zoom;
 		talkBubble.x = head.x;
-		talkBubble.y = this.y - 5 * Reg.zoom;
+		talkBubble.y = head.y - 5 * Reg.zoom;
 		if (talkBubble.alpha > 0) {
 			talkBubble.alpha -= 0.1;
 		}
@@ -278,15 +273,15 @@ class Entity extends FlxSprite {
 	}
 	
 	
-	public function updateAggresion() {
+	public function updateAggression() {
 		if (this.attacking) {
-			Reg.aggresionMap.members[Reg.aggresionMap.idx(Math.round(this.x), 0)] += 1;
-			for (i in 0...25) {
+			Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x), 0)] += 1;
+			for (i in 0...100) {
 				if(x+i < Reg.gameWidth){
-					Reg.aggresionMap.members[Reg.aggresionMap.idx(Math.round(this.x + i), 0)] += 1/i;
+					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x + i), 0)] += 1/i*2;
 				}
 				if(x-i > 0){
-					Reg.aggresionMap.members[Reg.aggresionMap.idx(Math.round(this.x - i), 0)] += 1/i;
+					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x - i), 0)] += 1/i*2;
 				}
 			}
 		}

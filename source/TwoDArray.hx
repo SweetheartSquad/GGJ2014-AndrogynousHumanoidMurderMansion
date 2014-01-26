@@ -50,7 +50,7 @@ class TwoDArray
 				if(members[idx(x, y)] > 1){
 					members[idx(x, y)] = 0.99;
 				}else if(members[idx(x, y)] > 0.01){
-					members[idx(x, y)] -= 0.01;
+					members[idx(x, y)] -= 0.001;
 				}else {
 					members[idx(x, y)] = 0;
 				}

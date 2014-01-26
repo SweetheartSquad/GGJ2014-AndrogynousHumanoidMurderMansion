@@ -98,7 +98,7 @@ class PlayState extends FlxState
 		#end
 		
 		
-		Reg.aggresionMap = new TwoDArray(Reg.gameWidth, 4);
+		Reg.aggressionMap = new TwoDArray(Reg.gameWidth, 4);
 		
 		
 		
@@ -115,9 +115,9 @@ class PlayState extends FlxState
 		add(Reg._level);
 		generateLevel();
 		
-		generateStairs();
-		generateDoors();
-		generateElevators();
+		//generateStairs();
+		//generateDoors();
+		//generateElevators();
 		
 		
 
@@ -181,9 +181,9 @@ class PlayState extends FlxState
 		particles = new FlxGroup();
 		add(particles);
 		
-		for (y in 0...Reg.aggresionMap.height) {
-			for (x in 0...Reg.aggresionMap.width) {
-				this.add(Reg.aggresionMap.vis[Reg.aggresionMap.idx(x,y)]);
+		for (y in 0...Reg.aggressionMap.height) {
+			for (x in 0...Reg.aggressionMap.width) {
+				this.add(Reg.aggressionMap.vis[Reg.aggressionMap.idx(x,y)]);
 			}
 		}
 		
@@ -212,11 +212,11 @@ class PlayState extends FlxState
 		#if flash
 		//player1 controls
 		if (FlxG.keyboard.anyPressed(["J"])){
-			player1.acceleration.x = -player1.maxVelocity.x * 4;
+			player1.acceleration.x = -player1.maxVelocity.x * (player1.running ? 8 : 4);
 			player1.facing = FlxObject.LEFT;
 		}
 		if (FlxG.keyboard.anyPressed(["L"])){
-			player1.acceleration.x = player1.maxVelocity.x * 4;
+			player1.acceleration.x = player1.maxVelocity.x * (player1.running ? 8 : 4);
 			player1.facing = FlxObject.RIGHT;
 		}
 		if (FlxG.keyboard.justPressed("I")) {
@@ -227,32 +227,35 @@ class PlayState extends FlxState
 		}
 		if (FlxG.keyboard.justPressed("U")) {
 			player1.interacting = true;
+		}if (FlxG.keyboard.anyPressed(["O"])) {
+			player1.running = true;
 		}
 		
 		
 		//player2 controls
 		if (FlxG.keyboard.anyPressed(["A"])){
-			player2.acceleration.x = -player2.maxVelocity.x * 4;
+			player2.acceleration.x = -player2.maxVelocity.x * (player2.running ? 8 : 4);
 			player2.facing = FlxObject.LEFT;
 		}if (FlxG.keyboard.anyPressed(["D"])){
-			player2.acceleration.x = player2.maxVelocity.x * 4;
+			player2.acceleration.x = player2.maxVelocity.x * (player2.running ? 8 : 4);
 			player2.facing = FlxObject.RIGHT;
 		}if (FlxG.keyboard.justPressed("W")) {
 			player2.jump();
 		}if (FlxG.keyboard.anyPressed(["S"])) {
 			player2.attacking = true;
-		}
-		if (FlxG.keyboard.justPressed("Q")) {
+		}if (FlxG.keyboard.justPressed("Q")) {
 			player2.interacting = true;
+		}if (FlxG.keyboard.anyPressed(["E"])) {
+			player2.running = true;
 		}
 		#else
 		//player1 controls
 		if (FlxG.keyboard.anyPressed(["J"]) || (gamepadUtilOne.getAxis() < -0.5 && gamepadUtilOne.getControllerId() == 0)){
-			player1.acceleration.x = -player1.maxVelocity.x * 4;
+			player1.acceleration.x = -player1.maxVelocity.x * (player1.running ? 8 : 4);
 			player1.facing = FlxObject.LEFT;
 		}
 		if (FlxG.keyboard.anyPressed(["L"])|| (gamepadUtilOne.getAxis() > 0.5 && gamepadUtilOne.getControllerId() == 0 )){
-			player1.acceleration.x = player1.maxVelocity.x * 4;
+			player1.acceleration.x = player1.maxVelocity.x * (player1.running ? 8 : 4);
 			player1.facing = FlxObject.RIGHT;
 		}
 		if ((FlxG.keyboard.justPressed("I")|| (gamepadUtilOne.getPressedbuttons().exists(0)&& gamepadUtilOne.getControllerId() == 0 ))) {
@@ -263,6 +266,8 @@ class PlayState extends FlxState
 		}
 		if (FlxG.keyboard.justPressed("U")|| (gamepadUtilOne.getPressedbuttons().exists(3)&& gamepadUtilOne.getControllerId() == 0 )) {
 			player1.interacting = true;
+		}if (FlxG.keyboard.anyPressed(["O"])|| (gamepadUtilOne.getPressedbuttons().exists(5)&& gamepadUtilOne.getControllerId() == 0 )) {
+			player1.running = true;
 		}
 		if (gamepadUtilOne.getLastbuttonUp() == 7 && gamepadUtilOne.getControllerId() == 0) {
 			player1.destroyGraphics();
@@ -273,10 +278,10 @@ class PlayState extends FlxState
 		
 		//player2 controls
 		if (FlxG.keyboard.anyPressed(["A"])|| (gamepadUtilTwo.getAxis() < -0.5 && gamepadUtilTwo.getControllerId() == 1)){
-			player2.acceleration.x = -player2.maxVelocity.x * 4;
+			player2.acceleration.x = -player2.maxVelocity.x * (player2.running ? 8 : 4);
 			player2.facing = FlxObject.LEFT;
 		}if (FlxG.keyboard.anyPressed(["D"])|| (gamepadUtilTwo.getAxis() > 0.5 && gamepadUtilTwo.getControllerId() == 1 )){
-			player2.acceleration.x = player2.maxVelocity.x * 4;
+			player2.acceleration.x = player2.maxVelocity.x * (player2.running ? 8 : 4);
 			player2.facing = FlxObject.RIGHT;
 		}if ((FlxG.keyboard.justPressed("W") || (gamepadUtilTwo.getPressedbuttons().exists(0) && gamepadUtilTwo.getControllerId() == 1))) {
 			player2.jump();
@@ -285,6 +290,8 @@ class PlayState extends FlxState
 		}
 		if (FlxG.keyboard.justPressed("Q")|| (gamepadUtilTwo.getPressedbuttons().exists(3)&& gamepadUtilTwo.getControllerId() == 1 )) {
 			player2.interacting = true;
+		}if (FlxG.keyboard.anyPressed(["E"])|| (gamepadUtilTwo.getPressedbuttons().exists(5)&& gamepadUtilTwo.getControllerId() == 1 )) {
+			player2.running = true;
 		}
 		if (gamepadUtilTwo.getLastbuttonUp() == 7 && gamepadUtilTwo.getControllerId() == 1) {
 			player2.destroyGraphics();
@@ -318,6 +325,7 @@ class PlayState extends FlxState
 
 		//Reset Variables
 		entities.setAll("interacting", false);
+		entities.setAll("running", false);
 		
 		FlxG.collide(Reg._level, entities);
 		FlxG.collide(Reg._level, particles,particleCollide);
@@ -329,22 +337,23 @@ class PlayState extends FlxState
 		
 		entities.callAll("attackDelay");
 		
-		Reg.aggresionMap.reduceAggression();
+		Reg.aggressionMap.reduceAggression();
 		
 		
-		entities.callAll("updateAggresion");
+		entities.callAll("updateAggression");
+		npcs.callAll("updateLocalAggression");
 		
-		/*for (y in 0...Reg.aggresionMap.height) {
-			for (x in 0...Reg.aggresionMap.width) {
-				this.remove(Reg.aggresionMap.vis[Reg.aggresionMap.idx(x,y)]);
+		/*for (y in 0...Reg.aggressionMap.height) {
+			for (x in 0...Reg.aggressionMap.width) {
+				this.remove(Reg.aggressionMap.vis[Reg.aggressionMap.idx(x,y)]);
 			}
 		}*/
 		
-		//Reg.aggresionMap.colourSprites();
+		Reg.aggressionMap.colourSprites();
 		
-		/*for (y in 0...Reg.aggresionMap.height) {
-			for (x in 0...Reg.aggresionMap.width) {
-				this.add(Reg.aggresionMap.vis[Reg.aggresionMap.idx(x,y)]);
+		/*for (y in 0...Reg.aggressionMap.height) {
+			for (x in 0...Reg.aggressionMap.width) {
+				this.add(Reg.aggressionMap.vis[Reg.aggressionMap.idx(x,y)]);
 			}
 		}*/
 	}
