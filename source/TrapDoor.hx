@@ -24,7 +24,8 @@ class TrapDoor extends FlxSprite
 	
 	private function drawGraphics()
 	{
-		makeGraphic(32, 16, 0xff550099);
+		loadGraphic(imgPath);
+		//makeGraphic(32, 16, 0xff550099);
 	}
 	
 }

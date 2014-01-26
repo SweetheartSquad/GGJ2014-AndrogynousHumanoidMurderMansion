@@ -593,14 +593,14 @@ class PlayState extends FlxState
 		
 		
 		//create the trapdoor
-		trapdoor = new TrapDoor((tempX*16), (tempY*16),"assets/image/trapdoor.png");
+		trapdoor = new TrapDoor((tempX*16), (tempY*16),"assets/images/TrapDoorObjThingy.png");
 		add(trapdoor);
 		
 		//position and create lever
 		tempX = getTempX() * 16;
-		tempY = getTempY() * 16;
+		tempY = (getTempY()-1) * 16;
 		
-		lever = new Lever(tempX, (tempY) - 22,"assets/image/lever.png");
+		lever = new Lever(tempX, (tempY) - 22,"assets/images/LeverObjThingy.png");
 		add(lever);
 		
 		
@@ -612,7 +612,7 @@ class PlayState extends FlxState
 			var flag:Bool = true;
 			var flag2:Bool = false;
 			do {
-				tempY = (getTempY() -2) * 16;
+				tempY = (getTempY() -3) * 16 - 8;
 				for (i in teleporters._members) {
 					if (Math.abs(cast(i, Teleporter).y - tempY) < 75) {
 						flag2 = true;
@@ -636,7 +636,7 @@ class PlayState extends FlxState
 			var flag:Bool = true;
 			var flag2:Bool = false;
 			do {
-				tempY = (getTempY()-2) * 16;
+				tempY = (getTempY()-3) * 16;
 				tempX = getTempX() * 16;
 				for (i in teleporters._members) {
 					if ((Math.abs(cast(i, Teleporter).x - tempX) < 75) && (Math.abs(cast(i, Teleporter).y - tempY) < 75)) {
@@ -655,7 +655,7 @@ class PlayState extends FlxState
 			
 			//second stair floor
 			do {
-				tempY = (getTempY()-2) * 16;
+				tempY = (getTempY()-3) * 16;
 			}while (Math.abs(cast(teleporters._members[teleporters.length-1],Teleporter).y-tempY) < 75);
 			
 			//second stair xpos
@@ -685,7 +685,7 @@ class PlayState extends FlxState
 			var flag:Bool = true;
 			var flag2:Bool = false;
 			do {
-				tempY = (getTempY()-2) * 16;
+				tempY = (getTempY()-3) * 16;
 				tempX = getTempX() * 16;
 				for (i in teleporters._members) {
 					if ((Math.abs(cast(i, Teleporter).x - tempX) < 75) && (Math.abs(cast(i, Teleporter).y - tempY) < 75)) {

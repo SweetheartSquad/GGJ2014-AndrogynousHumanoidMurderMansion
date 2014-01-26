@@ -24,7 +24,8 @@ class Lever extends FlxSprite
 	
 	private function drawGraphics()
 	{
-		makeGraphic(4, 10, 0xff550099);
+		loadGraphic(imgPath);
+		//makeGraphic(4, 10, 0xff550099);
 	}
 	
 }
