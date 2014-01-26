@@ -61,8 +61,11 @@ class PlayState extends FlxState
 	#end
 	
 	//Thingies
-	private var doorOne:Teleporter;
-	private var doorTwo:Teleporter;
+	//Lever/Trapdoor
+	private var lever:Lever;
+	private var trapdoor:TrapDoor;
+	private var trapTimer:Int;
+	
 	//Sound
 	private var soundManager:SoundManager;
 	
@@ -328,6 +331,7 @@ class PlayState extends FlxState
 		
 		Reg.aggresionMap.reduceAggression();
 		
+		
 		entities.callAll("updateAggresion");
 		
 		/*for (y in 0...Reg.aggresionMap.height) {
@@ -386,6 +390,10 @@ class PlayState extends FlxState
 	public function manageThingies()
 	{
 		FlxG.overlap(doors, entities, manageTeleporters);
+		FlxG.overlap(lever, entities, manageLever);
+		FlxG.collide(trapdoor, entities);
+		trapdoor.immovable = true;
+		if (trapTimer > 0) --trapTimer;
 	}
 	
 	public function manageTeleporters(door:Teleporter,entity:Entity)
@@ -399,7 +407,22 @@ class PlayState extends FlxState
 		}
 		
 	}
-	
+	public function manageLever(lever:Lever,entity:Entity)
+	{
+		if (trapdoor != null && entity.interacting && trapdoor.isActive == false) {
+			trapdoor.x += 32;
+			trapdoor.y += 1;
+			trapdoor.isActive = true;
+			trapTimer = 100;
+		}
+		
+		if (trapTimer == 0 && trapdoor.isActive == true) {
+			trapdoor.x -= 32;
+			trapdoor.y -= 1;
+			trapdoor.isActive = false;
+		}
+		
+	}
 	public function getTeleporterById(id:Int):Teleporter
 	{
 		
@@ -508,12 +531,12 @@ class PlayState extends FlxState
 								
 								var genX = true; 
 								
-								while (
+							/*	while (
 								{
-									(doorsTwoRandX < ((cast(doors._members[doors._members.length-1],Teleporter).x)+60))&& (doorsTwoRandX > ((cast(doors._members[doors._members.length-1],Teleporter).x)-40)))
-									doorsTwoRandX = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
+									//(doorsTwoRandX < ((cast(doors._members[doors._members.length-1],Teleporter).x)+60))&& (doorsTwoRandX > ((cast(doors._members[doors._members.length-1],Teleporter).x)-40)))
+									//doorsTwoRandX = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
 								}
-								
+								*/
 								var doorsTwoRandY:Int = 0;
 								var tempI = i+1;
 								
@@ -663,7 +686,11 @@ class PlayState extends FlxState
 		
 		var trapX:Int;
 		var trapY:Int;
-		var floorNum:Int = Std.random(4);
+		var floorNum:Int = Std.random(3);
+		
+		var leverX:Int;
+		var leverY:Int;
+		var leverFloorNum:Int = Std.random(3);
 		
 		//add walls and floors to the level
 		for (i in 0...tileYNum) {
@@ -717,17 +744,19 @@ class PlayState extends FlxState
 			
 			
 		}
-		trace(tiles.toString());
-		//randomly insert a trapdoor into one of the floors
-		trapX = Std.random((tileEndX - tileStartX)) + 3;
+		
+		//randomly insert a hole into one of the floors
+		trapX = Std.random((tileEndX - tileStartX) - 3) + tileStartX;
+		trace(trapX);
+		trace("what");
 		
 		switch(floorNum) {
 			case 0:
 				trapY = 1 + floorHeight;
 			case 1:
-				trapY = 1 + floorHeight * 2;
+				trapY = 1 + (floorHeight * 2);
 			case 2:
-				trapY = 1 + floorHeight * 3;
+				trapY = 1 + (floorHeight * 3);
 			default:
 				trapY = -1;
 		}
@@ -738,6 +767,29 @@ class PlayState extends FlxState
 			}
 		}
 		
+		//create the trapdoor
+		trapdoor = new TrapDoor(
+			(trapX*16), (trapY*16),
+			"assets/image/trapdoor.png");
+		add(trapdoor);
 		
+		//position and create lever
+		leverX = (Std.random((tileEndX - tileStartX) - 3) + tileStartX) * 16;
+		
+		switch(leverFloorNum) {
+			case 0:
+				leverY = 1 + floorHeight;
+			case 1:
+				leverY = 1 + (floorHeight * 2);
+			case 2:
+				leverY = 1 + (floorHeight * 3);
+			default:
+				leverY = -1;
+		}
+		
+		lever = new Lever(
+			leverX, (leverY)*16 - 22,
+			"assets/image/lever.png");
+		add(lever);
 	}
 }
