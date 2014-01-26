@@ -12,6 +12,10 @@ import flixel.util.FlxPath;
 import flixel.util.FlxPoint;
 import openfl.Assets;
 import utils.GamepadUtil;
+import haxe.io.Eof;
+import sys.io.File;
+import sys.io.FileInput;
+import sys.io.FileOutput;
 
 
 /**
@@ -53,11 +57,11 @@ class PlayState extends FlxState
 		FlxG.cameras.bgColor = 0xffaaaaaa;
 		
 		
-		generateMap();
+		generateMapCSV();
 		_level = new FlxTilemap();
 		_level.loadMap(Assets.getText("assets/level.csv"), "assets/images/testSet.png", TILE_WIDTH, TILE_HEIGHT, FlxTilemap.AUTO);
 		add(_level);
-		generateThingys();
+		generateLevel();
 
 		player1 = new Player();
 		player2 = new Player();
@@ -191,31 +195,60 @@ class PlayState extends FlxState
 		victim.kill();
 	}
 	
-	public function generateMap() {
-		//gamewidth and gameheight
-		trace(Reg.gameWidth);
-		trace(Reg.gameHeight);
+	public function generateMapCSV() {
+		var fname = "assets/level.csv";
+		var fout = File.write(fname, false);
 		
-		//put the map in the middle third of the screen
-		//twothick border
-		//floors one tile thick
+		//create a level file
+		for (i in 0...Math.round(Reg.gameHeight/16)) {
+			for (j in 0...Math.round(Reg.gameWidth/16)) {
+				fout.writeString("0, ");
+			}
+			fout.writeString("\n");
+		}
+
+		fout.close();
 	}
 	
-	public function generateThingys() {
+	public function generateLevel() {
+		var tileXNum:Int = Math.round(Reg.gameWidth / 16);
+		var tileYNum:Int = Math.round(Reg.gameHeight / 16);
+		var tileStartX:Int = Math.round((tileXNum / 6)) - 1;
+		var tileEndX:Int = Math.round((tileXNum / 6)) * 5 + 1;
+		
+		var floorHeight = Math.round((tileYNum - 4) / 4);
+		var floorCount = -2;
+		
 		var trapX:Int;
 		var trapY:Int;
-		var floorNum = Std.random(4);
+		var floorNum:Int = Std.random(4);
 		
-		trapX = Std.random(38) + 3;
+		//add walls and floors to the level
+		for (i in 0...tileYNum) {
+			for (j in tileStartX...tileEndX) {
+				if (floorCount == (floorHeight - 1) || i == 0 || i == 1 || i == tileYNum - 1 || i == tileYNum - 2) {
+						_level.setTile(j, i, 1);
+				} else {
+					if (j == tileStartX || j == tileStartX + 1 || j == tileEndX - 2 || j == tileEndX - 1) {
+						_level.setTile(j, i, 1);
+					} else {
+						_level.setTile(j, i, 0);
+					}
+				}
+			}
+			floorCount++;
+			if (floorCount == floorHeight) floorCount = 0;
+		}
+		
+		//randomly insert a trapdoor into one of the floors
+		trapX = Std.random((tileEndX-tileStartX)) + 3;
 		switch(floorNum) {
 			case 0:
-				trapY = 17;
+				trapY = 1 + floorHeight;
 			case 1:
-				trapY = 13;
+				trapY = 1 + floorHeight * 2;
 			case 2:
-				trapY = 9;
-			case 3:
-				trapY = 5;
+				trapY = 1 + floorHeight * 3;
 			default:
 				trapY = -1;
 		}
