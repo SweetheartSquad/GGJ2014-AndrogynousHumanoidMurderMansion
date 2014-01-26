@@ -325,6 +325,7 @@ class PlayState extends FlxState
 		
 		Reg.aggresionMap.reduceAggression();
 		
+		
 		entities.callAll("updateAggresion");
 		
 		/*for (y in 0...Reg.aggresionMap.height) {
@@ -333,7 +334,7 @@ class PlayState extends FlxState
 			}
 		}*/
 		
-		Reg.aggresionMap.colourSprites();
+		//Reg.aggresionMap.colourSprites();
 		
 		/*for (y in 0...Reg.aggresionMap.height) {
 			for (x in 0...Reg.aggresionMap.width) {

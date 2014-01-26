@@ -1,6 +1,8 @@
 package ;
 import animation.SpriteSheetHandler;
 import flash.display.Sprite;
+import flash.display.StageQuality;
+import flash.display.StageScaleMode;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -107,6 +109,7 @@ class Entity extends FlxSprite {
 			body.graphics.endFill();
 			Lib.current.stage.addChild(body);
 			
+			
 			head = new Sprite();
 			head.graphics.beginFill(secondaryColour);
 			head.graphics.drawCircle(0, 0, headSize);
@@ -115,30 +118,32 @@ class Entity extends FlxSprite {
 			
 			legs = new Sprite();
 			Lib.current.stage.addChild(legs);
-			animationManagerLegs = new AnimationManager(legs.graphics,"assets/images/legAnimations.png");
+			animationManagerLegs = new AnimationManager(legs.graphics,"assets/images/legAnimationsHD.png");
 			var spriteSheetHandler:SpriteSheetHandler = new SpriteSheetHandler();
-			animationManagerLegs.addAnimationState("walk", SpriteSheetHandler.getSpriteArray(360, 66, 40, 23, 0, 0, 9, 0), 3);
-			animationManagerLegs.addAnimationState("jump", SpriteSheetHandler.getSpriteArray(360, 66, 40, 23, 0, 1, 9, 0), 3);
-			animationManagerLegs.addAnimationState("idle", SpriteSheetHandler.getSpriteArray(360, 66, 40, 23, 0, 2, 2, 0), 15);
+			animationManagerLegs.addAnimationState("walk", SpriteSheetHandler.getSpriteArray(360*3, 66*3, 40*3, 23*3, 0, 0, 9, 0), 3);
+			animationManagerLegs.addAnimationState("jump", SpriteSheetHandler.getSpriteArray(360*3, 66*3, 40*3, 23*3, 0, 4, 9, 0), 3);
+			animationManagerLegs.addAnimationState("idle", SpriteSheetHandler.getSpriteArray(360*3, 66*3, 40*3, 23*3, 0, 2, 2, 0), 15);
 			animationManagerLegs.setAnimationState("idle");
 			
-			legs.scaleY = h/40;
-			legs.scaleX = w/20;
+			legs.scaleY = h/40/3;
+			legs.scaleX = w/20/3;
 			
 			arms = new Sprite();
 			Lib.current.stage.addChild(arms);
-			animationManagerArms = new AnimationManager(arms.graphics,"assets/images/armAnimations.png");
-			animationManagerArms.addAnimationState("walk", SpriteSheetHandler.getSpriteArray(500, 154, 50, 22, 0, 0, 9, 0), 3);
-			animationManagerArms.addAnimationState("attack1", SpriteSheetHandler.getSpriteArray(500, 154, 50, 22, 0, 9, 8, 0), 3);
-			animationManagerArms.addAnimationState("attack2", SpriteSheetHandler.getSpriteArray(500, 154, 50, 22, 0, 2, 8, 0), 3);
-			animationManagerArms.addAnimationState("idle1", SpriteSheetHandler.getSpriteArray(500, 154, 50, 22, 0, 10, 5, 0), 3);
-			animationManagerArms.addAnimationState("idle2", SpriteSheetHandler.getSpriteArray(500, 154, 50, 22, 0, 4, 10, 0), 3);
-			animationManagerArms.addAnimationState("idle3", SpriteSheetHandler.getSpriteArray(500, 154, 50, 22, 0, 12, 8, 0), 3);
-			animationManagerArms.addAnimationState("idle4", SpriteSheetHandler.getSpriteArray(500, 154, 50, 22, 0, 6, 2, 0), 15);
+			
+			
+			animationManagerArms = new AnimationManager(arms.graphics,"assets/images/armAnimationsHD.png");
+			animationManagerArms.addAnimationState("walk", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 0, 9, 0), 3);
+			animationManagerArms.addAnimationState("attack1", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 9, 8, 0), 3);
+			animationManagerArms.addAnimationState("attack2", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 2, 8, 0), 3);
+			animationManagerArms.addAnimationState("idle1", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 10, 5, 0), 3);
+			animationManagerArms.addAnimationState("idle2", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 4, 10, 0), 3);
+			animationManagerArms.addAnimationState("idle3", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 12, 8, 0), 3);
+			animationManagerArms.addAnimationState("idle4", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 6, 2, 0), 15);
 			animationManagerArms.setAnimationState("idle1");
 			
-			arms.scaleY = h/30;
-			arms.scaleX = w/10;
+			arms.scaleY = h/30/3;
+			arms.scaleX = w/10/3;
 			
 			talkBubble = new Sprite();
 			talkBubble.graphics.beginFill(0xFFFFFFFF);
@@ -157,6 +162,8 @@ class Entity extends FlxSprite {
 			arms.scaleY *= Reg.zoom;
 			talkBubble.scaleX *= Reg.zoom;
 			talkBubble.scaleY *= Reg.zoom;
+			
+			this.antialiasing = false;
 		}
 	}
 	
