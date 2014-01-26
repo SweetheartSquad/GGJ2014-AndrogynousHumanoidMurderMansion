@@ -26,6 +26,7 @@ import sys.io.File;
 import sys.io.FileInput;
 import sys.io.FileOutput;
 
+
 #end
 
 /**
@@ -40,7 +41,7 @@ class PlayState extends FlxState
 	
 	//Flx Groups
 	private var entities:FlxGroup;
-	private var doors:FlxGroup;
+	private var teleporters:FlxGroup;
 	private var players:FlxGroup;
 	private var npcs:FlxGroup;
 	
@@ -78,7 +79,7 @@ class PlayState extends FlxState
 	
 	private static var doorThreshold:Int = 140;
 	
-	
+	private var framesElapsed:Int = 0;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -87,7 +88,7 @@ class PlayState extends FlxState
 		//FlxG.mouse.visible = false;
 		FlxG.cameras.bgColor = 0xffaaaaaa;
 		
-		doors = new FlxGroup();
+		teleporters = new FlxGroup();
 		teleporterId = 0;
 		
 		tiles = new Array();
@@ -98,7 +99,7 @@ class PlayState extends FlxState
 		#end
 		
 		
-		Reg.aggresionMap = new TwoDArray(Reg.gameWidth, 4);
+		Reg.aggressionMap = new TwoDArray(Reg.gameWidth, 4);
 		
 		
 		
@@ -115,27 +116,8 @@ class PlayState extends FlxState
 		add(Reg._level);
 		generateLevel();
 		
-		generateStairs();
-		generateDoors();
-		generateElevators();
-		
-		
-
-		/*for (y in 0...Reg.gameHeight) {
-			for (x in 0...Reg.gameWidth) {
-				trace(Reg._level.overlapsPoint(new FlxPoint(x, y)));
-			}
-		}*/
-		
-		
 		player1 = new Player();
 		player2 = new Player();
-		
-		//generate npcs
-		npcTest = new NPC();
-		npcTest.x = 150;
-		npcTest.y = 100;
-		
 		
 		// Set a background color
 		FlxG.cameras.bgColor = 0xff131c1b;
@@ -158,10 +140,9 @@ class PlayState extends FlxState
 		players.add(player1);
 		players.add(player2);
 		npcs = new FlxGroup();
-		npcs.add(npcTest);
 		
 		for(i in 0...Reg.npcCount){
-			npcs.add(new NPC());
+			npcs.add(new NPC(Math.random()>0.5 ? NpcType.COWARD : NpcType.AGGRESSOR));
 		}
 		entities = new FlxGroup();
 		entities.add(players);
@@ -169,7 +150,7 @@ class PlayState extends FlxState
 		
 		
 		//add thingies
-		add(doors);
+		add(teleporters);
 		//add entities to game
 		add(entities);
 		
@@ -181,9 +162,9 @@ class PlayState extends FlxState
 		particles = new FlxGroup();
 		add(particles);
 		
-		for (y in 0...Reg.aggresionMap.height) {
-			for (x in 0...Reg.aggresionMap.width) {
-				this.add(Reg.aggresionMap.vis[Reg.aggresionMap.idx(x,y)]);
+		for (y in 0...Reg.aggressionMap.height) {
+			for (x in 0...Reg.aggressionMap.width) {
+				this.add(Reg.aggressionMap.vis[Reg.aggressionMap.idx(x,y)]);
 			}
 		}
 		
@@ -202,6 +183,8 @@ class PlayState extends FlxState
 	 * Function that is called once every frame.
 	 */
 	override public function update():Void {
+		framesElapsed += 1;
+		
 		//reset accelerations
 		for (i in 0 ... players.length) {
 			cast(players._members[i],Entity).acceleration.x = 0;
@@ -209,14 +192,16 @@ class PlayState extends FlxState
 			cast(npcs._members[i],Entity).acceleration.x = 0;
 		}
 		
+		
+		if(player1.alive && player2.alive){
 		#if flash
 		//player1 controls
 		if (FlxG.keyboard.anyPressed(["J"])){
-			player1.acceleration.x = -player1.maxVelocity.x * 4;
+			player1.acceleration.x = -player1.maxVelocity.x * (player1.running ? 8 : 4);
 			player1.facing = FlxObject.LEFT;
 		}
 		if (FlxG.keyboard.anyPressed(["L"])){
-			player1.acceleration.x = player1.maxVelocity.x * 4;
+			player1.acceleration.x = player1.maxVelocity.x * (player1.running ? 8 : 4);
 			player1.facing = FlxObject.RIGHT;
 		}
 		if (FlxG.keyboard.justPressed("I")) {
@@ -227,32 +212,35 @@ class PlayState extends FlxState
 		}
 		if (FlxG.keyboard.justPressed("U")) {
 			player1.interacting = true;
+		}if (FlxG.keyboard.anyPressed(["O"])) {
+			player1.running = true;
 		}
 		
 		
 		//player2 controls
 		if (FlxG.keyboard.anyPressed(["A"])){
-			player2.acceleration.x = -player2.maxVelocity.x * 4;
+			player2.acceleration.x = -player2.maxVelocity.x * (player2.running ? 8 : 4);
 			player2.facing = FlxObject.LEFT;
 		}if (FlxG.keyboard.anyPressed(["D"])){
-			player2.acceleration.x = player2.maxVelocity.x * 4;
+			player2.acceleration.x = player2.maxVelocity.x * (player2.running ? 8 : 4);
 			player2.facing = FlxObject.RIGHT;
 		}if (FlxG.keyboard.justPressed("W")) {
 			player2.jump();
 		}if (FlxG.keyboard.anyPressed(["S"])) {
 			player2.attacking = true;
-		}
-		if (FlxG.keyboard.justPressed("Q")) {
+		}if (FlxG.keyboard.justPressed("Q")) {
 			player2.interacting = true;
+		}if (FlxG.keyboard.anyPressed(["E"])) {
+			player2.running = true;
 		}
 		#else
 		//player1 controls
 		if (FlxG.keyboard.anyPressed(["J"]) || (gamepadUtilOne.getAxis() < -0.5 && gamepadUtilOne.getControllerId() == 0)){
-			player1.acceleration.x = -player1.maxVelocity.x * 4;
+			player1.acceleration.x = -player1.maxVelocity.x * (player1.running ? 8 : 4);
 			player1.facing = FlxObject.LEFT;
 		}
 		if (FlxG.keyboard.anyPressed(["L"])|| (gamepadUtilOne.getAxis() > 0.5 && gamepadUtilOne.getControllerId() == 0 )){
-			player1.acceleration.x = player1.maxVelocity.x * 4;
+			player1.acceleration.x = player1.maxVelocity.x * (player1.running ? 8 : 4);
 			player1.facing = FlxObject.RIGHT;
 		}
 		if ((FlxG.keyboard.justPressed("I")|| (gamepadUtilOne.getPressedbuttons().exists(0)&& gamepadUtilOne.getControllerId() == 0 ))) {
@@ -261,8 +249,10 @@ class PlayState extends FlxState
 		if (FlxG.keyboard.justPressed("K")|| (gamepadUtilOne.getPressedbuttons().exists(1)&& gamepadUtilOne.getControllerId() == 0 )) {
 			player1.attacking = true;
 		}
-		if (FlxG.keyboard.justPressed("U")|| (gamepadUtilOne.getPressedbuttons().exists(3)&& gamepadUtilOne.getControllerId() == 0 )) {
+		if (FlxG.keyboard.justPressed("U")|| (gamepadUtilOne.getPressedbuttons().exists(2)&& gamepadUtilOne.getControllerId() == 0 )) {
 			player1.interacting = true;
+		}if (FlxG.keyboard.anyPressed(["O"])|| ((gamepadUtilOne.getPressedbuttons().exists(5)||gamepadUtilOne.getPressedbuttons().exists(4))&& gamepadUtilOne.getControllerId() == 0 )) {
+			player1.running = true;
 		}
 		if (gamepadUtilOne.getLastbuttonUp() == 7 && gamepadUtilOne.getControllerId() == 0) {
 			player1.destroyGraphics();
@@ -273,27 +263,37 @@ class PlayState extends FlxState
 		
 		//player2 controls
 		if (FlxG.keyboard.anyPressed(["A"])|| (gamepadUtilTwo.getAxis() < -0.5 && gamepadUtilTwo.getControllerId() == 1)){
-			player2.acceleration.x = -player2.maxVelocity.x * 4;
+			player2.acceleration.x = -player2.maxVelocity.x * (player2.running ? 8 : 4);
 			player2.facing = FlxObject.LEFT;
 		}if (FlxG.keyboard.anyPressed(["D"])|| (gamepadUtilTwo.getAxis() > 0.5 && gamepadUtilTwo.getControllerId() == 1 )){
-			player2.acceleration.x = player2.maxVelocity.x * 4;
+			player2.acceleration.x = player2.maxVelocity.x * (player2.running ? 8 : 4);
 			player2.facing = FlxObject.RIGHT;
 		}if ((FlxG.keyboard.justPressed("W") || (gamepadUtilTwo.getPressedbuttons().exists(0) && gamepadUtilTwo.getControllerId() == 1))) {
 			player2.jump();
 		}if (FlxG.keyboard.justPressed("S")|| (gamepadUtilTwo.getPressedbuttons().exists(1)&& gamepadUtilTwo.getControllerId() == 1 )) {
 			player2.attacking = true;
 		}
-		if (FlxG.keyboard.justPressed("Q")|| (gamepadUtilTwo.getPressedbuttons().exists(3)&& gamepadUtilTwo.getControllerId() == 1 )) {
+		if (FlxG.keyboard.justPressed("Q")|| (gamepadUtilTwo.getPressedbuttons().exists(2)&& gamepadUtilTwo.getControllerId() == 1 )) {
 			player2.interacting = true;
+		}if (FlxG.keyboard.anyPressed(["E"])|| ((gamepadUtilTwo.getPressedbuttons().exists(5)||gamepadUtilTwo.getPressedbuttons().exists(4))&& gamepadUtilTwo.getControllerId() == 1 )) {
+			player2.running = true;
 		}
 		if (gamepadUtilTwo.getLastbuttonUp() == 7 && gamepadUtilTwo.getControllerId() == 1) {
 			player2.destroyGraphics();
 			player2.generateGraphics();
 		}
 		
+		
 		if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
 			entities.callAll("destroyGraphics");
 			entities.callAll("generateGraphics");
+			
+			trapdoor.kill();
+			lever.kill();
+			teleporters.kill();
+			teleporters = new FlxGroup();
+			add(teleporters);
+			generateLevel();
 		}
 		#end
 		
@@ -308,45 +308,47 @@ class PlayState extends FlxState
 		npcs.callAll("moveAlongPath");
 		npcs.callAll("tryInteract");
 		npcs.callAll("tryJump");
-		npcs.callAll("tryAttack");
+		if(framesElapsed > 600){
+			npcs.callAll("tryAttack");
+		}
 		
+		entities.callAll("runningCheck");}
 		//states/controls above
 		super.update();
+		
+		if(player1.alive && player2.alive){
 		//updates below
 		manageThingies();
-		
 
 		//Reset Variables
 		entities.setAll("interacting", false);
-		
+		}
 		FlxG.collide(Reg._level, entities);
 		FlxG.collide(Reg._level, particles,particleCollide);
 		particles.callAll("postUpdate");
 		
 		entities.callAll("postUpdate");
+		if(player1.alive && player2.alive){
 		FlxG.overlap(entities, entities, entityToEntity);
+		entities.setAll("running", false);
 		
 		
 		entities.callAll("attackDelay");
 		
-		Reg.aggresionMap.reduceAggression();
+		Reg.aggressionMap.reduceAggression();
 		
 		
-		entities.callAll("updateAggresion");
+		entities.callAll("updateAggression");
+		npcs.callAll("updateLocalAggression");
 		
-		/*for (y in 0...Reg.aggresionMap.height) {
-			for (x in 0...Reg.aggresionMap.width) {
-				this.remove(Reg.aggresionMap.vis[Reg.aggresionMap.idx(x,y)]);
-			}
-		}*/
+		if(Reg.viewAggression){
+			Reg.aggressionMap.colourSprites();
+		}
 		
-		//Reg.aggresionMap.colourSprites();
-		
-		/*for (y in 0...Reg.aggresionMap.height) {
-			for (x in 0...Reg.aggresionMap.width) {
-				this.add(Reg.aggresionMap.vis[Reg.aggresionMap.idx(x,y)]);
-			}
-		}*/
+		}else{
+			entities.setAll("winState", true);
+			player1.alive ? makeGibs(player1.x, player1.y, true) : makeGibs(player2.x, player2.y, true);
+		}
 	}
 	public function entityToEntity(object1:Entity,object2:Entity) {
 		if (object1.interacting) {
@@ -362,22 +364,12 @@ class PlayState extends FlxState
 			object2.kill();
 		}
 	}
-	public function makeGibs(_x:Float, _y:Float) {
-		particles.add(new Particle(_x, _y));
-		if(Math.random()>0.1){
-			particles.add(new Particle(_x, _y));
-			if(Math.random()>0.2){
-				particles.add(new Particle(_x, _y));
-				if(Math.random()>0.3){
-					particles.add(new Particle(_x, _y));
-					if(Math.random()>0.4){
-						particles.add(new Particle(_x, _y));
-						if(Math.random()>0.5){
-							particles.add(new Particle(_x, _y));
-						}
-					}
-				}
-			}
+	public function makeGibs(_x:Float, _y:Float, _happy:Bool = false) {
+		particles.add(new Particle(_x, _y, _happy));
+		particles.add(new Particle(_x, _y, _happy));
+		particles.add(new Particle(_x, _y, _happy));
+		if(Math.random()>0.3){
+			makeGibs(_x, _y, _happy);
 		}
 	}
 	public function particleCollide(object1:FlxTilemap, object2:Particle) {
@@ -387,276 +379,53 @@ class PlayState extends FlxState
 			object2.timer = 8;
 		}
 	}
-	public function manageThingies()
-	{
-		FlxG.overlap(doors, entities, manageTeleporters);
+	public function manageThingies(){
+		FlxG.overlap(teleporters, entities, manageTeleporters);
 		FlxG.overlap(lever, entities, manageLever);
 		FlxG.collide(trapdoor, entities);
 		trapdoor.immovable = true;
-		if (trapTimer > 0) --trapTimer;
+		if (trapTimer > 0) {
+			--trapTimer;
+		}else if (trapTimer == 0 && trapdoor.isActive == true) {
+			trapdoor.x -= 32;
+			trapdoor.y -= 1;
+			trapdoor.isActive = false;
+		}
 	}
 	
-	public function manageTeleporters(door:Teleporter,entity:Entity)
-	{
+	public function manageTeleporters(door:Teleporter,entity:Entity){
 		var otherTeleporter:Teleporter = getTeleporterById(door.relatedId);
-		if (otherTeleporter != null && entity.interacting)
-		{
+		if (otherTeleporter != null && entity.interacting) {
+			entity.interacting = false;
 			entity.x = otherTeleporter.x;
 			entity.y = otherTeleporter.y - 10;
 			soundManager.playSound("door");
 		}
 		
 	}
-	public function manageLever(lever:Lever,entity:Entity)
-	{
+	public function manageLever(lever:Lever,entity:Entity){
 		if (trapdoor != null && entity.interacting && trapdoor.isActive == false) {
+			entity.interacting = false;
 			trapdoor.x += 32;
 			trapdoor.y += 1;
 			trapdoor.isActive = true;
 			trapTimer = 100;
 		}
 		
-		if (trapTimer == 0 && trapdoor.isActive == true) {
-			trapdoor.x -= 32;
-			trapdoor.y -= 1;
-			trapdoor.isActive = false;
-		}
-		
 	}
 	public function getTeleporterById(id:Int):Teleporter
 	{
 		
-		for (i in 0 ... doors.length)
+		for (i in 0 ... teleporters.length)
 		{
-			if (cast(doors._members[i], Teleporter).isId(id))
+			if (cast(teleporters._members[i], Teleporter).isId(id))
 			{
-				return (cast(doors._members[i], Teleporter));
+				return (cast(teleporters._members[i], Teleporter));
 			}
 		}
 		
 		return null;
 	}
-
-	private function containsInt(array:Array<Int>,value:Int)
-	{
-		for (i in array)
-		{
-			if (i == value)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public function generateDoors()
-	{
-		
-		var tileXNum:Int = Math.round(Reg.gameWidth);
-		var tileYNum:Int = Math.round(Reg.gameHeight);
-		var tileStartX:Int = Math.round((tileXNum / 6)) - 1;
-		var tileEndX:Int = Math.round((tileXNum / 6)) * 5 + 1;
-		
-		for (i in 0...Math.round(Reg.gameHeight /16))
-		{
-			if (containsInt(tiles[i], 1))
-			{
-				if (i - 2 >= 0)
-				{
-					if (containsInt(tiles[i-1], 0) && containsInt(tiles[i-2],0))
-					{
-						if (Std.random(10) > 3)
-						{
-							
-							doors.add(new Teleporter(
-								
-								Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
-								(i * 16 - 30),
-								DOOR,
-								"assets/images/door.png",
-								teleporterId,
-								teleporterId + 1));
-								
-								var doorTwoRandX:Int = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
-								while ((doorTwoRandX < ((cast(doors._members[doors._members.length-1],Teleporter).x)+60))&& (doorTwoRandX > ((cast(doors._members[doors._members.length-1],Teleporter).x)-40)))
-								{
-									doorTwoRandX = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
-								}
-								
-							doors.add(new Teleporter(
-								Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
-								(i * 16 - 30),
-								DOOR,
-								"assets/images/door.png",
-								teleporterId+1,
-								teleporterId));
-								teleporterId += 2;
-						}
-					}
-				}
-			}
-		}
-		
-	}
-	
-	public function generateStairs()
-	{
-		
-		var tileXNum:Int = Math.round(Reg.gameWidth);
-		var tileYNum:Int = Math.round(Reg.gameHeight);
-		var tileStartX:Int = Math.round((tileXNum / 6)) - 1;
-		var tileEndX:Int = Math.round((tileXNum / 6)) * 5 + 1;
-		
-		for (i in 0...Math.round(Reg.gameHeight /16))
-		{
-			if (containsInt(tiles[i], 1))
-			{
-				if (i - 2 >= 0)
-				{
-					if (containsInt(tiles[i-1], 0) && containsInt(tiles[i-2],0) && !containsInt(tiles[i+1],1))
-					{
-						if (Std.random(10) > 3)
-						{
-							
-							doors.add(new Teleporter(
-								
-								Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
-								(i * 16 - 30),
-								STAIRS,
-								"assets/images/door.png",
-								teleporterId,
-								teleporterId + 1));
-								
-								var doorsTwoRandX:Int = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
-								
-								var genX = true; 
-								
-							/*	while (
-								{
-									//(doorsTwoRandX < ((cast(doors._members[doors._members.length-1],Teleporter).x)+60))&& (doorsTwoRandX > ((cast(doors._members[doors._members.length-1],Teleporter).x)-40)))
-									//doorsTwoRandX = Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold;
-								}
-								*/
-								var doorsTwoRandY:Int = 0;
-								var tempI = i+1;
-								
-								
-								while(containsInt(tiles[tempI],0))
-								{
-									tempI++;
-								}
-								
-								
-							doors.add(new Teleporter(
-								Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
-								((tempI) * 16 - 30),
-								STAIRS,
-								"assets/images/door.png",
-								teleporterId+1,
-								teleporterId));
-								teleporterId += 2;
-						}
-					}
-				}
-			}
-		}
-		
-	}
-	
-	public function generateElevators()
-	{
-		var tileXNum:Int = Math.round(Reg.gameWidth);
-		var tileYNum:Int = Math.round(Reg.gameHeight);
-		var tileStartX:Int = Math.round((tileXNum / 6)) - 1;
-		var tileEndX:Int = Math.round((tileXNum / 6)) * 5 + 1;
-		
-		for (i in 0...Math.round(Reg.gameHeight /16))
-		{
-			if (containsInt(tiles[i], 1))
-			{
-				if (i - 2 >= 0)
-				{
-					if (containsInt(tiles[i-1], 0) && containsInt(tiles[i-2],0))
-					{
-						if (!hasStairs(i))
-						{
-							
-							doors.add(new Teleporter(
-								
-								Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
-								(i * 16 - 30),
-								ELEVATOR,
-								"assets/images/door.png",
-								teleporterId,
-								teleporterId + 1));
-								
-								
-						}
-					}
-				}
-			}
-		}
-		
-		var numElev:Int = 0;
-		
-		for (i in 0...doors.length)
-		{
-			if (cast(doors._members[i], Teleporter).type == ELEVATOR)
-			numElev++; 
-		}
-		
-		if (numElev == 1)
-		{
-			for (i in 0...Math.round(Reg.gameHeight /16))
-				{
-					if (hasStairs(i))
-					{
-						if (containsInt(tiles[i], 1))
-						{
-							if (i - 2 >= 0)
-							{
-								if (containsInt(tiles[i-1], 0) && containsInt(tiles[i-2],0))
-								{
-									doors.add(new Teleporter(
-										
-										Std.random((Reg.gameWidth - doorThreshold) - doorThreshold) + doorThreshold,
-										(i * 16 - 30),
-										ELEVATOR,
-										"assets/images/door.png",
-										teleporterId,
-										teleporterId + 1));
-										
-									break;
-								}
-							}
-					}	}
-				
-			}
-		}
-	}
-	
-	private function hasStairs(iterator:Int)
-	{
-		for (i in 0...doors.length)
-		{
-			if ((cast(doors._members[i], Teleporter).y+30 )/ 16 == iterator && cast(doors._members[i], Teleporter).type==STAIRS)
-			return true;
-		}
-		
-		return false;
-	}
-	
-	private function hasElevator(iterator:Int)
-	{
-		for (i in 0...doors.length)
-		{
-			if ((cast(doors._members[i], Teleporter).y+30 )/ 16 == iterator && cast(doors._members[i], Teleporter).type==ELEVATOR)
-			return true;
-		}
-		
-		return false;
-	}
-	
 	
 	#if flash
 	#else
@@ -678,62 +447,47 @@ class PlayState extends FlxState
 	public function generateLevel() {
 		var tileXNum:Int = Math.round(Reg.gameWidth / 16);
 		var tileYNum:Int = Math.round(Reg.gameHeight / 16);
-		var tileStartX:Int = Math.round((tileXNum / 6)) - 1;
-		var tileEndX:Int = Math.round((tileXNum / 6)) * 5 + 1;
+		var tileStartX:Int = Math.round((tileXNum / 8));
+		var tileEndX:Int = tileXNum-tileStartX;
 		
 		var floorHeight = Math.round((tileYNum - 4) / 4);
-		var floorCount = -2;
+		var floorCount = -3;
 		
-		var trapX:Int;
-		var trapY:Int;
-		var floorNum:Int = Std.random(3);
-		
-		var leverX:Int;
-		var leverY:Int;
-		var leverFloorNum:Int = Std.random(3);
+		var tempX:Int;
+		var tempY:Int;
 		
 		//add walls and floors to the level
-		for (i in 0...tileYNum) {
-			for (j in tileStartX...tileEndX) {
-				if (floorCount == (floorHeight - 1) || i == 0 || i == 1 || i == tileYNum - 1 || i == tileYNum - 2) {
-						Reg._level.setTile(j, i, 1);
-						if (j > tileStartX + 2 && j < tileEndX - 2)
-						{
-							if (tiles.length-1 == i)
-							{
-								tiles[i].push(1);
-							}
-							else {
-								tiles.push(new Array<Int>());
-								tiles[i].push(1);
-							}
+		for (y in 0...tileYNum) {
+			for (x in tileStartX...tileEndX) {
+				if (floorCount == (floorHeight - 1) || y == 0 || y == 1 || y == tileYNum - 1 || y == tileYNum - 2) {
+					Reg._level.setTile(x, y, 1);
+					if (x > tileStartX + 2 && x < tileEndX - 2){
+						if (tiles.length-1 == y){
+							tiles[y].push(1);
+						}else {
+							tiles.push(new Array<Int>());
+							tiles[y].push(1);
 						}
-						
+					}
 				} else {
-					if (j == tileStartX || j == tileStartX + 1 || j == tileEndX - 2 || j == tileEndX - 1) {
-						Reg._level.setTile(j, i, 1);
-						if (j > tileStartX + 2 && j < tileEndX - 2)
-						{
-								if (tiles.length-1 == i)
-							{
-								tiles[i].push(1);
-							}
-							else {
+					if (x == tileStartX || x == tileStartX + 1 || x == tileEndX - 2 || x == tileEndX - 1) {
+						Reg._level.setTile(x, y, 1);
+						if (x > tileStartX + 2 && x < tileEndX - 2){
+							if (tiles.length-1 == y){
+								tiles[y].push(1);
+							}else {
 								tiles.push(new Array<Int>());
-								tiles[i].push(1);
+								tiles[y].push(1);
 							}
 						}
 					} else {
-						Reg._level.setTile(j, i, 0);
-						if (j > tileStartX + 2 && j < tileEndX - 2)
-						{
-							if (tiles.length-1 == i)
-							{
-								tiles[i].push(0);
-							}
-							else {
+						Reg._level.setTile(x, y, 0);
+						if (x > tileStartX + 2 && x < tileEndX - 2){
+							if (tiles.length-1 == y){
+								tiles[y].push(0);
+							}else {
 								tiles.push(new Array<Int>());
-								tiles[i].push(0);
+								tiles[y].push(0);
 							}
 						}
 					}
@@ -741,55 +495,245 @@ class PlayState extends FlxState
 			}
 			floorCount++;
 			if (floorCount == floorHeight) floorCount = 0;
-			
-			
 		}
 		
 		//randomly insert a hole into one of the floors
-		trapX = Std.random((tileEndX - tileStartX) - 3) + tileStartX;
-		trace(trapX);
-		trace("what");
-		
-		switch(floorNum) {
-			case 0:
-				trapY = 1 + floorHeight;
-			case 1:
-				trapY = 1 + (floorHeight * 2);
-			case 2:
-				trapY = 1 + (floorHeight * 3);
-			default:
-				trapY = -1;
-		}
-		
+		tempX = getTempX();
+		tempY = getTempY();
 		for (i in 0...2) {
 			for (j in 0...1) {
-				Reg._level.setTile(trapX + i, trapY + j, 0);
+				Reg._level.setTile(tempX + i, tempY + j, 0);
 			}
 		}
 		
+		
+		
+		
+		
 		//create the trapdoor
-		trapdoor = new TrapDoor(
-			(trapX*16), (trapY*16),
-			"assets/image/trapdoor.png");
+		trapdoor = new TrapDoor((tempX*16), (tempY*16),"assets/image/trapdoor.png");
 		add(trapdoor);
 		
 		//position and create lever
-		leverX = (Std.random((tileEndX - tileStartX) - 3) + tileStartX) * 16;
+		tempX = getTempX() * 16;
+		tempY = getTempY() * 16;
 		
-		switch(leverFloorNum) {
-			case 0:
-				leverY = 1 + floorHeight;
-			case 1:
-				leverY = 1 + (floorHeight * 2);
-			case 2:
-				leverY = 1 + (floorHeight * 3);
-			default:
-				leverY = -1;
+		lever = new Lever(tempX, (tempY) - 22,"assets/image/lever.png");
+		add(lever);
+		
+		
+		//elevators -> stairs -> doors
+		//ELEVATORS
+		tempX = getTempX() * 16;
+		var maxNumElevators = Std.random(3) + 2;
+		for (numElevators in 0...maxNumElevators) {
+			var flag:Bool = true;
+			var flag2:Bool = false;
+			do {
+				tempY = (getTempY() -2) * 16;
+				for (i in teleporters._members) {
+					if (Math.abs(cast(i, Teleporter).y - tempY) < 75) {
+						flag2 = true;
+						break;
+					}
+				}
+				flag = false;
+				if (flag2) {
+					flag = true;
+					flag2 = false;
+				}
+			}while (flag);
+			
+			var tempId:Int = teleporters.length;
+			teleporters.add(new Teleporter(tempX, tempY, ThingyType.ELEVATOR, "assets/elevator.png", numElevators, numElevators == maxNumElevators-1 ? 0 : tempId + 1));
 		}
 		
-		lever = new Lever(
-			leverX, (leverY)*16 - 22,
-			"assets/image/lever.png");
-		add(lever);
+		//STAIRS
+		for (numStairs in 0...2/*Std.random(3)*/) {
+			//first stair
+			var flag:Bool = true;
+			var flag2:Bool = false;
+			do {
+				tempY = (getTempY()-2) * 16;
+				tempX = getTempX() * 16;
+				for (i in teleporters._members) {
+					if ((Math.abs(cast(i, Teleporter).x - tempX) < 75) && (Math.abs(cast(i, Teleporter).y - tempY) < 75)) {
+						flag2 = true;
+						break;
+					}
+				}
+				flag = false;
+				if (flag2) {
+					flag = true;
+					flag2 = false;
+				}
+			}while (flag);
+			var tempId:Int = teleporters.length;
+			teleporters.add(new Teleporter(tempX, tempY, ThingyType.STAIRS, "assets/stairs.png", tempId, tempId + 1));
+			
+			//second stair floor
+			do {
+				tempY = (getTempY()-2) * 16;
+			}while (Math.abs(cast(teleporters._members[teleporters.length-1],Teleporter).y-tempY) < 75);
+			
+			//second stair xpos
+			flag = true;
+			flag2 = false;
+			do {
+				tempX = getTempX() * 16;
+				for (i in teleporters._members) {
+					if (Math.abs(cast(i, Teleporter).x - tempX) < 75 && Math.abs(cast(i, Teleporter).y - tempY) < 75) {
+						flag2 = true;
+						break;
+					}
+				}
+				flag = false;
+				if (flag2) {
+					flag = true;
+					flag2 = false;
+				}
+			}while (flag);
+			teleporters.add(new Teleporter(tempX, tempY, ThingyType.STAIRS, "assets/stairs.png", tempId+1, tempId));
+		}
+		
+		for(numDoors in 0...Std.random(2)+1){
+			//first door
+			var tempId:Int = teleporters.length;
+			var sentinel:Int = 0;
+			var flag:Bool = true;
+			var flag2:Bool = false;
+			do {
+				tempY = (getTempY()-2) * 16;
+				tempX = getTempX() * 16;
+				for (i in teleporters._members) {
+					if ((Math.abs(cast(i, Teleporter).x - tempX) < 75) && (Math.abs(cast(i, Teleporter).y - tempY) < 75)) {
+						flag2 = true;
+						break;
+					}
+				}
+				flag = false;
+				if (flag2) {
+					flag = true;
+					flag2 = false;
+				}
+				if (sentinel < 100000) {
+					sentinel += 1;
+				}else {
+					//trace("broken1");
+					break;
+				}
+			}while (flag);
+			teleporters.add(new Teleporter(tempX, tempY, ThingyType.DOOR, "assets/door.png", tempId, tempId + 1));
+			
+			//first door
+			var flag:Bool = true;
+			var flag2:Bool = false;
+			do {
+				tempX = getTempX() * 16;
+				for (i in teleporters._members) {
+					if ((Math.abs(cast(i, Teleporter).x - tempX) < 50) && (Math.abs(cast(i, Teleporter).y - tempY) < 75)) {
+						flag2 = true;
+						break;
+					}
+				}
+				flag = false;
+				if (flag2) {
+					flag = true;
+					flag2 = false;
+				}
+				if (sentinel < 200000) {
+					sentinel += 1;
+				}else {
+					//trace("broken2");
+					break;
+				}
+			}while (flag);
+			trace(sentinel);
+			teleporters.add(new Teleporter(tempX, tempY, ThingyType.DOOR, "assets/door.png", tempId+1, tempId));
+		}
+		
+		
+		//generate stalactites/stalagmites
+		var tempTile:Array<Int> = new Array();
+		for (i in 0...Std.random(50)+5) {
+			var _x:Int = getTempX();
+			var _y:Int = getTempY() - 1;
+			tempTile.push(_x);
+			Reg._level.setTile(_x, _y, compareToTeleporters(_x,_y));
+			
+			
+		}for (i in 0...Std.random(50)+5) {
+			var _x:Int;
+			var _y:Int = getTempY() + 1 - floorHeight;
+			if (_y < floorHeight) {
+				_y -= 1;
+			}
+			var flag:Bool = true;
+			var flag2:Bool = false;
+			do {
+				_x = getTempX();
+				
+				for (i in tempTile) {
+					if (i == _x) {
+						flag2 = true;
+						break;
+					}
+				}
+				flag = false;
+				if (flag2) {
+					flag = true;
+					flag2 = false;
+				}
+			}while (flag);
+			Reg._level.setTile(_x, _y, compareToTeleporters(_x,_y));
+		}
+		
+		
+		var tempTile:Array<Int> = new Array();
+		for (i in 0...Std.random(3)+3) {
+			var _x:Int = getTempX();
+			var _y:Int;
+			if (i >= 3) {
+				_y = getTempY();
+			}else if (i == 0) {
+				_y = 2 + floorHeight;
+			}else if (i == 1) {
+				_y = 2 + floorHeight * 2;
+			}else {
+				_y = 2 + floorHeight * 3;
+			}
+			Reg._level.setTile(_x, _y, 0);
+		}
+	}
+	public function compareToTeleporters(tempX:Int, tempY:Int) {
+		for (i in teleporters._members) {
+			if ((cast(i, Teleporter).x - tempX*16 < 5) && (cast(i, Teleporter).y - tempY*16 < 5)) {
+				return 0;
+			}
+		}
+		return 1;
+	}
+	public function getTempX():Int {
+		var tileXNum:Int = Math.round(Reg.gameWidth / 16);
+		var tileStartX:Int = Math.round((tileXNum / 8));
+		var tileEndX:Int = tileXNum-tileStartX;
+		
+		return Std.random((tileEndX - tileStartX) - 5) + tileStartX+2;
+	}
+	public function getTempY():Int {
+		var tileYNum:Int = Math.round(Reg.gameHeight / 16);
+		var floorHeight = Math.round((tileYNum - 4) / 4);
+		switch(Std.random(4)) {
+			case 0:
+				return (2 + floorHeight);
+			case 1:
+				return (2 + (floorHeight * 2));
+			case 2:
+				return (2 + (floorHeight * 3));
+			case 3:
+				return (2 + (floorHeight * 4));
+			default:
+				return -1;
+		}
 	}
 }
