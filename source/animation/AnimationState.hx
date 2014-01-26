@@ -41,5 +41,9 @@ class AnimationState
 		return frames[currentFrame];
 	}
 	
+	public function setCurrentFrame(_frame:Int) {
+		currentFrame = _frame;
+		frameCounter = 0;
+	}
 	
 }

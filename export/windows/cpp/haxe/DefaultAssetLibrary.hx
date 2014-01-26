@@ -38,6 +38,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("assets/data/data-goes-here.txt", __ASSET__assets_data_data_goes_here_txt);
 		type.set ("assets/data/data-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		className.set ("assets/images/armAnimations.png", __ASSET__assets_images_armanimations_png);
+		type.set ("assets/images/armAnimations.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("assets/images/armCycles.png", __ASSET__assets_images_armcycles_png);
+		type.set ("assets/images/armCycles.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/door.png", __ASSET__assets_images_door_png);
 		type.set ("assets/images/door.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/images/images-go-here.txt", __ASSET__assets_images_images_go_here_txt);
@@ -136,6 +140,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		path.set ("assets/data/data-goes-here.txt", "assets/data/data-goes-here.txt");
 		type.set ("assets/data/data-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		path.set ("assets/images/armAnimations.png", "assets/images/armAnimations.png");
+		type.set ("assets/images/armAnimations.png", Reflect.field (AssetType, "image".toUpperCase ()));
+		path.set ("assets/images/armCycles.png", "assets/images/armCycles.png");
+		type.set ("assets/images/armCycles.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/door.png", "assets/images/door.png");
 		type.set ("assets/images/door.png", Reflect.field (AssetType, "image".toUpperCase ()));
 		path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
@@ -672,6 +680,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 #elseif flash
 
 class __ASSET__assets_data_data_goes_here_txt extends null { }
+class __ASSET__assets_images_armanimations_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
+class __ASSET__assets_images_armcycles_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_door_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class __ASSET__assets_images_images_go_here_txt extends null { }
 class __ASSET__assets_images_leganimations_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
@@ -721,6 +731,8 @@ class __ASSET__flixel_snd_flixel_wav extends null { }
 
 
 #elseif html5
+
+
 
 
 

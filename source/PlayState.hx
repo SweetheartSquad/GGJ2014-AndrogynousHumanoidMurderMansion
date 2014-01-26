@@ -17,8 +17,11 @@ import haxe.io.Eof;
 import sys.io.File;
 import sys.io.FileInput;
 import sys.io.FileOutput;
+import flixel.effects.particles.FlxEmitter;
+import flixel.effects.particles.FlxParticle;
 
-#if not flash
+#if flash
+#else
 import utils.GamepadUtil;
 #end
 
@@ -38,6 +41,8 @@ class PlayState extends FlxState
 	private var players:FlxGroup;
 	private var npcs:FlxGroup;
 	
+	private var particles:FlxGroup;
+	
 	//players
 	private var player1:Player;
 	private var player2:Player;
@@ -45,7 +50,8 @@ class PlayState extends FlxState
 	//npcs
 	private var npcTest:NPC;
 	
-	#if not flash
+	#if flash
+	#else
 	//Utils 
 	private var gamepadUtilOne:GamepadUtil;
 	private var gamepadUtilTwo:GamepadUtil;
@@ -94,7 +100,10 @@ class PlayState extends FlxState
 		FlxG.mouse.show();
 		#end
 		
-		#if not flash
+		#if flash
+	trace("FLASH");
+		#else
+	trace("!FLASH");
 		//Utils
 		gamepadUtilOne = new GamepadUtil(0);
 		gamepadUtilTwo = new GamepadUtil(1);
@@ -106,7 +115,7 @@ class PlayState extends FlxState
 		players.add(player2);
 		npcs = new FlxGroup();
 		npcs.add(npcTest);
-		for(i in 0...500){
+		for(i in 0...Reg.npcCount){
 			npcs.add(new NPC());
 		}
 		entities = new FlxGroup();
@@ -116,8 +125,8 @@ class PlayState extends FlxState
 		
 		//Thingies
 		var doorPath:String = "assets/images/door.png"; 
-		doorOne = new Door(40,50,DOOR,doorPath,0,1);
-		doorTwo = new Door(100,300,DOOR,doorPath,1,0);
+		doorOne = new Door(Reg.gameWidth/2,50,DOOR,doorPath,0,1);
+		doorTwo = new Door(Reg.gameWidth/2,300,DOOR,doorPath,1,0);
 		
 		doors = new FlxGroup();
 		doors.add(doorOne);
@@ -134,6 +143,7 @@ class PlayState extends FlxState
 		soundManager = new SoundManager();
 		soundManager.addSound("door", "assets/music/door.wav");
 		
+		add(particles);
 		
 		super.create();
 	}
@@ -157,57 +167,7 @@ class PlayState extends FlxState
 			cast(npcs._members[i],Entity).acceleration.x = 0;
 		}
 		
-		#if not flash
-		//player1 controls
-		if (FlxG.keyboard.anyPressed(["J"]) || (gamepadUtilOne.getAxis() < -0.5 && gamepadUtilOne.getControllerId() == 0)){
-			player1.acceleration.x = -player1.maxVelocity.x * 4;
-			player1.facing = FlxObject.LEFT;
-		}
-		if (FlxG.keyboard.anyPressed(["L"])|| (gamepadUtilOne.getAxis() > 0.5 && gamepadUtilOne.getControllerId() == 0 )){
-			player1.acceleration.x = player1.maxVelocity.x * 4;
-			player1.facing = FlxObject.RIGHT;
-		}
-		if ((FlxG.keyboard.justPressed("I")|| (gamepadUtilOne.getPressedbuttons().exists(0)&& gamepadUtilOne.getControllerId() == 0 ))) {
-			player1.jump();
-		}
-		if (FlxG.keyboard.justPressed("K")|| (gamepadUtilOne.getPressedbuttons().exists(1)&& gamepadUtilOne.getControllerId() == 0 )) {
-			FlxG.overlap(player1, player2, killPlayer);
-		}
-		if (FlxG.keyboard.justPressed("U")|| (gamepadUtilOne.getPressedbuttons().exists(3)&& gamepadUtilOne.getControllerId() == 0 )) {
-			player1.interacting = true;
-		}
-		if (gamepadUtilOne.getLastbuttonUp() == 7 && gamepadUtilOne.getControllerId() == 0) {
-			player1.destroyGraphics();
-			player1.generateGraphics();
-			
-		}
-		
-		
-		//player2 controls
-		if (FlxG.keyboard.anyPressed(["A"])|| (gamepadUtilTwo.getAxis() < -0.5 && gamepadUtilTwo.getControllerId() == 1)){
-			player2.acceleration.x = -player2.maxVelocity.x * 4;
-			player2.facing = FlxObject.LEFT;
-		}if (FlxG.keyboard.anyPressed(["D"])|| (gamepadUtilTwo.getAxis() > 0.5 && gamepadUtilTwo.getControllerId() == 1 )){
-			player2.acceleration.x = player2.maxVelocity.x * 4;
-			player2.facing = FlxObject.RIGHT;
-		}if ((FlxG.keyboard.justPressed("W") || (gamepadUtilTwo.getPressedbuttons().exists(0) && gamepadUtilTwo.getControllerId() == 1))) {
-			player2.jump();
-		}if (FlxG.keyboard.anyPressed(["S"]) || (gamepadUtilTwo.getPressedbuttons().exists(1) && gamepadUtilTwo.getControllerId() == 1)) {
-			FlxG.overlap(player2, player1, killPlayer);
-		}
-		if (FlxG.keyboard.justPressed("Q")|| (gamepadUtilTwo.getPressedbuttons().exists(3)&& gamepadUtilTwo.getControllerId() == 1 )) {
-			player2.interacting = true;
-		}
-		if (gamepadUtilTwo.getLastbuttonUp() == 7 && gamepadUtilTwo.getControllerId() == 1) {
-			player2.destroyGraphics();
-			player2.generateGraphics();
-		}
-		
-		if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
-			entities.callAll("destroyGraphics");
-			entities.callAll("generateGraphics");
-		}
-		#else
+		#if flash
 		//player1 controls
 		if (FlxG.keyboard.anyPressed(["J"])){
 			player1.acceleration.x = -player1.maxVelocity.x * 4;
@@ -243,6 +203,56 @@ class PlayState extends FlxState
 		if (FlxG.keyboard.justPressed("Q")) {
 			player2.interacting = true;
 		}
+		#else
+		//player1 controls
+		if (FlxG.keyboard.anyPressed(["J"]) || (gamepadUtilOne.getAxis() < -0.5 && gamepadUtilOne.getControllerId() == 0)){
+			player1.acceleration.x = -player1.maxVelocity.x * 4;
+			player1.facing = FlxObject.LEFT;
+		}
+		if (FlxG.keyboard.anyPressed(["L"])|| (gamepadUtilOne.getAxis() > 0.5 && gamepadUtilOne.getControllerId() == 0 )){
+			player1.acceleration.x = player1.maxVelocity.x * 4;
+			player1.facing = FlxObject.RIGHT;
+		}
+		if ((FlxG.keyboard.justPressed("I")|| (gamepadUtilOne.getPressedbuttons().exists(0)&& gamepadUtilOne.getControllerId() == 0 ))) {
+			player1.jump();
+		}
+		if (FlxG.keyboard.justPressed("K")|| (gamepadUtilOne.getPressedbuttons().exists(1)&& gamepadUtilOne.getControllerId() == 0 )) {
+			player1.attacking = true;
+		}
+		if (FlxG.keyboard.justPressed("U")|| (gamepadUtilOne.getPressedbuttons().exists(3)&& gamepadUtilOne.getControllerId() == 0 )) {
+			player1.interacting = true;
+		}
+		if (gamepadUtilOne.getLastbuttonUp() == 7 && gamepadUtilOne.getControllerId() == 0) {
+			player1.destroyGraphics();
+			player1.generateGraphics();
+			
+		}
+		
+		
+		//player2 controls
+		if (FlxG.keyboard.anyPressed(["A"])|| (gamepadUtilTwo.getAxis() < -0.5 && gamepadUtilTwo.getControllerId() == 1)){
+			player2.acceleration.x = -player2.maxVelocity.x * 4;
+			player2.facing = FlxObject.LEFT;
+		}if (FlxG.keyboard.anyPressed(["D"])|| (gamepadUtilTwo.getAxis() > 0.5 && gamepadUtilTwo.getControllerId() == 1 )){
+			player2.acceleration.x = player2.maxVelocity.x * 4;
+			player2.facing = FlxObject.RIGHT;
+		}if ((FlxG.keyboard.justPressed("W") || (gamepadUtilTwo.getPressedbuttons().exists(0) && gamepadUtilTwo.getControllerId() == 1))) {
+			player2.jump();
+		}if (FlxG.keyboard.anyPressed(["S"]) || (gamepadUtilTwo.getPressedbuttons().exists(1) && gamepadUtilTwo.getControllerId() == 1)) {
+			player2.attacking = true;
+		}
+		if (FlxG.keyboard.justPressed("Q")|| (gamepadUtilTwo.getPressedbuttons().exists(3)&& gamepadUtilTwo.getControllerId() == 1 )) {
+			player2.interacting = true;
+		}
+		if (gamepadUtilTwo.getLastbuttonUp() == 7 && gamepadUtilTwo.getControllerId() == 1) {
+			player2.destroyGraphics();
+			player2.generateGraphics();
+		}
+		
+		if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
+			entities.callAll("destroyGraphics");
+			entities.callAll("generateGraphics");
+		}
 		#end
 		
 		
@@ -262,22 +272,54 @@ class PlayState extends FlxState
 		//updates below
 		manageThingies();
 		
+		FlxG.collide(Reg._level, entities);
+		//FlxG.collide(Reg._level, particles);
+		
+		
+		entities.callAll("postUpdate");
+		FlxG.overlap(entities, entities, entityToEntity);
+		
 		//Reset Variables
 		entities.setAll("interacting", false);
-		
-		FlxG.collide(Reg._level, entities);
-		entities.callAll("postUpdate");
-		//FlxG.overlap(entities, entities, entityToEntity);
+		entities.callAll("attackDelay");
 	}
 	public function entityToEntity(attacker:Entity,victim:Entity) {
 		if (attacker.interacting) {
 			victim.talkBubble.alpha += 0.5;
 		}
+		
+		if (attacker.attacking) {
+			/*var emitter:FlxEmitter = new FlxEmitter(victim.x,victim.y); //x and y of the emitter
+			var particles:Int = Std.random(4) + 2;
+			emitter.gravity = 500;
+			 emitter.bounce = 50;
+			for(i in 0...particles){
+				var particle:FlxParticle = new FlxParticle();
+				particle.makeGraphic(2, 2, 0xFFFF0000);
+				particle.exists = false;
+				emitter.add(particle);
+			}
+			 
+			add(emitter);
+			emitter.start();*/
+			var particle:FlxSprite = new FlxSprite(victim.x, victim.y);
+			particle.makeGraphic(3, 3, 0xFFFF0000);
+			particle.x = victim.x;
+			particle.y = victim.y;
+			particle.maxVelocity.set(80, 500);
+			particle.acceleration.y = 1500;
+			particle.drag.x = particle.maxVelocity.x * 8;
+			
+			//smooth subpixel stuff
+			particle.forceComplexRender = false;
+			
+			this.add(particles);
+			//particles.add(particle);
+			
+			victim.kill();
+		}
 	}
-	public function killPlayer(attacker:FlxObject,victim:FlxObject) {
-		victim.kill();
-	}
-
+	
 	public function manageThingies()
 	{
 		FlxG.overlap(doors, players, manageDoors);

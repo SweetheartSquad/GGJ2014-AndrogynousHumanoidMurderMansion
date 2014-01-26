@@ -15,18 +15,16 @@ import openfl.Assets;
 import openfl.display.Tilesheet;
 
 
-class AnimationManager
-{
+class AnimationManager{
 	
 	private var bitmap:Bitmap;
 	private var tileSheet:Tilesheet;
 	private var animationStates:Map<String, AnimationState>;
 	private var graphics:Graphics;
 	private var addedTiles:Int;
-	private var currentSate:AnimationState;
+	public var currentState:AnimationState;
 
-	public function new(graphic:Graphics, bitmapPath:String) 
-	{
+	public function new(graphic:Graphics, bitmapPath:String){
 		graphics = graphic;
 		tileSheet = new Tilesheet(Assets.getBitmapData(bitmapPath));
 		animationStates = new Map();
@@ -54,13 +52,24 @@ class AnimationManager
 	
 	public function setAnimationState(name:String)
 	{
-		currentSate = animationStates.get(name); 
+		currentState = animationStates.get(name); 
 	}
-	
 	public function draw()
 	{
-		var data=[0.0, 0.0, currentSate.getCurrentFrame()];
+		var data=[0.0, 0.0, currentState.getCurrentFrame()];
 		graphics.clear();
 		tileSheet.drawTiles(graphics, data, true);
+	}
+	public function drawNoLoop(freezeAtFrame:Int)
+	{
+		if(currentState.getCurrentFrame() <= freezeAtFrame){
+			var data=[0.0, 0.0, currentState.getCurrentFrame()];
+			graphics.clear();
+			tileSheet.drawTiles(graphics, data, true);
+		}
+	}
+	
+	public function reset(name:String) {
+		currentState.setCurrentFrame(0);
 	}
 }
