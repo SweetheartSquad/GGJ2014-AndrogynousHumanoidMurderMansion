@@ -31,7 +31,7 @@ class NPC extends Entity{
 		super();
 		targetX = -1;
 		targetY = -1;
-		
+		this.health = 300;
 		this.type = _type;
 		
 		this.randomTargetTimer = 0;
@@ -45,12 +45,14 @@ class NPC extends Entity{
 				this.jumpChance = 0.01;
 				this.interactChance = 0.01;
 				this.attackChance = 0.00001;
+				this.attackDmg = 15;
 			case NpcType.AGGRESSOR:
 				this.aggressionTolerance = 0.5;
 				this.randomTargetTimerLimit = 180;
 				this.targetTimerLimit = 30;
 				this.jumpChance = 0.001;
 				this.attackChance = 0.01;
+				this.attackDmg = 34;
 			case NpcType.CIVILIAN:
 				this.aggressionTolerance = 0.8;
 				this.randomTargetTimerLimit = 60;
@@ -58,6 +60,7 @@ class NPC extends Entity{
 				this.jumpChance = 0.001;
 				this.interactChance = 0.005;
 				this.attackChance = 0.0001;
+				this.attackDmg = 15;
 		}
 	}
 	
@@ -70,13 +73,8 @@ class NPC extends Entity{
 			this.facing = FlxObject.LEFT;
 		}
 		if (Math.abs(this.x - targetX) < 10) {
-			//getRandomTarget();
 			this.acceleration.x = 0;
 		}
-		/*if (Std.random(5) == 1) {
-			getRandomTarget();
-		}*/
-		//trace(targetX);
 	}
 	public function setTarget(_x, _y) {
 		targetX = _x;
@@ -101,10 +99,9 @@ class NPC extends Entity{
 		}
 	}
 	public function tryAttack() {
-		if(type != NpcType.COWARD){
-			if (Math.random() < attackChance) {
-				this.attacking = true;
-			}
+		var aggro:Float = Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x), 0)];
+		if (Math.random() < (attackChance + attackChance*(aggressionTolerance<aggro ? 0 : 1))) {
+			this.attacking = true;
 		}
 	}
 	public function updateLocalAggression() {

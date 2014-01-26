@@ -33,7 +33,7 @@ class Particle extends FlxSprite
 	}
 	public function postUpdate() {
 		if (this.alpha > 0) {
-			this.alpha -= 0.001;
+			this.alpha -= 0.005;
 		}else {
 			this.kill();
 		}

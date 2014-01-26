@@ -51,6 +51,9 @@ class PlayState extends FlxState
 	private var player1:Player;
 	private var player2:Player;
 	
+	private var player1Lives:Array<FlxSprite>;
+	private var player2Lives:Array<FlxSprite>;
+	
 	//npcs
 	private var npcTest:NPC;
 	
@@ -142,7 +145,7 @@ class PlayState extends FlxState
 		npcs = new FlxGroup();
 		
 		for(i in 0...Reg.npcCount){
-			npcs.add(new NPC(Math.random()>0.5 ? NpcType.COWARD : NpcType.AGGRESSOR));
+			npcs.add(new NPC(Math.random()>0.25 ? NpcType.COWARD : NpcType.AGGRESSOR));
 		}
 		entities = new FlxGroup();
 		entities.add(players);
@@ -159,6 +162,19 @@ class PlayState extends FlxState
 		soundManager = new SoundManager();
 		soundManager.addSound("door", "assets/music/door.wav");
 		
+		var songOneArray:Array<String> = ["assets/music/f1.wav",
+		"assets/music/f2.wav",
+		"assets/music/f3.wav",
+		"assets/music/f4.wav",
+		"assets/music/f5.wav",
+		"assets/music/f6.wav",
+		"assets/music/f7.wav",
+		"assets/music/f8.wav",
+		];
+		
+		soundManager.addSong("songOne", songOneArray);
+		soundManager.playSong("songOne");
+		
 		particles = new FlxGroup();
 		add(particles);
 		
@@ -167,6 +183,9 @@ class PlayState extends FlxState
 				this.add(Reg.aggressionMap.vis[Reg.aggressionMap.idx(x,y)]);
 			}
 		}
+		
+		
+		
 		
 		super.create();
 	}
@@ -298,7 +317,6 @@ class PlayState extends FlxState
 		#end
 		
 		
-		
 		if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
 			entities.callAll("destroyGraphics");
 			entities.callAll("generateGraphics");
@@ -357,18 +375,28 @@ class PlayState extends FlxState
 		
 		if (object2.attacking && object2.attackTimer == 3) {
 			makeGibs(object1.x, object1.y);
-			object1.kill();
+			object1.health -= object2.attackDmg;
+			if(object1.health <= 0.0){
+			makeGibs(object1.x, object1.y);
+			makeGibs(object1.x, object1.y);
+				object1.kill();
+			}
 		}
 		if (object1.attacking && object1.attackTimer == 3) {
 			makeGibs(object2.x, object2.y);
-			object2.kill();
+			object2.health -= object1.attackDmg;
+			if(object2.health <= 0.0){
+			makeGibs(object2.x, object2.y);
+			makeGibs(object2.x, object2.y);
+				object2.kill();
+			}
 		}
 	}
 	public function makeGibs(_x:Float, _y:Float, _happy:Bool = false) {
 		particles.add(new Particle(_x, _y, _happy));
 		particles.add(new Particle(_x, _y, _happy));
 		particles.add(new Particle(_x, _y, _happy));
-		if(Math.random()>0.3){
+		if(Math.random()>0.6){
 			makeGibs(_x, _y, _happy);
 		}
 	}
@@ -648,7 +676,7 @@ class PlayState extends FlxState
 					break;
 				}
 			}while (flag);
-			trace(sentinel);
+			//trace(sentinel);
 			teleporters.add(new Teleporter(tempX, tempY, ThingyType.DOOR, "assets/door.png", tempId+1, tempId));
 		}
 		

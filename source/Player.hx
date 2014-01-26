@@ -8,7 +8,7 @@ class Player extends Entity {
 	public var lives:Int = 3;
 	public function new() {
 		super();
-		
+		this.attackDmg = 101;
 	}
 	
 	override public function kill() {

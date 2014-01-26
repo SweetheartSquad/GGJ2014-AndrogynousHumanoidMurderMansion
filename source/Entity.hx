@@ -10,6 +10,8 @@ import flixel.group.FlxGroup;
 import flixel.util.FlxColor;
 import utils.AnimationManager;
 import flixel.util.FlxColorUtil;
+import flash.Vector;
+import flash.geom.Point;
 
 import flash.Lib;
 import Std;
@@ -28,7 +30,7 @@ class Entity extends FlxSprite {
 	private var walkSpeed:Float;
 	private var runSpeed:Float;
 	//private var health:Int;
-	private var attackDmg:Int;
+	public var attackDmg:Int;
 	public var attacking:Bool;
 	public var attackTimer:Int;
 	private var attackTimerLimit:Int;
@@ -65,7 +67,7 @@ class Entity extends FlxSprite {
 		attacking = false;
 		running = false;
 		winState = false;
-		
+		this.health = 100;
 		this.attackTimer = 0;
 		this.attackTimerLimit = 9;
 		this.idleTimer = 0;
@@ -106,9 +108,31 @@ class Entity extends FlxSprite {
 			Lib.current.stage.addChild(body);
 			
 			
+			
 			head = new Sprite();
 			head.graphics.beginFill(secondaryColour);
 			head.graphics.drawCircle(0, 0, headSize);
+			head.graphics.endFill();
+			head.graphics.beginFill(FlxColorUtil.makeFromHSBA(0,0,Math.random(),1));
+			
+			var lastX:Float = 5;
+			var lastY:Float = 5;
+			
+			var sides:Int = Std.random(30 - 15)+15;
+			
+			for (i in 1...sides)
+			{
+				//var x = Std.random(Math.round(lastX + Std.random(13 - 3) + 3) - (lastX - Std.random(8-4)+4)) + (lastX - Std.random(8-4)+4)));
+				//var y = Std.random(Math.round(lastY + 10 - (lastY - 5))) - Math.round(lastY - 5);
+				
+				var y = Std.random(Math.round(((lastX + (Std.random(15 - 10) + 10)) - (lastX - (Std.random(10 - 5) + 5))) - lastX - (Std.random(10 - 5) + 5)));
+				var x = Std.random(Math.round(((lastY + (Std.random(15 - 10) + 10)) - (lastY - (Std.random(10 - 5) + 5))) - lastY - (Std.random(10 - 5) + 5)));
+				
+				lastX = x;
+				lastY = y;
+				head.graphics.lineTo(x,y);
+				
+			}	
 			head.graphics.endFill();
 			Lib.current.stage.addChild(head);
 			
@@ -211,8 +235,8 @@ class Entity extends FlxSprite {
 		
 		body.x = (this.x + (this.facing == FlxObject.LEFT ? w : 0))*Reg.zoom;// + (this.facing == FlxObject.LEFT ? -w / 2 : 0);
 		body.y = (this.y)*Reg.zoom;
-		head.x = body.x + (w/2 * (this.facing == FlxObject.LEFT ? -1 : 1))*Reg.zoom;
-		head.y = body.y - headSize/2 * Reg.zoom;
+		head.x = (this.x + this.width/2) *Reg.zoom;// body.x + (w / 2 * (this.facing == FlxObject.LEFT ? -1 : 1)) * Reg.zoom;
+		head.y = body.y - headSize - 10 * Reg.zoom;
 		legs.x = body.x + (body.width*1.5 * (this.facing == FlxObject.LEFT ? -1 : 1));
 		legs.y = body.y+body.height;
 		arms.x = body.x + (body.width*3.25 * (this.facing == FlxObject.LEFT ? -1 : 1));
@@ -311,6 +335,16 @@ class Entity extends FlxSprite {
 				}
 				if(x-i > 0){
 					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x - i), 0)] += 1/i*2;
+				}
+			}
+		}if (this.running) {
+			Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x), 0)] += 1;
+			for (i in 0...100) {
+				if(x+i < Reg.gameWidth){
+					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x + i), 0)] += 1/i/2;
+				}
+				if(x-i > 0){
+					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x - i), 0)] += 1/i/2;
 				}
 			}
 		}
