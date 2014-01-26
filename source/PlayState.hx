@@ -111,7 +111,7 @@ class PlayState extends FlxState
 		Reg._level.loadMap(Assets.getText("assets/level.csv"), "assets/images/woodTileSet.png", TILE_WIDTH, TILE_HEIGHT, FlxTilemap.AUTO);
 		
 		//var bm = new Bitmap(new TestBMD(100,100));
-		var bg:FlxSprite = new FlxSprite(-525,-310);
+		var bg:FlxSprite = new FlxSprite(-600,-400);
 		bg.loadGraphic("assets/images/background.png");
 		bg.scale.x /= Reg.zoom;
 		bg.scale.y /= Reg.zoom;
@@ -481,7 +481,10 @@ class PlayState extends FlxState
 			entity.interacting = false;
 			entity.x = otherTeleporter.x;
 			entity.y = otherTeleporter.y - 10;
-			soundManager.playSound("door");
+			if (Math.random < 0.1)
+			{
+				soundManager.playSound("door");
+			}
 		}
 		
 	}

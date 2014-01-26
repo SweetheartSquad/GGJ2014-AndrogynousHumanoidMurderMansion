@@ -8,8 +8,8 @@ class GameClass extends FlxGame
 {
 	var initialState:Class<FlxState> = MenuState; // The FlxState the game starts with.
 	var framerate:Int = 60; // How many frames per second the game should run at.
-	var skipSplash:Bool = false; // Whether to skip the flixel splash screen that appears in release mode.
-	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
+	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
+	var startFullscreen:Bool = true; // Whether to start the game in fullscreen on desktop targets
 
 	/**
 	 * You can pretty much ignore this logic and edit the variables above.

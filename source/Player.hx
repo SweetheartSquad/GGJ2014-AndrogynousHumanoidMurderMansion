@@ -1,4 +1,5 @@
 package ;
+import utils.SoundManager;
 
 /**
  * ...
@@ -9,6 +10,7 @@ class Player extends Entity {
 	public function new() {
 		super();
 		this.attackDmg = 101;
+	
 	}
 	
 	override public function kill() {
@@ -18,6 +20,7 @@ class Player extends Entity {
 			this.generateGraphics();
 			this.placeRandom();
 			this.health = 100;
+			
 		}else {
 			super.kill();
 		}

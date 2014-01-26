@@ -7,6 +7,7 @@ import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
+import flixel.util.FlxPoint;
 
 /**
  * A FlxState which can be used for the game's menu.
@@ -29,23 +30,26 @@ class MenuState extends FlxState
 		pReady = false;
 		qReady = false;
 		
-		bg = new FlxSprite(-525,-310);
+		bg = new FlxSprite( -590, -350);
 		bg.loadGraphic("assets/images/background.png");
 		bg.scale.x /= Reg.zoom;
 		bg.scale.y /= Reg.zoom;
 		add(bg);
 		FlxG.cameras.bgColor = 0x00000000;
 		
-		title = new FlxSprite(Reg.gameWidth/2 - 220, 20);
+		title = new FlxSprite(Reg.gameWidth/2 - 220,-80);
 		title.loadGraphic("assets/images/titleCard.png");
+		title.scale = new FlxPoint(0.7, 0.7);
 		add(title);
 		
-		_text1 = new FlxText((Reg.gameWidth / 2) - 100, Reg.gameHeight / 4 + 280, 295, "PRESS SPACE TO START");
+		
+		
+		_text1 = new FlxText((Reg.gameWidth / 2) - 100, Reg.gameHeight / 4 + 200, 295, "PRESS SPACE TO START");
 		_text1.size = 20;
 		_text1.color = 0x000000;
 		add(_text1);
 		
-		_text2 = new FlxText((Reg.gameWidth / 2) - 95, Reg.gameHeight / 4 + 315, 300, "PRESS Q TO READ INSTRUCTIONS");
+		_text2 = new FlxText((Reg.gameWidth / 2) - 95, Reg.gameHeight / 4 + 225, 300, "PRESS Q TO READ INSTRUCTIONS");
 		_text2.size = 14;
 		_text2.color = 0x000000;
 		add(_text2);
