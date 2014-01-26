@@ -46,6 +46,8 @@ class GamepadUtil
 			pressedbuttons.remove(evt.id);
 			lastbuttonUp = evt.id;
 			device = evt.device;
+			pressedbuttons = new  Map<Int,Int>();
+			
 		}
 		
 	}
@@ -56,6 +58,22 @@ class GamepadUtil
 		{
 			axis = evt.axis[0];
 		}
+	}
+	
+	public function clear()
+	{
+		if (pressedbuttons.exists(5) || pressedbuttons.exists(4))
+		{
+			pressedbuttons = new  Map<Int,Int>();
+			pressedbuttons.set(5, 5);
+			pressedbuttons.set(4, 4);
+			
+		}
+		else
+		{
+			pressedbuttons = new  Map<Int,Int>();
+		}
+		
 	}
 	
 	public function getPressedbuttons():Map<Int,Int> 

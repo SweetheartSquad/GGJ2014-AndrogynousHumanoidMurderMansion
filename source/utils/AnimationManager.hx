@@ -52,7 +52,12 @@ class AnimationManager{
 	
 	public function setAnimationState(name:String)
 	{
+		if (currentState != null && currentState != animationStates.get(name))
+		{
+			currentState.setCurrentFrame(1);
+		}
 		currentState = animationStates.get(name); 
+		
 	}
 	public function draw()
 	{

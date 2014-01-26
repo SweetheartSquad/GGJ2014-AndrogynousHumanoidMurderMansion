@@ -113,7 +113,7 @@ class SoundManager
 		{
 			if (songCounter < songs.get(name)[songSegmentCounter].length)
 			{
-				trace("play");
+				
 					
 				songs.get(name)[songSegmentCounter][songCounter].play();
 					
