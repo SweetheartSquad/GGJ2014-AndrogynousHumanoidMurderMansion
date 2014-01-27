@@ -27,20 +27,22 @@ class InstructState extends FlxState
 	{
 		ready = false;
 		
-		bg = new FlxSprite(-525,-310);
+		bg = new FlxSprite( -580, -330);
 		bg.loadGraphic("assets/images/background.png");
 		bg.scale.x /= Reg.zoom;
 		bg.scale.y /= Reg.zoom;
 		add(bg);
-		FlxG.cameras.bgColor = 0x00000000;
+		FlxG.cameras.bgColor = 0xFF000000;
 		
-		instructions = new FlxSprite(Reg.gameWidth/2 - 260, 25);
+		instructions = new FlxSprite(Reg.gameWidth/2 - 260, 0);
 		instructions.loadGraphic("assets/images/instructions1.png");
+		instructions.scale.x /= (Reg.zoom/1.5);
+		instructions.scale.y /= (Reg.zoom/1.5); 
 		add(instructions);
 		
-		_text1 = new FlxText((Reg.gameWidth / 2) - 100, Reg.gameHeight / 4 + 320, 290, "PRESS Q TO GO BACK");
+		_text1 = new FlxText((Reg.gameWidth / 2) - 100, 360, 290, "PRESS Q TO GO BACK");
 		_text1.size = 20;
-		_text1.color = 0x000000;
+		_text1.color = 0xFFFFFF;
 		add(_text1);
 		
 		particles = new FlxGroup();

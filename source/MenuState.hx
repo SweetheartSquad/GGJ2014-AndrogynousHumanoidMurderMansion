@@ -30,14 +30,14 @@ class MenuState extends FlxState
 		pReady = false;
 		qReady = false;
 		
-		bg = new FlxSprite( -590, -350);
+		bg = new FlxSprite( -580, -330);
 		bg.loadGraphic("assets/images/background.png");
 		bg.scale.x /= Reg.zoom;
 		bg.scale.y /= Reg.zoom;
 		add(bg);
-		FlxG.cameras.bgColor = 0x00000000;
+		FlxG.cameras.bgColor = 0xFF000000;
 		
-		title = new FlxSprite(Reg.gameWidth/2 - 220,-80);
+		title = new FlxSprite(Reg.gameWidth/2 - 225,-50);
 		title.loadGraphic("assets/images/titleCard.png");
 		title.scale = new FlxPoint(0.7, 0.7);
 		add(title);
