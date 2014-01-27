@@ -10,9 +10,20 @@ import Map;
  * ...
  * @author Ryan
  */
-class GamepadUtil
-{
-	
+class XboxControls {
+	public static var A:Int = 0;
+	public static var B:Int = 1;
+	public static var X:Int = 2;
+	public static var Y:Int = 3;
+	public static var L1:Int = 4;
+	public static var R1:Int = 5;
+	public static var SELECT:Int = 6;
+	public static var START:Int = 7;
+	public static var L3:Int = 8;
+	public static var R3:Int = 9;
+}
+
+class GamepadUtil{
 	private var pressedbuttons:Map<Int,Int>;
     private var lastbuttonUp:Int;
 	private var axis:Float;

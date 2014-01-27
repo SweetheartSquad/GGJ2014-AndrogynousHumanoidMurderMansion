@@ -294,15 +294,15 @@ class PlayState extends FlxState
 			player1.acceleration.x = player1.maxVelocity.x * (player1.running ? 8 : 4);
 			//player1.facing = FlxObject.RIGHT;
 		}
-		if ((FlxG.keyboard.justPressed("W")|| (gamepadUtilOne.getPressedbuttons().exists(0)&& gamepadUtilOne.getControllerId() == 0 ))) {
+		if ((FlxG.keyboard.justPressed("W")|| (gamepadUtilOne.getPressedbuttons().exists(XboxControls.A)&& gamepadUtilOne.getControllerId() == 0 ))) {
 			player1.jump();
 		}
-		if (FlxG.keyboard.justPressed("S")|| (gamepadUtilOne.getPressedbuttons().exists(1)&& gamepadUtilOne.getControllerId() == 0 )) {
+		if (FlxG.keyboard.justPressed("S")|| (gamepadUtilOne.getPressedbuttons().exists(XboxControls.B)&& gamepadUtilOne.getControllerId() == 0 )) {
 			player1.attacking = true;
 		}
-		if (FlxG.keyboard.justPressed("Q")|| (gamepadUtilOne.getPressedbuttons().exists(2)&& gamepadUtilOne.getControllerId() == 0 )) {
+		if (FlxG.keyboard.justPressed("Q")|| (gamepadUtilOne.getPressedbuttons().exists(XboxControls.X)&& gamepadUtilOne.getControllerId() == 0 )) {
 			player1.interacting = true;
-		}if (FlxG.keyboard.anyPressed(["E"])|| ((gamepadUtilOne.getPressedbuttons().exists(5)||gamepadUtilOne.getPressedbuttons().exists(4))&& gamepadUtilOne.getControllerId() == 0 )) {
+		}if (FlxG.keyboard.anyPressed(["E"])|| ((gamepadUtilOne.getPressedbuttons().exists(XboxControls.L1)||gamepadUtilOne.getPressedbuttons().exists(XboxControls.R1))&& gamepadUtilOne.getControllerId() == 0 )) {
 			player1.running = true;
 		}
 		/*if (gamepadUtilOne.getLastbuttonUp() == 7 && gamepadUtilOne.getControllerId() == 0) {
@@ -319,14 +319,14 @@ class PlayState extends FlxState
 		}if (FlxG.keyboard.anyPressed(["L"])|| (gamepadUtilTwo.getAxis() > 0.5 && gamepadUtilTwo.getControllerId() == 1 )){
 			player2.acceleration.x = player2.maxVelocity.x * (player2.running ? 8 : 4);
 			//player2.facing = FlxObject.RIGHT;
-		}if ((FlxG.keyboard.justPressed("I") || (gamepadUtilTwo.getPressedbuttons().exists(0) && gamepadUtilTwo.getControllerId() == 1))) {
+		}if ((FlxG.keyboard.justPressed("I") || (gamepadUtilTwo.getPressedbuttons().exists(XboxControls.A) && gamepadUtilTwo.getControllerId() == 1))) {
 			player2.jump();
-		}if (FlxG.keyboard.justPressed("K")|| (gamepadUtilTwo.getPressedbuttons().exists(1)&& gamepadUtilTwo.getControllerId() == 1 )) {
+		}if (FlxG.keyboard.justPressed("K")|| (gamepadUtilTwo.getPressedbuttons().exists(XboxControls.B)&& gamepadUtilTwo.getControllerId() == 1 )) {
 			player2.attacking = true;
 		}
-		if (FlxG.keyboard.justPressed("U")|| (gamepadUtilTwo.getPressedbuttons().exists(2)&& gamepadUtilTwo.getControllerId() == 1 )) {
+		if (FlxG.keyboard.justPressed("U")|| (gamepadUtilTwo.getPressedbuttons().exists(XboxControls.X)&& gamepadUtilTwo.getControllerId() == 1 )) {
 			player2.interacting = true;
-		}if (FlxG.keyboard.anyPressed(["O"])|| ((gamepadUtilTwo.getPressedbuttons().exists(5)||gamepadUtilTwo.getPressedbuttons().exists(4))&& gamepadUtilTwo.getControllerId() == 1 )) {
+		}if (FlxG.keyboard.anyPressed(["O"])|| ((gamepadUtilTwo.getPressedbuttons().exists(XboxControls.L1)||gamepadUtilTwo.getPressedbuttons().exists(XboxControls.R1))&& gamepadUtilTwo.getControllerId() == 1 )) {
 			player2.running = true;
 		}
 		/*if (gamepadUtilTwo.getLastbuttonUp() == 7 && gamepadUtilTwo.getControllerId() == 1) {
@@ -402,7 +402,7 @@ class PlayState extends FlxState
 			entities.setAll("winState", true);
 			player1.alive ? makeGibs(player1.x, player1.y, true) : makeGibs(player2.x, player2.y, true);
 			
-			if (FlxG.keyboard.anyJustPressed(["ESC","SPACE","ENTER"]) || gamepadUtilOne.getLastbuttonUp() == 7) {
+			if (FlxG.keyboard.anyJustPressed(["ESC","SPACE","ENTER"]) || gamepadUtilOne.getLastbuttonUp() == XboxControls.START) {
 						
 				entities.callAll("destroyGraphics");
 				entities.kill();
