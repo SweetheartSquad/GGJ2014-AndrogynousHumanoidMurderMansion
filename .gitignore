@@ -1,3 +1,5 @@
+export/
+
 #################
 ## Eclipse
 #################
@@ -213,8 +215,3 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
-
-
-export/
-export/flash/
-export/flash/haxe/
