@@ -322,9 +322,10 @@ class Entity extends FlxSprite {
 	
 	
 	public function updateAggression() {
+		//increase if attacking
 		if (this.attacking) {
 			Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x),  getRow(this.y))] += 1;
-			for (i in 0...100) {
+			for (i in 0...120) {
 				if(x+i < Reg.gameWidth){
 					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x + i),  getRow(this.y))] += 1/i*2;
 				}
@@ -332,14 +333,30 @@ class Entity extends FlxSprite {
 					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x - i),  getRow(this.y))] += 1/i*2;
 				}
 			}
-		}if (this.running) {
+		}
+		
+		//increase if running
+		if (this.running) {
 			Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x),  getRow(this.y))] += 1;
-			for (i in 0...100) {
+			for (i in 0...80) {
 				if(x+i < Reg.gameWidth){
 					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x + i),  getRow(this.y))] += 1/i/2;
 				}
 				if(x-i > 0){
 					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x - i),  getRow(this.y))] += 1/i/2;
+				}
+			}
+		}
+		
+		//increase if standing still
+		if (Math.abs(this.velocity.x) < 1) {
+			Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x),  getRow(this.y))] += 1;
+			for (i in 0...50) {
+				if(x+i < Reg.gameWidth){
+					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x + i),  getRow(this.y))] += 0.00005*(50-i);
+				}
+				if(x-i > 0){
+					Reg.aggressionMap.members[Reg.aggressionMap.idx(Math.round(this.x - i),  getRow(this.y))] += 0.00005*(50-i);
 				}
 			}
 		}
@@ -397,7 +414,7 @@ class Entity extends FlxSprite {
 			return 0;
 		}else if (_y <= 200) {
 			return 1;
-		}else if (_y <= 380) {
+		}else if (_y <= 280) {
 			return 2;
 		}else {
 			return 3;

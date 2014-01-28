@@ -126,7 +126,7 @@ class NPC extends Entity{
 					this.running = true;
 				}else {
 					setTarget(minLocX+Std.random(20)-Std.random(20), Math.round(this.y));
-					targetTimer = 0;
+					targetTimer = Std.random(Math.round(targetTimerLimit*0.5));
 				}
 			}else if (type == NpcType.AGGRESSOR) {
 				var maxAggro:Float = aggro;

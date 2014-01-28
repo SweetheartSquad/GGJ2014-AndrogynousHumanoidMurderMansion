@@ -43,5 +43,5 @@ class Reg
 	static public var _level:FlxTilemap;
 	static public var npcCount:Int = 200;
 	static public var aggressionMap:TwoDArray;
-	public static var viewAggression:Bool = false;
+	public static var viewAggression:Bool = true;
 }

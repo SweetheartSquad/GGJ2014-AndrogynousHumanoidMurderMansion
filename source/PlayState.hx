@@ -394,7 +394,7 @@ class PlayState extends FlxState
 		entities.callAll("updateAggression");
 		npcs.callAll("updateLocalAggression");
 		
-		if(Reg.viewAggression){
+		if(Reg.viewAggression && framesElapsed%60==0){
 			Reg.aggressionMap.colourSprites();
 		}
 		
