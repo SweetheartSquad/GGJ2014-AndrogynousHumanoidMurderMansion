@@ -396,13 +396,13 @@ class Entity extends FlxSprite {
 		
 		switch(Std.random(4)) {
 			case 0:
-				_y = (2 + floorHeight);
+				_y = (1 + floorHeight);
 			case 1:
-				_y = (2 + (floorHeight * 2));
+				_y = (1 + (floorHeight * 2));
 			case 2:
-				_y = (2 + (floorHeight * 3));
+				_y = (1 + (floorHeight * 3));
 			case 3:
-				_y = (0 + (floorHeight * 4));
+				_y = (-1 + (floorHeight * 4));
 			default:
 				_y = -1;
 		}

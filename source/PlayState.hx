@@ -494,8 +494,8 @@ class PlayState extends FlxState
 		var otherTeleporter:Teleporter = getTeleporterById(door.relatedId);
 		if (otherTeleporter != null && entity.interacting) {
 			entity.interacting = false;
-			entity.x = otherTeleporter.x;
-			entity.y = otherTeleporter.y - 10;
+			entity.x = otherTeleporter.x + otherTeleporter.width/2;
+			entity.y = otherTeleporter.y;
 			if (Math.random() < 0.1)
 			{
 				soundManager.playSound("door");
