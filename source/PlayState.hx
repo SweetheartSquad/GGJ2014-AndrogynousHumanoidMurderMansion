@@ -461,10 +461,12 @@ class PlayState extends FlxState
 	}
 	public function makeGibs(_x:Float, _y:Float, _happy:Bool = false) {
 		particles.add(new Particle(_x, _y, _happy));
-		particles.add(new Particle(_x, _y, _happy));
-		particles.add(new Particle(_x, _y, _happy));
-		if(Math.random()>0.6){
-			makeGibs(_x, _y, _happy);
+		if(FlxG.elapsed < 0.018 && particles.countLiving() < 1000){
+			particles.add(new Particle(_x, _y, _happy));
+			particles.add(new Particle(_x, _y, _happy));
+			if(Math.random()>0.6){
+				makeGibs(_x, _y, _happy);
+			}
 		}
 	}
 	public function particleCollide(object1:FlxTilemap, object2:Particle) {

@@ -12,6 +12,7 @@ import utils.AnimationManager;
 import flixel.util.FlxColorUtil;
 import flash.Vector;
 import flash.geom.Point;
+import flash.geom.ColorTransform;
 
 import flash.Lib;
 import Std;
@@ -44,6 +45,7 @@ class Entity extends FlxSprite {
 	//appearance
 	private var primaryColour:Int;
 	private var secondaryColour:Int;
+	private var tertiaryColour:Int;
 	private var headShape:FlxSprite;
 	
 	//bodyparts
@@ -97,7 +99,9 @@ class Entity extends FlxSprite {
 			this.makeGraphic(w, h, 0x000000FF);
 			
 			primaryColour = FlxColorUtil.makeFromARGB(1.0, Std.random(255), Std.random(255), Std.random(255));
-			secondaryColour = Math.random() > 0.5 ? FlxColorUtil.getAnalogousHarmony(primaryColour, Std.random(50)).color2 : FlxColorUtil.getAnalogousHarmony(primaryColour, Std.random(50)).color3;
+			var harmony = FlxColorUtil.getAnalogousHarmony(primaryColour, Std.random(50));
+			secondaryColour = harmony.color2;
+			tertiaryColour = harmony.color3;
 			
 			
 			body = new Sprite();
@@ -145,6 +149,8 @@ class Entity extends FlxSprite {
 			animationManagerLegs.addAnimationState("idle", SpriteSheetHandler.getSpriteArray(1080, 544, 40*3, 23*3, 0, 2, 2, 0), 15);
 			animationManagerLegs.setAnimationState("idle");
 			
+			legs.transform.colorTransform = new ColorTransform(1, 1, 1, 1, FlxColorUtil.getRed(tertiaryColour), FlxColorUtil.getGreen(tertiaryColour),  FlxColorUtil.getBlue(tertiaryColour), 0);
+			
 			legs.scaleY = h/40/3;
 			legs.scaleX = w/20/3;
 			
@@ -162,6 +168,8 @@ class Entity extends FlxSprite {
 			animationManagerArms.addAnimationState("idle3", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 12, 8, 0), 3);
 			animationManagerArms.addAnimationState("idle4", SpriteSheetHandler.getSpriteArray(500*3, 154*3, 50*3, 22*3, 0, 6, 2, 0), 15);
 			animationManagerArms.setAnimationState("idle1");
+			
+			arms.transform.colorTransform = new ColorTransform(1, 1, 1, 1, FlxColorUtil.getRed(tertiaryColour), FlxColorUtil.getGreen(tertiaryColour),  FlxColorUtil.getBlue(tertiaryColour), 0);
 			
 			arms.scaleY = h/30/3;
 			arms.scaleX = w / 10 / 3;
