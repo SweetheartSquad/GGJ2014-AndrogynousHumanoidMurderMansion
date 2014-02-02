@@ -133,8 +133,8 @@ class NPC extends Entity{
 				var maxLocX:Int = Math.round(this.x);
 				for (curLocX in 128...Reg.aggressionMap.width - 128) {
 					var curAggro:Float = Reg.aggressionMap.members[Reg.aggressionMap.idx(curLocX,  getRow(this.y))];
-					if (curAggro+Math.abs(this.x - curLocX)/(Reg.gameWidth*0.5) >= maxAggro) {
-						maxAggro = curAggro + Math.abs(this.x - curLocX) / (Reg.gameWidth*0.5);
+					if (curAggro - Math.abs(this.x - curLocX)/(Reg.gameWidth*0.5) >= maxAggro) {
+						maxAggro = curAggro - Math.abs(this.x - curLocX) / (Reg.gameWidth*0.5);
 						maxLocX = curLocX;
 					}
 				}
