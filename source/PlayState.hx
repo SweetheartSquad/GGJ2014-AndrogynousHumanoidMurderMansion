@@ -70,8 +70,10 @@ class PlayState extends FlxState
 	private var trapdoor:TrapDoor;
 	private var trapTimer:Int;
 	
+	#if !flash
 	//Sound
 	private var soundManager:SoundManager;
+	#end
 	
 	//Tile map array values
 	private var tiles:Array<Array<Int>> ;
@@ -103,12 +105,8 @@ class PlayState extends FlxState
 		
 		
 		Reg.aggressionMap = new TwoDArray(Reg.gameWidth, 4);
-		
-		
-		
-		
 		Reg._level = new FlxTilemap();
-		Reg._level.loadMap(Assets.getText("assets/level.csv"), "assets/images/woodTileSet.png", TILE_WIDTH, TILE_HEIGHT, FlxTilemap.AUTO);
+		Reg._level.loadMap("0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0", "assets/images/woodTileSet.png", TILE_WIDTH, TILE_HEIGHT, FlxTilemap.AUTO);
 		
 		//var bm = new Bitmap(new TestBMD(100,100));
 		var bg:FlxSprite = new FlxSprite(-600,-400);
@@ -126,13 +124,10 @@ class PlayState extends FlxState
 		FlxG.cameras.bgColor = 0xFF000000;
 		// Show the mouse (in case it hasn't been disabled)
 		#if !FLX_NO_MOUSE
-		FlxG.mouse.show();
+		FlxG.mouse.visible = true;
 		#end
 		
-		#if flash
-	trace("FLASH");
-		#else
-	trace("!FLASH");
+		#if !flash
 		//Utils
 		gamepadUtilOne = new GamepadUtil(0);
 		gamepadUtilTwo = new GamepadUtil(1);
@@ -157,7 +152,7 @@ class PlayState extends FlxState
 		//add entities to game
 		add(entities);
 		
-		
+		#if !flash
 		//Add Sounds 
 		soundManager = new SoundManager();
 		soundManager.addSound("door", "assets/music/door.wav");
@@ -174,6 +169,7 @@ class PlayState extends FlxState
 		
 		soundManager.addSong("songOne", songOneArray);
 		soundManager.playSong("songOne");
+		#end
 		
 		particles = new FlxGroup();
 		add(particles);
@@ -246,41 +242,41 @@ class PlayState extends FlxState
 		
 		if(player1.alive && player2.alive){
 		//player1 controls
-		if (FlxG.keyboard.anyPressed(["A"])){
+		if (FlxG.keys.anyPressed(["A"])){
 			player1.acceleration.x = -player1.maxVelocity.x * (player1.running ? 8 : 4);
 			//player1.facing = FlxObject.LEFT;
 		}
-		if (FlxG.keyboard.anyPressed(["D"])){
+		if (FlxG.keys.anyPressed(["D"])){
 			player1.acceleration.x = player1.maxVelocity.x * (player1.running ? 8 : 4);
 			//player1.facing = FlxObject.RIGHT;
 		}
-		if (FlxG.keyboard.justPressed("W")) {
+		if (FlxG.keys.anyJustPressed(["W"])) {
 			player1.jump();
 		}
-		if (FlxG.keyboard.justPressed("S")) {
+		if (FlxG.keys.anyJustPressed(["S"])) {
 			player1.attacking = true;
 		}
-		if (FlxG.keyboard.justPressed("Q")) {
+		if (FlxG.keys.anyJustPressed(["Q"])) {
 			player1.interacting = true;
-		}if (FlxG.keyboard.anyPressed(["E"])) {
+		}if (FlxG.keys.anyPressed(["E"])) {
 			player1.running = true;
 		}
 		
 		
 		//player2 controls
-		if (FlxG.keyboard.anyPressed(["J"])){
+		if (FlxG.keys.anyPressed(["J"])){
 			player2.acceleration.x = -player2.maxVelocity.x * (player2.running ? 8 : 4);
 			//player2.facing = FlxObject.LEFT;
-		}if (FlxG.keyboard.anyPressed(["L"])){
+		}if (FlxG.keys.anyPressed(["L"])){
 			player2.acceleration.x = player2.maxVelocity.x * (player2.running ? 8 : 4);
 			//player2.facing = FlxObject.RIGHT;
-		}if (FlxG.keyboard.justPressed("I")) {
+		}if (FlxG.keys.anyJustPressed(["I"])) {
 			player2.jump();
-		}if (FlxG.keyboard.anyPressed(["K"])) {
+		}if (FlxG.keys.anyPressed(["K"])) {
 			player2.attacking = true;
-		}if (FlxG.keyboard.justPressed("U")) {
+		}if (FlxG.keys.anyJustPressed(["U"])) {
 			player2.interacting = true;
-		}if (FlxG.keyboard.anyPressed(["O"])) {
+		}if (FlxG.keys.anyPressed(["O"])) {
 			player2.running = true;
 		}
 		#if flash
@@ -337,7 +333,7 @@ class PlayState extends FlxState
 		gamepadUtilOne.clear();
 		gamepadUtilTwo.clear();
 		
-		/*if (FlxG.keyboard.anyJustPressed(["SPACESPACE"])) {
+		/*if (FlxG.keys.anyJustPressed(["SPACESPACE"])) {
 			entities.callAll("destroyGraphics");
 			entities.callAll("generateGraphics");
 			
@@ -351,7 +347,7 @@ class PlayState extends FlxState
 		#end
 		
 		
-		/*if (FlxG.keyboard.anyJustPressed(["SPACE"])) {
+		/*if (FlxG.keys.anyJustPressed(["SPACE"])) {
 			entities.callAll("destroyGraphics");
 			entities.callAll("generateGraphics");
 			entities.callAll("placeRandom()");
@@ -401,8 +397,9 @@ class PlayState extends FlxState
 		}else{
 			entities.setAll("winState", true);
 			player1.alive ? makeGibs(player1.x, player1.y, true) : makeGibs(player2.x, player2.y, true);
-			
-			if (FlxG.keyboard.anyJustPressed(["ESC","SPACE","ENTER"]) || gamepadUtilOne.getLastbuttonUp() == XboxControls.START) {
+			#if flash
+			#else
+			if (FlxG.keys.anyJustPressed(["ESC","SPACE","ENTER"]) || gamepadUtilOne.getLastbuttonUp() == XboxControls.START) {
 						
 				entities.callAll("destroyGraphics");
 				entities.kill();
@@ -414,6 +411,7 @@ class PlayState extends FlxState
 				this.kill();
 				FlxG.switchState(new MenuState());
 			}
+			#end
 		}
 		
 		
@@ -496,10 +494,12 @@ class PlayState extends FlxState
 			entity.interacting = false;
 			entity.x = otherTeleporter.x + otherTeleporter.width/2;
 			entity.y = otherTeleporter.y;
+		#if !flash
 			if (Math.random() < 0.1)
 			{
 				soundManager.playSound("door");
 			}
+		#end
 		}
 		
 	}

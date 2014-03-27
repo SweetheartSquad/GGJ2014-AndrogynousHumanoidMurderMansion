@@ -80,7 +80,7 @@ class InstructState extends FlxState
 	{
 		super.update();
 		
-		if (FlxG.keyboard.anyJustReleased(["Q"])) {
+		if (FlxG.keys.anyJustReleased(["Q"])) {
 			_text1.alpha = 0;
 			ready = true;
 			

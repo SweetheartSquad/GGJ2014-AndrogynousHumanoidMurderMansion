@@ -22,6 +22,7 @@ import openfl.utils.SystemPath;
 #end
 
 
+@:access(flash.media.Sound)
 class DefaultAssetLibrary extends AssetLibrary {
 	
 	
@@ -106,232 +107,45 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 		className.set ("assets/sounds/sounds-go-here.txt", __ASSET__assets_sounds_sounds_go_here_txt);
 		type.set ("assets/sounds/sounds-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
-		className.set ("flixel/img/debugger/buttons/console.png", __ASSET__flixel_img_debugger_buttons_console_png);
-		type.set ("flixel/img/debugger/buttons/console.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/debugger/buttons/logDebug.png", __ASSET__flixel_img_debugger_buttons_logdebug_png);
-		type.set ("flixel/img/debugger/buttons/logDebug.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/debugger/buttons/open.png", __ASSET__flixel_img_debugger_buttons_open_png);
-		type.set ("flixel/img/debugger/buttons/open.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/debugger/buttons/pause.png", __ASSET__flixel_img_debugger_buttons_pause_png);
-		type.set ("flixel/img/debugger/buttons/pause.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/debugger/buttons/play.png", __ASSET__flixel_img_debugger_buttons_play_png);
-		type.set ("flixel/img/debugger/buttons/play.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/debugger/buttons/record_off.png", __ASSET__flixel_img_debugger_buttons_record_off_png);
-		type.set ("flixel/img/debugger/buttons/record_off.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/debugger/buttons/record_on.png", __ASSET__flixel_img_debugger_buttons_record_on_png);
-		type.set ("flixel/img/debugger/buttons/record_on.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/debugger/buttons/restart.png", __ASSET__flixel_img_debugger_buttons_restart_png);
-		type.set ("flixel/img/debugger/buttons/restart.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/debugger/buttons/statsDebug.png", __ASSET__flixel_img_debugger_buttons_statsdebug_png);
-		type.set ("flixel/img/debugger/buttons/statsDebug.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/debugger/buttons/step.png", __ASSET__flixel_img_debugger_buttons_step_png);
-		type.set ("flixel/img/debugger/buttons/step.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/debugger/buttons/stop.png", __ASSET__flixel_img_debugger_buttons_stop_png);
-		type.set ("flixel/img/debugger/buttons/stop.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/debugger/buttons/visualDebug.png", __ASSET__flixel_img_debugger_buttons_visualdebug_png);
-		type.set ("flixel/img/debugger/buttons/visualDebug.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/debugger/buttons/watchDebug.png", __ASSET__flixel_img_debugger_buttons_watchdebug_png);
-		type.set ("flixel/img/debugger/buttons/watchDebug.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/debugger/flixel.png", __ASSET__flixel_img_debugger_flixel_png);
-		type.set ("flixel/img/debugger/flixel.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/debugger/windowHandle.png", __ASSET__flixel_img_debugger_windowhandle_png);
-		type.set ("flixel/img/debugger/windowHandle.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/logo/default.png", __ASSET__flixel_img_logo_default_png);
-		type.set ("flixel/img/logo/default.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/logo/HaxeFlixel.svg", __ASSET__flixel_img_logo_haxeflixel_svg);
-		type.set ("flixel/img/logo/HaxeFlixel.svg", Reflect.field (AssetType, "text".toUpperCase ()));
-		className.set ("flixel/img/logo/logo.png", __ASSET__flixel_img_logo_logo_png);
-		type.set ("flixel/img/logo/logo.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/preloader/corners.png", __ASSET__flixel_img_preloader_corners_png);
-		type.set ("flixel/img/preloader/corners.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/preloader/light.png", __ASSET__flixel_img_preloader_light_png);
-		type.set ("flixel/img/preloader/light.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/tile/autotiles.png", __ASSET__flixel_img_tile_autotiles_png);
-		type.set ("flixel/img/tile/autotiles.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/tile/autotiles_alt.png", __ASSET__flixel_img_tile_autotiles_alt_png);
-		type.set ("flixel/img/tile/autotiles_alt.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/ui/analog/base.png", __ASSET__flixel_img_ui_analog_base_png);
-		type.set ("flixel/img/ui/analog/base.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/ui/analog/thumb.png", __ASSET__flixel_img_ui_analog_thumb_png);
-		type.set ("flixel/img/ui/analog/thumb.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/ui/button.png", __ASSET__flixel_img_ui_button_png);
-		type.set ("flixel/img/ui/button.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/ui/cursor.png", __ASSET__flixel_img_ui_cursor_png);
-		type.set ("flixel/img/ui/cursor.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/ui/fontData11pt.png", __ASSET__flixel_img_ui_fontdata11pt_png);
-		type.set ("flixel/img/ui/fontData11pt.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/ui/virtualpad/a.png", __ASSET__flixel_img_ui_virtualpad_a_png);
-		type.set ("flixel/img/ui/virtualpad/a.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/ui/virtualpad/b.png", __ASSET__flixel_img_ui_virtualpad_b_png);
-		type.set ("flixel/img/ui/virtualpad/b.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/ui/virtualpad/c.png", __ASSET__flixel_img_ui_virtualpad_c_png);
-		type.set ("flixel/img/ui/virtualpad/c.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/ui/virtualpad/down.png", __ASSET__flixel_img_ui_virtualpad_down_png);
-		type.set ("flixel/img/ui/virtualpad/down.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/ui/virtualpad/left.png", __ASSET__flixel_img_ui_virtualpad_left_png);
-		type.set ("flixel/img/ui/virtualpad/left.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/ui/virtualpad/right.png", __ASSET__flixel_img_ui_virtualpad_right_png);
-		type.set ("flixel/img/ui/virtualpad/right.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/ui/virtualpad/up.png", __ASSET__flixel_img_ui_virtualpad_up_png);
-		type.set ("flixel/img/ui/virtualpad/up.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/ui/virtualpad/x.png", __ASSET__flixel_img_ui_virtualpad_x_png);
-		type.set ("flixel/img/ui/virtualpad/x.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/img/ui/virtualpad/y.png", __ASSET__flixel_img_ui_virtualpad_y_png);
-		type.set ("flixel/img/ui/virtualpad/y.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("flixel/snd/beep.wav", __ASSET__flixel_snd_beep_wav);
-		type.set ("flixel/snd/beep.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
-		className.set ("flixel/snd/flixel.wav", __ASSET__flixel_snd_flixel_wav);
-		type.set ("flixel/snd/flixel.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
 		
 		
 		#elseif html5
 		
-		path.set ("assets/data/data-goes-here.txt", "assets/data/data-goes-here.txt");
-		type.set ("assets/data/data-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
-		path.set ("assets/images/armAnimations.png", "assets/images/armAnimations.png");
-		type.set ("assets/images/armAnimations.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/armAnimationsHD.png", "assets/images/armAnimationsHD.png");
-		type.set ("assets/images/armAnimationsHD.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/background.png", "assets/images/background.png");
-		type.set ("assets/images/background.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/door.png", "assets/images/door.png");
-		type.set ("assets/images/door.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/doorObjThingy.png", "assets/images/doorObjThingy.png");
-		type.set ("assets/images/doorObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/ElevatorObjThingy.png", "assets/images/ElevatorObjThingy.png");
-		type.set ("assets/images/ElevatorObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/heart.png", "assets/images/heart.png");
-		type.set ("assets/images/heart.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/heart_mask.png", "assets/images/heart_mask.png");
-		type.set ("assets/images/heart_mask.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
-		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
-		path.set ("assets/images/instructions1.png", "assets/images/instructions1.png");
-		type.set ("assets/images/instructions1.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/instructions2.png", "assets/images/instructions2.png");
-		type.set ("assets/images/instructions2.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/instructions3.png", "assets/images/instructions3.png");
-		type.set ("assets/images/instructions3.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/instructions4.png", "assets/images/instructions4.png");
-		type.set ("assets/images/instructions4.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/legAnimations.png", "assets/images/legAnimations.png");
-		type.set ("assets/images/legAnimations.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/legAnimationsHD.png", "assets/images/legAnimationsHD.png");
-		type.set ("assets/images/legAnimationsHD.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/LeverObjThingy.png", "assets/images/LeverObjThingy.png");
-		type.set ("assets/images/LeverObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/mask.png", "assets/images/mask.png");
-		type.set ("assets/images/mask.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/runCycle.png", "assets/images/runCycle.png");
-		type.set ("assets/images/runCycle.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/StairObjThingy.png", "assets/images/StairObjThingy.png");
-		type.set ("assets/images/StairObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/titleCard.png", "assets/images/titleCard.png");
-		type.set ("assets/images/titleCard.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/TrapDoorObjThingy.png", "assets/images/TrapDoorObjThingy.png");
-		type.set ("assets/images/TrapDoorObjThingy.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/images/woodTileSet.png", "assets/images/woodTileSet.png");
-		type.set ("assets/images/woodTileSet.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("assets/level.csv", "assets/level.csv");
-		type.set ("assets/level.csv", Reflect.field (AssetType, "binary".toUpperCase ()));
-		path.set ("assets/music/door.wav", "assets/music/door.wav");
-		type.set ("assets/music/door.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
-		path.set ("assets/music/f1.wav", "assets/music/f1.wav");
-		type.set ("assets/music/f1.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
-		path.set ("assets/music/f2.wav", "assets/music/f2.wav");
-		type.set ("assets/music/f2.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
-		path.set ("assets/music/f3.wav", "assets/music/f3.wav");
-		type.set ("assets/music/f3.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
-		path.set ("assets/music/f4.wav", "assets/music/f4.wav");
-		type.set ("assets/music/f4.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
-		path.set ("assets/music/f5.wav", "assets/music/f5.wav");
-		type.set ("assets/music/f5.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
-		path.set ("assets/music/f6.wav", "assets/music/f6.wav");
-		type.set ("assets/music/f6.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
-		path.set ("assets/music/f7.wav", "assets/music/f7.wav");
-		type.set ("assets/music/f7.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
-		path.set ("assets/music/f8.wav", "assets/music/f8.wav");
-		type.set ("assets/music/f8.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
-		path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
-		type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
-		path.set ("assets/sounds/sounds-go-here.txt", "assets/sounds/sounds-go-here.txt");
-		type.set ("assets/sounds/sounds-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
-		path.set ("flixel/img/debugger/buttons/console.png", "flixel/img/debugger/buttons/console.png");
-		type.set ("flixel/img/debugger/buttons/console.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/debugger/buttons/logDebug.png", "flixel/img/debugger/buttons/logDebug.png");
-		type.set ("flixel/img/debugger/buttons/logDebug.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/debugger/buttons/open.png", "flixel/img/debugger/buttons/open.png");
-		type.set ("flixel/img/debugger/buttons/open.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/debugger/buttons/pause.png", "flixel/img/debugger/buttons/pause.png");
-		type.set ("flixel/img/debugger/buttons/pause.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/debugger/buttons/play.png", "flixel/img/debugger/buttons/play.png");
-		type.set ("flixel/img/debugger/buttons/play.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/debugger/buttons/record_off.png", "flixel/img/debugger/buttons/record_off.png");
-		type.set ("flixel/img/debugger/buttons/record_off.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/debugger/buttons/record_on.png", "flixel/img/debugger/buttons/record_on.png");
-		type.set ("flixel/img/debugger/buttons/record_on.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/debugger/buttons/restart.png", "flixel/img/debugger/buttons/restart.png");
-		type.set ("flixel/img/debugger/buttons/restart.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/debugger/buttons/statsDebug.png", "flixel/img/debugger/buttons/statsDebug.png");
-		type.set ("flixel/img/debugger/buttons/statsDebug.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/debugger/buttons/step.png", "flixel/img/debugger/buttons/step.png");
-		type.set ("flixel/img/debugger/buttons/step.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/debugger/buttons/stop.png", "flixel/img/debugger/buttons/stop.png");
-		type.set ("flixel/img/debugger/buttons/stop.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/debugger/buttons/visualDebug.png", "flixel/img/debugger/buttons/visualDebug.png");
-		type.set ("flixel/img/debugger/buttons/visualDebug.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/debugger/buttons/watchDebug.png", "flixel/img/debugger/buttons/watchDebug.png");
-		type.set ("flixel/img/debugger/buttons/watchDebug.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/debugger/flixel.png", "flixel/img/debugger/flixel.png");
-		type.set ("flixel/img/debugger/flixel.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/debugger/windowHandle.png", "flixel/img/debugger/windowHandle.png");
-		type.set ("flixel/img/debugger/windowHandle.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/logo/default.png", "flixel/img/logo/default.png");
-		type.set ("flixel/img/logo/default.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/logo/HaxeFlixel.svg", "flixel/img/logo/HaxeFlixel.svg");
-		type.set ("flixel/img/logo/HaxeFlixel.svg", Reflect.field (AssetType, "text".toUpperCase ()));
-		path.set ("flixel/img/logo/logo.png", "flixel/img/logo/logo.png");
-		type.set ("flixel/img/logo/logo.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/preloader/corners.png", "flixel/img/preloader/corners.png");
-		type.set ("flixel/img/preloader/corners.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/preloader/light.png", "flixel/img/preloader/light.png");
-		type.set ("flixel/img/preloader/light.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/tile/autotiles.png", "flixel/img/tile/autotiles.png");
-		type.set ("flixel/img/tile/autotiles.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/tile/autotiles_alt.png", "flixel/img/tile/autotiles_alt.png");
-		type.set ("flixel/img/tile/autotiles_alt.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/ui/analog/base.png", "flixel/img/ui/analog/base.png");
-		type.set ("flixel/img/ui/analog/base.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/ui/analog/thumb.png", "flixel/img/ui/analog/thumb.png");
-		type.set ("flixel/img/ui/analog/thumb.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/ui/button.png", "flixel/img/ui/button.png");
-		type.set ("flixel/img/ui/button.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/ui/cursor.png", "flixel/img/ui/cursor.png");
-		type.set ("flixel/img/ui/cursor.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/ui/fontData11pt.png", "flixel/img/ui/fontData11pt.png");
-		type.set ("flixel/img/ui/fontData11pt.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/ui/virtualpad/a.png", "flixel/img/ui/virtualpad/a.png");
-		type.set ("flixel/img/ui/virtualpad/a.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/ui/virtualpad/b.png", "flixel/img/ui/virtualpad/b.png");
-		type.set ("flixel/img/ui/virtualpad/b.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/ui/virtualpad/c.png", "flixel/img/ui/virtualpad/c.png");
-		type.set ("flixel/img/ui/virtualpad/c.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/ui/virtualpad/down.png", "flixel/img/ui/virtualpad/down.png");
-		type.set ("flixel/img/ui/virtualpad/down.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/ui/virtualpad/left.png", "flixel/img/ui/virtualpad/left.png");
-		type.set ("flixel/img/ui/virtualpad/left.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/ui/virtualpad/right.png", "flixel/img/ui/virtualpad/right.png");
-		type.set ("flixel/img/ui/virtualpad/right.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/ui/virtualpad/up.png", "flixel/img/ui/virtualpad/up.png");
-		type.set ("flixel/img/ui/virtualpad/up.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/ui/virtualpad/x.png", "flixel/img/ui/virtualpad/x.png");
-		type.set ("flixel/img/ui/virtualpad/x.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/img/ui/virtualpad/y.png", "flixel/img/ui/virtualpad/y.png");
-		type.set ("flixel/img/ui/virtualpad/y.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		path.set ("flixel/snd/beep.wav", "flixel/snd/beep.wav");
-		type.set ("flixel/snd/beep.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
-		path.set ("flixel/snd/flixel.wav", "flixel/snd/flixel.wav");
-		type.set ("flixel/snd/flixel.wav", Reflect.field (AssetType, "sound".toUpperCase ()));
+		addExternal("assets/data/data-goes-here.txt", "text", "assets/data/data-goes-here.txt");
+		addExternal("assets/images/armAnimations.png", "image", "assets/images/armAnimations.png");
+		addExternal("assets/images/armAnimationsHD.png", "image", "assets/images/armAnimationsHD.png");
+		addExternal("assets/images/background.png", "image", "assets/images/background.png");
+		addExternal("assets/images/door.png", "image", "assets/images/door.png");
+		addExternal("assets/images/doorObjThingy.png", "image", "assets/images/doorObjThingy.png");
+		addExternal("assets/images/ElevatorObjThingy.png", "image", "assets/images/ElevatorObjThingy.png");
+		addExternal("assets/images/heart.png", "image", "assets/images/heart.png");
+		addExternal("assets/images/heart_mask.png", "image", "assets/images/heart_mask.png");
+		addExternal("assets/images/images-go-here.txt", "text", "assets/images/images-go-here.txt");
+		addExternal("assets/images/instructions1.png", "image", "assets/images/instructions1.png");
+		addExternal("assets/images/instructions2.png", "image", "assets/images/instructions2.png");
+		addExternal("assets/images/instructions3.png", "image", "assets/images/instructions3.png");
+		addExternal("assets/images/instructions4.png", "image", "assets/images/instructions4.png");
+		addExternal("assets/images/legAnimations.png", "image", "assets/images/legAnimations.png");
+		addExternal("assets/images/legAnimationsHD.png", "image", "assets/images/legAnimationsHD.png");
+		addExternal("assets/images/LeverObjThingy.png", "image", "assets/images/LeverObjThingy.png");
+		addExternal("assets/images/mask.png", "image", "assets/images/mask.png");
+		addExternal("assets/images/runCycle.png", "image", "assets/images/runCycle.png");
+		addExternal("assets/images/StairObjThingy.png", "image", "assets/images/StairObjThingy.png");
+		addExternal("assets/images/titleCard.png", "image", "assets/images/titleCard.png");
+		addExternal("assets/images/TrapDoorObjThingy.png", "image", "assets/images/TrapDoorObjThingy.png");
+		addExternal("assets/images/woodTileSet.png", "image", "assets/images/woodTileSet.png");
+		addExternal("assets/level.csv", "binary", "assets/level.csv");
+		addExternal("assets/music/door.wav", "sound", "assets/music/door.wav");
+		addExternal("assets/music/f1.wav", "sound", "assets/music/f1.wav");
+		addExternal("assets/music/f2.wav", "sound", "assets/music/f2.wav");
+		addExternal("assets/music/f3.wav", "sound", "assets/music/f3.wav");
+		addExternal("assets/music/f4.wav", "sound", "assets/music/f4.wav");
+		addExternal("assets/music/f5.wav", "sound", "assets/music/f5.wav");
+		addExternal("assets/music/f6.wav", "sound", "assets/music/f6.wav");
+		addExternal("assets/music/f7.wav", "sound", "assets/music/f7.wav");
+		addExternal("assets/music/f8.wav", "sound", "assets/music/f8.wav");
+		addExternal("assets/music/music-goes-here.txt", "text", "assets/music/music-goes-here.txt");
+		addExternal("assets/sounds/sounds-go-here.txt", "text", "assets/sounds/sounds-go-here.txt");
 		
 		
 		#else
@@ -386,6 +200,20 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#end
 		
 	}
+	
+	
+	#if html5
+	private function addEmbed(id:String, kind:String, value:Dynamic):Void {
+		className.set(id, value);
+		type.set(id, Reflect.field(AssetType, kind.toUpperCase()));
+	}
+	
+	
+	private function addExternal(id:String, kind:String, value:String):Void {
+		path.set(id, value);
+		type.set(id, Reflect.field(AssetType, kind.toUpperCase()));
+	}
+	#end
 	
 	
 	public override function exists (id:String, type:AssetType):Bool {
@@ -453,6 +281,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		return cast (Type.createInstance (className.get (id), []), BitmapData);
 		
+		#elseif openfl_html5
+		
+		return BitmapData.fromImage (ApplicationMain.images.get (path.get (id)));
+		
 		#elseif js
 		
 		return cast (ApplicationMain.loaders.get (path.get (id)).contentLoaderInfo.content, Bitmap).bitmapData;
@@ -475,6 +307,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#elseif flash
 		
 		return cast (Type.createInstance (className.get (id), []), ByteArray);
+		
+		#elseif openfl_html5
+		
+		return null;
 		
 		#elseif js
 		
@@ -538,11 +374,18 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		#if pixi
 		
-		//return null;		
+		return null;
 		
 		#elseif flash
 		
 		return cast (Type.createInstance (className.get (id), []), Sound);
+		
+		#elseif openfl_html5
+		
+		var sound = new Sound ();
+		sound.__buffer = true;
+		sound.load (new URLRequest (path.get (id)));
+		return sound; 
 		
 		#elseif js
 		
@@ -589,6 +432,56 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#else
 		
 		return new Sound (new URLRequest (path.get (id)), null, type.get (id) == MUSIC);
+		
+		#end
+		
+	}
+	
+	
+	public override function getText (id:String):String {
+		
+		#if js
+		
+		var bytes:ByteArray = null;
+		var data = ApplicationMain.urlLoaders.get (path.get (id)).data;
+		
+		if (Std.is (data, String)) {
+			
+			return cast data;
+			
+		} else if (Std.is (data, ByteArray)) {
+			
+			bytes = cast data;
+			
+		} else {
+			
+			bytes = null;
+			
+		}
+
+		if (bytes != null) {
+			
+			bytes.position = 0;
+			return bytes.readUTFBytes (bytes.length);
+			
+		} else {
+			
+			return null;
+		}
+		
+		#else
+		
+		var bytes = getBytes (id);
+		
+		if (bytes == null) {
+			
+			return null;
+			
+		} else {
+			
+			return bytes.readUTFBytes (bytes.length);
+			
+		}
 		
 		#end
 		
@@ -769,126 +662,93 @@ class DefaultAssetLibrary extends AssetLibrary {
 	}
 	
 	
+	public override function loadText (id:String, handler:String -> Void):Void {
+		
+		#if js
+		
+		if (path.exists (id)) {
+			
+			var loader = new URLLoader ();
+			loader.addEventListener (Event.COMPLETE, function (event:Event) {
+				
+				handler (event.currentTarget.data);
+				
+			});
+			loader.load (new URLRequest (path.get (id)));
+			
+		} else {
+			
+			handler (getText (id));
+			
+		}
+		
+		#else
+		
+		var callback = function (bytes:ByteArray):Void {
+			
+			if (bytes == null) {
+				
+				handler (null);
+				
+			} else {
+				
+				handler (bytes.readUTFBytes (bytes.length));
+				
+			}
+			
+		}
+		
+		loadBytes (id, callback);
+		
+		#end
+		
+	}
+	
+	
 }
 
 
 #if pixi
 #elseif flash
 
-class __ASSET__assets_data_data_goes_here_txt extends null { }
-class __ASSET__assets_images_armanimations_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_armanimationshd_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_background_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_door_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_doorobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_elevatorobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_heart_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_heart_mask_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_images_go_here_txt extends null { }
-class __ASSET__assets_images_instructions1_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_instructions2_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_instructions3_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_instructions4_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_leganimations_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_leganimationshd_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_leverobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_mask_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_runcycle_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_stairobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_titlecard_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_trapdoorobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_images_woodtileset_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__assets_level_csv extends null { }
-class __ASSET__assets_music_door_wav extends null { }
-class __ASSET__assets_music_f1_wav extends null { }
-class __ASSET__assets_music_f2_wav extends null { }
-class __ASSET__assets_music_f3_wav extends null { }
-class __ASSET__assets_music_f4_wav extends null { }
-class __ASSET__assets_music_f5_wav extends null { }
-class __ASSET__assets_music_f6_wav extends null { }
-class __ASSET__assets_music_f7_wav extends null { }
-class __ASSET__assets_music_f8_wav extends null { }
-class __ASSET__assets_music_music_goes_here_txt extends null { }
-class __ASSET__assets_sounds_sounds_go_here_txt extends null { }
-class __ASSET__flixel_img_debugger_buttons_console_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_debugger_buttons_logdebug_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_debugger_buttons_open_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_debugger_buttons_pause_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_debugger_buttons_play_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_debugger_buttons_record_off_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_debugger_buttons_record_on_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_debugger_buttons_restart_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_debugger_buttons_statsdebug_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_debugger_buttons_step_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_debugger_buttons_stop_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_debugger_buttons_visualdebug_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_debugger_buttons_watchdebug_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_debugger_flixel_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_debugger_windowhandle_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_logo_default_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_logo_haxeflixel_svg extends null { }
-class __ASSET__flixel_img_logo_logo_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_preloader_corners_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_preloader_light_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_tile_autotiles_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_tile_autotiles_alt_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_ui_analog_base_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_ui_analog_thumb_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_ui_button_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_ui_cursor_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_ui_fontdata11pt_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_ui_virtualpad_a_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_ui_virtualpad_b_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_ui_virtualpad_c_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_ui_virtualpad_down_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_ui_virtualpad_left_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_ui_virtualpad_right_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_ui_virtualpad_up_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_ui_virtualpad_x_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_img_ui_virtualpad_y_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
-class __ASSET__flixel_snd_beep_wav extends null { }
-class __ASSET__flixel_snd_flixel_wav extends null { }
+@:keep class __ASSET__assets_data_data_goes_here_txt extends null { }
+@:keep class __ASSET__assets_images_armanimations_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_armanimationshd_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_background_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_door_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_doorobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_elevatorobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_heart_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_heart_mask_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_images_go_here_txt extends null { }
+@:keep class __ASSET__assets_images_instructions1_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_instructions2_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_instructions3_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_instructions4_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_leganimations_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_leganimationshd_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_leverobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_mask_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_runcycle_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_stairobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_titlecard_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_trapdoorobjthingy_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_woodtileset_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_level_csv extends null { }
+@:keep class __ASSET__assets_music_door_wav extends null { }
+@:keep class __ASSET__assets_music_f1_wav extends null { }
+@:keep class __ASSET__assets_music_f2_wav extends null { }
+@:keep class __ASSET__assets_music_f3_wav extends null { }
+@:keep class __ASSET__assets_music_f4_wav extends null { }
+@:keep class __ASSET__assets_music_f5_wav extends null { }
+@:keep class __ASSET__assets_music_f6_wav extends null { }
+@:keep class __ASSET__assets_music_f7_wav extends null { }
+@:keep class __ASSET__assets_music_f8_wav extends null { }
+@:keep class __ASSET__assets_music_music_goes_here_txt extends null { }
+@:keep class __ASSET__assets_sounds_sounds_go_here_txt extends null { }
 
 
 #elseif html5
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

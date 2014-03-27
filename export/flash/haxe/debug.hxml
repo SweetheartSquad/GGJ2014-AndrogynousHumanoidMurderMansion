@@ -1,15 +1,15 @@
 -main ApplicationMain 
--lib openfl
 -lib flixel
+-lib openfl
 -lib actuate
 -cp source
--D tools=1.2.8
+-D tools=1.3.2
 -D FLX_NO_DEBUG
 -D web
 -swf-version 11.2
 -swf export/flash/bin/HelloWorld.swf
--swf-header 1920:1080:60:FFFFFF
+-swf-header 1920:1080:60:000000
 -cp export/flash/haxe
 #--remap nme:flash
---no-inline
+#--no-inline
 -debug

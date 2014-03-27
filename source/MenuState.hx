@@ -39,7 +39,8 @@ class MenuState extends FlxState
 		
 		title = new FlxSprite(Reg.gameWidth/2 - 225,-50);
 		title.loadGraphic("assets/images/titleCard.png");
-		title.scale = new FlxPoint(0.7, 0.7);
+		title.scale.x = 0.7;
+		title.scale.y = 0.7;
 		add(title);
 		
 		
@@ -89,8 +90,7 @@ class MenuState extends FlxState
 	override public function update():Void
 	{
 		super.update();
-		
-		if (FlxG.keyboard.anyJustReleased(["SPACE"])) {
+		if (FlxG.keys.anyJustReleased(["SPACE"])) {
 			_text1.alpha = 0;
 			pReady = true;
 			
@@ -100,7 +100,7 @@ class MenuState extends FlxState
 			
 		}
 		
-		if (FlxG.keyboard.anyJustReleased(["Q"])) {
+		if (FlxG.keys.anyJustReleased(["Q"])) {
 			_text2.alpha = 0;
 			qReady = true;
 			
